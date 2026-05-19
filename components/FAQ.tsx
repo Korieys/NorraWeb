@@ -7,7 +7,7 @@ import {
 
 const ITEMS = [
   {
-    q: "When does Norra launch?",
+    q: "When does Daypack launch?",
     a: "Targeting Q3 2026. Reserve a pack to lock in early access and founder pricing.",
   },
   {

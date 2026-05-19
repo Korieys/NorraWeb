@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://norra.com/sitemap.xml
+Sitemap: https://eatdaypack.com/sitemap.xml

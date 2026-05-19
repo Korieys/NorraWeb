@@ -15,7 +15,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-6">
             <p className="font-display text-[40px] font-medium uppercase leading-none tracking-wide-lg text-paper lg:text-[56px]">
-              NORRA
+              DAYPACK
             </p>
             <p className="mt-3 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-paper/55">
               COMPLETE DAILY NUTRITION · DESIGNED FOR THE NUMBER
@@ -32,13 +32,13 @@ export function Footer() {
             </p>
             <ul className="mt-4 space-y-2 font-sans text-[12px] font-semibold uppercase tracking-wide-md text-paper/85">
               <li>
-                <a href="mailto:hello@norra.com" className="hover:text-paper">
-                  HELLO@NORRA.COM
+                <a href="mailto:hello@eatdaypack.com" className="hover:text-paper">
+                  HELLO@EATDAYPACK.COM
                 </a>
               </li>
               <li>
                 <a
-                  href="https://instagram.com/norra"
+                  href="https://instagram.com/eatdaypack"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-paper"
@@ -48,7 +48,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://twitter.com/norra"
+                  href="https://twitter.com/eatdaypack"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-paper"
@@ -80,7 +80,7 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col gap-3 border-t border-paper/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/50">
-            © 2026 NORRA. NOT YET SHIPPING. RESERVE TO BE FIRST.
+            © 2026 DAYPACK. NOT YET SHIPPING. RESERVE TO BE FIRST.
           </p>
           <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/40">
             DESIGNED IN THE PACIFIC NORTHWEST

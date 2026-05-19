@@ -48,7 +48,7 @@ export function EmailDialog({ trigger }: Props) {
       <DialogContent>
         <DialogTitle>GET NOTIFIED.</DialogTitle>
         <DialogDescription>
-          Drop your email. We&apos;ll tell you when Norra ships. No spam.
+          Drop your email. We&apos;ll tell you when Daypack ships. No spam.
         </DialogDescription>
         <form onSubmit={onSubmit} className="mt-2 flex flex-col gap-3">
           <Input

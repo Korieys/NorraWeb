@@ -4,7 +4,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 
 export const metadata = {
-  title: "Cancelled — Norra",
+  title: "Cancelled — Daypack",
   description: "No charge. Take another look when you're ready.",
 };
 

@@ -48,7 +48,7 @@ export function PackMockup({ sku, size = "md", className }: PackMockupProps) {
         s.wrap,
         className
       )}
-      aria-label={`Norra ${sku.protein} protein pack`}
+      aria-label={`Daypack ${sku.protein} protein pack`}
     >
       {/* Heat-seal top edge */}
       <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-b from-paper/15 to-transparent" />
@@ -76,7 +76,7 @@ export function PackMockup({ sku, size = "md", className }: PackMockupProps) {
                 s.label
               )}
             >
-              NORRA
+              DAYPACK
             </span>
             <span
               className={cn(

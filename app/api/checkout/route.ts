@@ -39,14 +39,21 @@ export async function POST(req: Request) {
             currency: "usd",
             unit_amount: 100,
             product_data: {
-              name: `Norra ${sku} Protein Pack — Founder Reservation`,
+              name: `Daypack ${sku} Protein Pack — Founder Reservation`,
               description: `Refundable $1 deposit. Locks in $20 off launch and early access to the ${sku} pack.`,
             },
           },
           quantity: 1,
         },
       ],
-      metadata: { sku },
+      metadata: { sku, kind: "founder_reservation" },
+      payment_intent_data: {
+        metadata: { sku, kind: "founder_reservation" },
+      },
+      customer_creation: "always",
+      consent_collection: {
+        terms_of_service: "none",
+      },
       success_url: `${origin}/reserved?sku=${sku}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/cancelled`,
       allow_promotion_codes: false,

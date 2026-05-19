@@ -25,7 +25,7 @@ export function Nav() {
       <div className="mx-auto flex h-full max-w-content items-center justify-between px-6 lg:px-10">
         <Link href="/" className="flex flex-col leading-none">
           <span className="font-display text-[22px] font-medium uppercase tracking-wide-lg text-ink">
-            NORRA
+            DAYPACK
           </span>
           <span className="mt-0.5 hidden font-sans text-[9px] font-semibold uppercase tracking-wide-lg text-ink/55 md:block">
             COMPLETE DAILY NUTRITION
