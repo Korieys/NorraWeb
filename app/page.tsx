@@ -2,6 +2,7 @@ import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { SKUSection } from "@/components/SKUSection";
 import { Argument } from "@/components/Argument";
+import { Comparison } from "@/components/Comparison";
 import { PackComposition } from "@/components/PackComposition";
 import { ConversionBlock } from "@/components/ConversionBlock";
 import { FAQ } from "@/components/FAQ";
@@ -18,6 +19,7 @@ export default function Home() {
         <SKUSection skuId="200" />
         <SKUSection skuId="230" />
         <Argument />
+        <Comparison />
         <PackComposition />
         <ConversionBlock />
         <FAQ />

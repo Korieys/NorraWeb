@@ -4,6 +4,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { PackMockup } from "@/components/PackMockup";
 import { SKUS, type SkuId } from "@/lib/skus";
+
+const COMPARE_NOTES: Record<SkuId, string> = {
+  "170": "VS. CUTTING WITH FACTOR: SAVE $14/DAY AND HIT PROTEIN.",
+  "200": "VS. 3 CHIPOTLE BOWLS: SAVE $10/DAY. ZERO LINES.",
+  "230": "VS. MEAL PREP SUNDAY: SAVE 4 HOURS AND $5/DAY.",
+};
 import { track } from "@/lib/analytics";
 
 type Props = {
@@ -120,6 +126,9 @@ export function SKUSection({ skuId }: Props) {
               </p>
               <p className="mt-1 font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/55">
                 ${sku.pricePerWeek} / WEEK
+              </p>
+              <p className="mt-3 border-t border-paper/20 pt-3 font-sans text-[12px] font-semibold uppercase tracking-[0.1em] text-paper/60">
+                {COMPARE_NOTES[sku.id]}
               </p>
             </div>
             <Button

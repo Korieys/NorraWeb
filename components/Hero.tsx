@@ -31,7 +31,11 @@ export function Hero() {
             <br />
             FUEL YOUR DAY.
           </h1>
-          <p className="mt-8 max-w-[560px] font-sans text-[18px] leading-[1.5] text-ink/80 lg:text-[20px]">
+          <p className="mt-4 font-display text-[18px] uppercase leading-[1.3] tracking-wide-sm text-tan sm:text-[24px]">
+            FACTOR MAKES YOU PICK MEALS. HUEL ASKS YOU TO DRINK THEM.{" "}
+            DAYPACK JUST SELLS YOU A NUMBER.
+          </p>
+          <p className="mt-4 max-w-[560px] font-sans text-[18px] leading-[1.5] text-ink/80 lg:text-[20px]">
             Daily meal packs engineered around your protein target. Shelf
             stable. Microwave ready. No tracking.
           </p>
