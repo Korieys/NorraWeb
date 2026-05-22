@@ -118,13 +118,16 @@ export function SKUSection({ skuId }: Props) {
                 FOUNDER PRICING
               </p>
               <p className="mt-1 font-display text-[32px] font-medium leading-none tracking-wide-sm text-paper">
-                ${sku.pricePerDay}
+                ${sku.pricePerDay.toFixed(2)}
                 <span className="ml-2 font-sans text-[12px] font-semibold uppercase tracking-wide-md text-paper/55">
                   / DAY
                 </span>
               </p>
               <p className="mt-1 font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/55">
-                ${sku.pricePerWeek} / WEEK
+                ${sku.pricePerWeek.toFixed(2)} / WEEK
+                <span className="ml-2 text-paper/80">
+                  · SAVE {sku.weeklyDiscount}%
+                </span>
               </p>
             </div>
             <Button

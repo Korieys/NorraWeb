@@ -73,7 +73,7 @@ export function Hero() {
                     trigger={
                       <button
                         type="button"
-                        className="font-sans text-[14px] font-medium text-ink underline underline-offset-4 transition-opacity hover:opacity-70"
+                        className="inline-flex items-center rounded-[4px] border border-ink/15 bg-paper px-4 py-2.5 font-sans text-[14px] font-medium text-ink underline underline-offset-4 shadow-sm transition-colors hover:bg-paper/85"
                       >
                         Or just get notified →
                       </button>
@@ -114,7 +114,7 @@ export function Hero() {
               trigger={
                 <button
                   type="button"
-                  className="font-sans text-[14px] font-medium text-ink underline underline-offset-4 transition-opacity hover:opacity-70"
+                  className="inline-flex items-center rounded-[4px] border border-ink/15 bg-paper px-4 py-2.5 font-sans text-[14px] font-medium text-ink underline underline-offset-4 shadow-sm transition-colors hover:bg-paper/85"
                 >
                   Or just get notified →
                 </button>

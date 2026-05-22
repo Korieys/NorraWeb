@@ -35,6 +35,10 @@ const ITEMS = [
     a: "Yes. Any time. No questions, no email required. Click the link in your confirmation.",
   },
   {
+    q: "Do I have to buy weekly?",
+    a: "No. The weekly bundle gets the best per-day price, but you're welcome to grab a single pack and try it first. Pricing and pack structure are still being finalized and may change before launch.",
+  },
+  {
     q: "Can I customize the meals?",
     a: "Not at launch. We start with a fixed library so the protein math is guaranteed. Customization comes in v2.",
   },
