@@ -15,6 +15,7 @@ export type Sku = {
   meals: Meal[];
   pricePerDay: number;
   pricePerWeek: number;
+  weeklyDiscount: number;
   color: {
     bg: string;
     text: string;
@@ -36,8 +37,9 @@ export const SKUS: Record<SkuId, Sku> = {
       { slot: "DINNER", name: "Beef pouch, rice, sauce", protein: 45 },
       { slot: "SNACK", name: "Jerky", protein: 15 },
     ],
-    pricePerDay: 28,
-    pricePerWeek: 196,
+    pricePerDay: 24.99,
+    pricePerWeek: 157.44,
+    weeklyDiscount: 10,
     color: {
       bg: "bg-slate",
       text: "text-slate",
@@ -56,8 +58,9 @@ export const SKUS: Record<SkuId, Sku> = {
       { slot: "DINNER", name: "Beef pouch, rice, sauce", protein: 60 },
       { slot: "SNACK", name: "Jerky", protein: 30 },
     ],
-    pricePerDay: 28,
-    pricePerWeek: 196,
+    pricePerDay: 27.99,
+    pricePerWeek: 170.46,
+    weeklyDiscount: 13,
     color: {
       bg: "bg-olive",
       text: "text-olive",
@@ -76,8 +79,9 @@ export const SKUS: Record<SkuId, Sku> = {
       { slot: "DINNER", name: "Beef pouch, rice, sauce", protein: 75 },
       { slot: "SNACK", name: "Jerky", protein: 35 },
     ],
-    pricePerDay: 32,
-    pricePerWeek: 224,
+    pricePerDay: 30.99,
+    pricePerWeek: 184.39,
+    weeklyDiscount: 15,
     color: {
       bg: "bg-sienna",
       text: "text-sienna",
