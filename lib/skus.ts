@@ -19,7 +19,6 @@ export type Sku = {
     bg: string;
     text: string;
     name: "slate" | "olive" | "sienna";
-    hex: string;
   };
 };
 
@@ -43,7 +42,6 @@ export const SKUS: Record<SkuId, Sku> = {
       bg: "bg-slate",
       text: "text-slate",
       name: "slate",
-      hex: "#3A5567",
     },
   },
   "200": {
@@ -64,7 +62,6 @@ export const SKUS: Record<SkuId, Sku> = {
       bg: "bg-olive",
       text: "text-olive",
       name: "olive",
-      hex: "#5A6340",
     },
   },
   "230": {
@@ -85,7 +82,6 @@ export const SKUS: Record<SkuId, Sku> = {
       bg: "bg-sienna",
       text: "text-sienna",
       name: "sienna",
-      hex: "#8B5A3C",
     },
   },
 };

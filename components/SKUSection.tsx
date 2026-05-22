@@ -59,7 +59,7 @@ export function SKUSection({ skuId }: Props) {
             PROTEIN PACK NO. {sku.index} / 03
           </span>
           <span className="font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-paper/60">
-            {sku.color.name.toUpperCase()} · {sku.color.hex}
+            {sku.color.name.toUpperCase()}
           </span>
         </div>
       </div>
@@ -106,6 +106,11 @@ export function SKUSection({ skuId }: Props) {
               </li>
             ))}
           </ul>
+
+          <p className="mt-4 font-sans text-[11px] leading-[1.5] text-paper/55">
+            Pending menu. Final flavors, ingredients &amp; packaging may
+            change before launch.
+          </p>
 
           <div className="mt-10 flex flex-wrap items-end justify-between gap-6">
             <div>
