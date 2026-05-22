@@ -32,9 +32,10 @@ export function Nav() {
           </span>
         </Link>
         <nav className="hidden items-center gap-7 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/65 md:flex">
-          <a href="#sku-170" className="hover:text-ink">PACKS</a>
-          <a href="#why" className="hover:text-ink">WHY</a>
-          <a href="#faq" className="hover:text-ink">FAQ</a>
+          <a href="/#sku-170" className="hover:text-ink">PACKS</a>
+          <a href="/#why" className="hover:text-ink">WHY</a>
+          <Link href="/story" className="hover:text-ink">STORY</Link>
+          <a href="/#faq" className="hover:text-ink">FAQ</a>
         </nav>
         <Button asChild size="sm">
           <a href="#sku-170">RESERVE A PACK</a>
