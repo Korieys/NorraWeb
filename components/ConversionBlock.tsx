@@ -74,6 +74,9 @@ export function ConversionBlock() {
         <p className="mx-auto mt-6 max-w-[560px] text-center font-sans text-[16px] leading-[1.55] text-paper/70 lg:text-[18px]">
           First shipment Q3 2026. Founder pricing for early reservations.
         </p>
+        <p className="mx-auto mt-3 max-w-[560px] text-center font-sans text-[11px] leading-[1.5] text-paper/45">
+          Final flavors, ingredients &amp; packaging may change before launch.
+        </p>
 
         <div className="mt-16 grid grid-cols-1 gap-6 lg:grid-cols-5 lg:gap-8">
           {/* Primary: $1 deposit, 3/5 width */}

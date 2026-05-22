@@ -1,9 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { EmailDialog } from "@/components/EmailDialog";
-import { PackMockup } from "@/components/PackMockup";
-import { SKUS } from "@/lib/skus";
 
 export function Hero() {
   return (
@@ -11,7 +10,7 @@ export function Hero() {
       {/* Faint paper grain */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.04]"
         style={{
           backgroundImage:
             "radial-gradient(rgba(28,28,26,1) 1px, transparent 1px)",
@@ -19,25 +18,97 @@ export function Hero() {
         }}
       />
 
-      <div className="relative mx-auto grid max-w-content grid-cols-1 gap-12 px-6 pb-24 pt-14 lg:grid-cols-12 lg:gap-12 lg:px-10 lg:pb-36 lg:pt-24">
-        <div className="lg:col-span-7 lg:pt-4">
+      {/* DESKTOP: full-bleed image with overlaid text in the natural left negative space */}
+      <div className="relative hidden lg:block">
+        {/* Image canvas */}
+        <div className="relative h-[760px] w-full xl:h-[820px]">
+          <Image
+            src="/DaypackHero.png"
+            alt="Daypack 200g daily meal kit pouch with a bowl of chicken, grains, and vegetables. 170g and 230g pouches and a water bottle in the background."
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          {/* Soft gradient on the left so text always reads, regardless of crop */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(244,240,232,0.92) 0%, rgba(244,240,232,0.78) 28%, rgba(244,240,232,0.0) 55%)",
+            }}
+          />
+
+          {/* Disclaimer floats bottom-right of the image */}
+          <p className="absolute bottom-5 right-6 max-w-[260px] text-right font-sans text-[10px] leading-[1.5] text-ink/55 lg:right-10">
+            Prototype photography. Final flavors, ingredients &amp; packaging
+            may change before launch.
+          </p>
+
+          {/* Overlay copy */}
+          <div className="absolute inset-0">
+            <div className="mx-auto flex h-full max-w-content items-center px-6 lg:px-10">
+              <div className="max-w-[620px]">
+                <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55">
+                  PRE-LAUNCH · COMPLETE DAILY NUTRITION
+                </p>
+                <h1 className="mt-6 font-display font-medium uppercase leading-[0.92] tracking-wide-sm text-ink"
+                    style={{ fontSize: "clamp(64px, 8.4vw, 112px)" }}>
+                  HIT YOUR
+                  <br />
+                  NUMBER.
+                  <br />
+                  FUEL YOUR DAY.
+                </h1>
+                <p className="mt-7 max-w-[480px] font-sans text-[18px] leading-[1.5] text-ink/80 lg:text-[20px]">
+                  Daily meal packs engineered around your protein target. Shelf
+                  stable. Microwave ready. No tracking.
+                </p>
+                <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
+                  <Button asChild size="lg">
+                    <a href="#sku-170">RESERVE YOUR PACK · $1</a>
+                  </Button>
+                  <EmailDialog
+                    trigger={
+                      <button
+                        type="button"
+                        className="font-sans text-[14px] font-medium text-ink underline underline-offset-4 transition-opacity hover:opacity-70"
+                      >
+                        Or just get notified →
+                      </button>
+                    }
+                  />
+                </div>
+                <p className="mt-7 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45">
+                  REFUNDABLE ANY TIME · $20 OFF AT LAUNCH · FIRST RUN Q3 2026
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* MOBILE / TABLET: text first, image full-width below */}
+      <div className="relative lg:hidden">
+        <div className="mx-auto max-w-content px-6 pb-10 pt-14 sm:px-8">
           <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55">
             PRE-LAUNCH · COMPLETE DAILY NUTRITION
           </p>
-          <h1 className="mt-6 font-display text-[48px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[64px] lg:text-[84px]">
+          <h1 className="mt-6 font-display text-[52px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[68px]">
             HIT YOUR
             <br />
             NUMBER.
             <br />
             FUEL YOUR DAY.
           </h1>
-          <p className="mt-8 max-w-[560px] font-sans text-[18px] leading-[1.5] text-ink/80 lg:text-[20px]">
+          <p className="mt-7 max-w-[560px] font-sans text-[17px] leading-[1.5] text-ink/80">
             Daily meal packs engineered around your protein target. Shelf
             stable. Microwave ready. No tracking.
           </p>
-          <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
             <Button asChild size="lg">
-              <a href="#sku-170">RESERVE YOUR PACK — $1</a>
+              <a href="#sku-170">RESERVE YOUR PACK · $1</a>
             </Button>
             <EmailDialog
               trigger={
@@ -50,30 +121,28 @@ export function Hero() {
               }
             />
           </div>
-          <p className="mt-8 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45">
+          <p className="mt-7 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45">
             REFUNDABLE ANY TIME · $20 OFF AT LAUNCH · FIRST RUN Q3 2026
           </p>
         </div>
 
-        <div className="lg:col-span-5">
-          <div className="relative mx-auto h-[520px] w-full max-w-[520px] lg:h-[600px] lg:max-w-[560px]">
-            {/* Back-left peeking */}
-            <div className="absolute bottom-0 left-0 z-10 -rotate-[8deg] origin-bottom-left">
-              <PackMockup sku={SKUS["170"]} size="sm" />
-            </div>
-            {/* Back-right peeking */}
-            <div className="absolute bottom-0 right-0 z-10 rotate-[8deg] origin-bottom-right">
-              <PackMockup sku={SKUS["230"]} size="sm" />
-            </div>
-            {/* Hero — middle (slightly smaller than lg to let peeks breathe) */}
-            <div className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2">
-              <PackMockup sku={SKUS["200"]} size="md" className="max-w-[260px] sm:max-w-[300px]" />
-            </div>
+        <figure className="relative mt-2">
+          <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
+            <Image
+              src="/DaypackHero.png"
+              alt="Daypack 200g daily meal kit pouch with a bowl of chicken, grains, and vegetables."
+              fill
+              sizes="100vw"
+              className="object-cover object-[65%_center]"
+            />
           </div>
-        </div>
+          <p className="px-6 pb-6 pt-3 font-sans text-[10px] leading-[1.5] text-ink/50 sm:px-8">
+            Prototype photography. Final flavors, ingredients &amp; packaging
+            may change before launch.
+          </p>
+        </figure>
       </div>
 
-      {/* Section index strip */}
       <SkuIndexStrip />
     </section>
   );

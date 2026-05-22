@@ -126,6 +126,10 @@ export function PackComposition() {
         <p className="mt-8 text-center font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45">
           ALLERGENS LABELED PER FDA · NUTRITION DATA THIRD-PARTY VERIFIED
         </p>
+        <p className="mx-auto mt-3 max-w-[560px] text-center font-sans text-[11px] leading-[1.5] text-ink/45">
+          Sample ingredients shown. Final flavors, ingredients &amp; packaging
+          may change before launch.
+        </p>
       </div>
     </section>
   );
