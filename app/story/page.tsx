@@ -4,9 +4,9 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/Button";
 
 export const metadata = {
-  title: "Our Story — Daypack",
+  title: "Our Story | Daypack",
   description:
-    "Daypack was built by KJ Dixon to solve a simple problem: hitting your protein target without spending your life tracking food.",
+    "Daypack started because KJ Dixon got tired of solving the same annoying problem every day. Hitting a protein target without turning it into a side quest.",
 };
 
 export default function StoryPage() {
@@ -15,9 +15,10 @@ export default function StoryPage() {
       <Nav />
       <main>
         <StoryHero />
+        <Letter />
         <PullQuote />
         <Principles />
-        <Founder />
+        <Signoff />
         <CTA />
       </main>
       <Footer />
@@ -40,25 +41,24 @@ function StoryHero() {
       <div className="relative mx-auto grid max-w-content grid-cols-1 gap-12 px-6 pb-24 pt-14 lg:grid-cols-12 lg:gap-12 lg:px-10 lg:pb-32 lg:pt-24">
         <div className="lg:col-span-6 lg:pt-4">
           <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55">
-            OUR STORY · EST. 2026
+            OUR STORY · A LETTER FROM THE FOUNDER
           </p>
           <h1 className="mt-6 font-display text-[48px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[64px] lg:text-[80px]">
-            BUILT
+            ONE PACK.
             <br />
-            BY SOMEONE
+            ONE DAY.
             <br />
-            HITTING
+            FOUR REAL
             <br />
-            THE NUMBER.
+            MEALS.
           </h1>
           <p className="mt-8 max-w-[520px] font-sans text-[18px] leading-[1.55] text-ink/80 lg:text-[20px]">
-            Daypack started in a kitchen, on a kitchen scale, with a frustration
-            most lifters and busy professionals know too well — eating enough
-            real food to hit your protein target without spending your whole day
-            cooking, tracking, and second-guessing it.
+            Daypack started because I got tired of solving the same annoying
+            problem every day. Hitting a protein target that actually mattered,
+            without turning my whole day into a grocery store side quest.
           </p>
           <p className="mt-5 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45">
-            FOUNDED BY KJ DIXON · DESIGNED FOR THE NUMBER
+            KJ DIXON · FOUNDER, DAYPACK
           </p>
         </div>
 
@@ -85,20 +85,89 @@ function StoryHero() {
   );
 }
 
+function Letter() {
+  return (
+    <section className="border-t border-ink/10 bg-paper py-24 lg:py-32">
+      <div className="mx-auto grid max-w-content grid-cols-1 gap-12 px-6 lg:grid-cols-12 lg:px-10">
+        <div className="lg:col-span-3">
+          <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
+            THE PROBLEM
+          </p>
+          <h2 className="mt-6 font-display text-[32px] font-medium uppercase leading-[1.0] tracking-wide-sm text-ink sm:text-[40px] lg:text-[44px]">
+            THE GROCERY STORE SIDE QUEST.
+          </h2>
+        </div>
+
+        <div className="space-y-6 font-sans text-[17px] leading-[1.65] text-ink/80 lg:col-span-9 lg:text-[18px]">
+          <p>
+            I&rsquo;d train, try to hit a protein target that actually mattered,
+            then spend the rest of the day piecing food together like a grocery
+            store side quest.
+          </p>
+          <p>
+            One stop for chicken. Another stop for snacks. Maybe a smoothie
+            somewhere. Maybe a &ldquo;high protein&rdquo; thing that only works
+            if you eat three of them and pretend the sugar doesn&rsquo;t count.
+          </p>
+          <p className="font-display text-[20px] font-medium uppercase tracking-wide-sm text-ink lg:text-[22px]">
+            The other option was meal prep. <span className="text-tan">
+              (cue the daunting music.)
+            </span>
+          </p>
+          <p>
+            Spend half of Sunday cooking eight containers of the same food,
+            stack them in the fridge, then slowly start hating them by
+            Wednesday.
+          </p>
+          <p className="font-display text-[22px] font-medium uppercase leading-tight tracking-wide-sm text-ink lg:text-[26px]">
+            There had to be a better middle option.
+          </p>
+
+          <ul className="mt-8 space-y-3 border-l-2 border-ink/15 pl-6">
+            <li className="font-sans text-[16px] leading-[1.5] text-ink/80">
+              Fast food was too expensive.
+            </li>
+            <li className="font-sans text-[16px] leading-[1.5] text-ink/80">
+              I didn&rsquo;t want a cleanse <span className="text-ink/45">
+                (because ew).
+              </span>
+            </li>
+            <li className="font-sans text-[16px] leading-[1.5] text-ink/80">
+              Not a box of bars <span className="text-ink/45">
+                (are you kidding me?).
+              </span>
+            </li>
+            <li className="font-sans text-[16px] leading-[1.5] text-ink/80">
+              And definitely not another meal kit that still needs time, dishes,
+              and motivation.
+            </li>
+          </ul>
+
+          <p className="pt-6 font-display text-[22px] font-medium uppercase leading-tight tracking-wide-sm text-ink lg:text-[26px]">
+            I wanted one thing I could grab that already handled the day.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function PullQuote() {
   return (
     <section className="border-y border-ink/10 bg-paper py-20 lg:py-28">
       <div className="mx-auto max-w-content px-6 lg:px-10">
-        <blockquote className="mx-auto max-w-[1100px] text-center font-display text-[28px] font-medium uppercase leading-[1.15] tracking-wide-sm text-ink sm:text-[36px] lg:text-[48px]">
-          <span className="text-tan">&ldquo;</span>I didn&rsquo;t want another
-          shake. I didn&rsquo;t want another app. I wanted a box that already
-          did the math &mdash; and tasted like food.<span className="text-tan">
-            &rdquo;
+        <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-tan">
+          THE WHOLE IDEA, ON ONE LINE
+        </p>
+        <blockquote className="mx-auto mt-6 max-w-[1100px] text-center font-display text-[32px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink sm:text-[44px] lg:text-[56px]">
+          ONE PACK. ONE DAY.
+          <br />
+          FOUR REAL MEALS.
+          <br />
+          <span className="text-tan">
+            A CLEAR PROTEIN TARGET ON THE FRONT.
           </span>
         </blockquote>
-        <p className="mt-8 text-center font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/55">
-          &mdash; KJ DIXON, FOUNDER
-        </p>
       </div>
     </section>
   );
@@ -115,13 +184,13 @@ const PRINCIPLES = [
     index: "02",
     accent: "text-olive",
     headline: "REAL FOOD, NOT POWDER.",
-    body: "Sous-vide proteins. Real grains. Real sauces. Nothing extruded, nothing pretending. The kind of meal you&rsquo;d make on your best day &mdash; on every day.",
+    body: "Sous-vide proteins. Real grains. Real sauces. Nothing extruded, nothing pretending. The kind of meal you&rsquo;d make on your best day, on every day.",
   },
   {
     index: "03",
     accent: "text-sienna",
-    headline: "DESIGNED FOR THE NUMBER.",
-    body: "Three packs. Three targets. 170, 200, 230 grams of protein. Pick the one that matches your training, your work, your week. It&rsquo;s that simple.",
+    headline: "SHELF STABLE BY DESIGN.",
+    body: "Needing a fridge turns food into another planning problem. Built to sit in a backpack, gym bag, truck, or desk drawer. Wherever life actually happens.",
   },
 ];
 
@@ -164,44 +233,68 @@ function Principles() {
   );
 }
 
-function Founder() {
+function Signoff() {
   return (
     <section className="border-t border-ink/10 bg-paper py-24 lg:py-32">
       <div className="mx-auto grid max-w-content grid-cols-1 gap-12 px-6 lg:grid-cols-12 lg:px-10">
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-3">
           <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
-            THE FOUNDER
+            THE GOAL
           </p>
-          <h2 className="mt-6 font-display text-[36px] font-medium uppercase leading-[1.0] tracking-wide-sm text-ink sm:text-[44px] lg:text-[52px]">
-            KJ DIXON
+          <h2 className="mt-6 font-display text-[32px] font-medium uppercase leading-[1.0] tracking-wide-sm text-ink sm:text-[40px] lg:text-[44px]">
+            ALREADY HANDLED.
           </h2>
-          <p className="mt-4 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/55">
-            FOUNDER &amp; HEAD OF PRODUCT
-          </p>
         </div>
 
-        <div className="space-y-6 font-sans text-[17px] leading-[1.6] text-ink/80 lg:col-span-8 lg:text-[18px]">
-          <p>
-            KJ started Daypack the same way most good products start &mdash; out
-            of personal frustration. As an athlete and a working professional,
-            he was tired of choosing between hitting his protein target and
-            having a life. The status quo was three options: cook for hours, eat
-            another chalky shake, or accept that he wasn&rsquo;t going to hit
-            the number that day.
+        <div className="space-y-6 font-sans text-[17px] leading-[1.65] text-ink/80 lg:col-span-9 lg:text-[18px]">
+          <p className="font-display text-[22px] font-medium uppercase leading-tight tracking-wide-sm text-ink lg:text-[26px]">
+            Make hitting your protein feel less like a chore, and more like
+            something already handled.
           </p>
           <p>
-            None of those were good enough. So he started prototyping in his own
-            kitchen &mdash; building meal packs around a single protein number,
-            using real ingredients and real cooking techniques, with one rule:
-            it had to taste like something he&rsquo;d actually want to eat after
-            a long day.
+            Daypack isn&rsquo;t trying to be some magic transformation product.
+            It&rsquo;s definitely not promising to change your life in thirty
+            days. And I can&rsquo;t pretend it&rsquo;s a celebrity meal plan in
+            a cleaner box.
           </p>
           <p>
-            Daypack is what came out of that work. Three packs, three targets,
-            zero guesswork. It&rsquo;s the product KJ wished existed &mdash;
-            built for everyone who&rsquo;s ever stood in front of a fridge at
-            9pm trying to do math.
+            It&rsquo;s just a full day of food, sorted by protein, shipped to
+            your door, so you can stop thinking about it and go do the work.
           </p>
+
+          <div className="mt-8 border-l-2 border-tan bg-tan/5 p-6 lg:p-8">
+            <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-tan">
+              WHERE WE ARE RIGHT NOW
+            </p>
+            <p className="mt-4 font-sans text-[16px] leading-[1.6] text-ink/85">
+              Daypack is still in validation. The site is real. The $1 deposit
+              is real and refundable. The packs are being finalized with a
+              co-packer. I&rsquo;m building this in public, sending honest
+              updates, and only shipping once the food is good enough to put my
+              name on.
+            </p>
+          </div>
+
+          <p className="pt-6">
+            If this sounds like something you would actually use, lock a pack.
+            <br />
+            If not, no hard feelings.
+          </p>
+          <p className="font-display text-[22px] font-medium uppercase leading-tight tracking-wide-sm text-ink lg:text-[26px]">
+            Either way. Eat the protein, enjoy the gym.
+          </p>
+
+          <div className="mt-10 border-t border-ink/15 pt-8">
+            <p className="font-sans text-[14px] italic text-ink/70">
+              Never stop,
+            </p>
+            <p className="mt-2 font-display text-[40px] font-medium uppercase leading-none tracking-wide-sm text-ink lg:text-[52px]">
+              KJ
+            </p>
+            <p className="mt-2 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/55">
+              KJ DIXON · FOUNDER, DAYPACK
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -221,18 +314,18 @@ function CTA() {
       />
       <div className="relative mx-auto max-w-content px-6 text-center lg:px-10">
         <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-paper/55">
-          JOIN THE FIRST RUN
+          LOCK A PACK
         </p>
         <h2 className="mx-auto mt-6 max-w-[900px] font-display text-[36px] font-medium uppercase leading-[1.05] tracking-wide-sm sm:text-[44px] lg:text-[56px]">
-          BE FIRST. EAT FIRST. HIT THE NUMBER.
+          $1 DEPOSIT. REAL AND REFUNDABLE.
         </h2>
         <p className="mx-auto mt-6 max-w-[560px] font-sans text-[16px] leading-[1.55] text-paper/75 lg:text-[18px]">
-          Reserve a pack for $1. Refundable any time. $20 off at launch. First
-          run ships Q3 2026.
+          Built in public. Honest updates. Shipping once the food is good enough
+          to put my name on. $20 off at launch. First run Q3 2026.
         </p>
         <div className="mt-10 flex justify-center">
           <Button asChild size="lg" variant="invertedPaper">
-            <a href="/#sku-170">RESERVE YOUR PACK &mdash; $1</a>
+            <a href="/#sku-170">LOCK YOUR PACK · $1</a>
           </Button>
         </div>
       </div>
