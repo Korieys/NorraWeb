@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { PackMockup } from "@/components/PackMockup";
+import { Reveal } from "@/components/Reveal";
 import { SKUS, recommendSku } from "@/lib/skus";
 import { track } from "@/lib/analytics";
 
@@ -89,7 +90,7 @@ export function FindYourPack() {
   return (
     <section className="border-t border-ink/10 bg-paper pb-32 pt-12 lg:pb-40 lg:pt-16">
       <div className="mx-auto max-w-content px-6 lg:px-10">
-        <div className="grid grid-cols-1 gap-px overflow-hidden border border-ink/10 bg-ink/10 lg:grid-cols-12">
+        <Reveal variant="fade-scale" className="grid grid-cols-1 gap-px overflow-hidden border border-ink/10 bg-ink/10 lg:grid-cols-12">
           {/* Form */}
           <form
             onSubmit={onSubmit}
@@ -221,20 +222,20 @@ export function FindYourPack() {
               YOUR RECOMMENDATION
             </p>
             {submitted && result && sku ? (
-              <div className="mt-6">
-                <div className="flex items-center justify-center">
+              <div key={result.skuId} className="mt-6 animate-fade-in-up">
+                <div className="flex animate-fade-in-scale items-center justify-center [animation-delay:120ms]">
                   <PackMockup sku={sku} size="md" />
                 </div>
-                <p className="mt-8 font-display text-[12px] font-medium uppercase tracking-wide-md text-ink/55">
+                <p className="mt-8 animate-fade-in font-display text-[12px] font-medium uppercase tracking-wide-md text-ink/55 [animation-delay:280ms]">
                   TARGET · {result.targetGrams} G PROTEIN PER DAY
                 </p>
-                <p className="mt-2 font-display text-[40px] font-medium uppercase leading-none tracking-wide-sm text-ink lg:text-[52px]">
+                <p className="mt-2 animate-fade-in-up font-display text-[40px] font-medium uppercase leading-none tracking-wide-sm text-ink lg:text-[52px] [animation-delay:360ms]">
                   {sku.title}
                 </p>
-                <p className="mt-4 font-sans text-[15px] leading-[1.55] text-ink/75">
+                <p className="mt-4 animate-fade-in-up font-sans text-[15px] leading-[1.55] text-ink/75 [animation-delay:440ms]">
                   {result.rationale}
                 </p>
-                <div className="mt-6 border-t border-ink/15 pt-6">
+                <div className="mt-6 animate-fade-in-up border-t border-ink/15 pt-6 [animation-delay:520ms]">
                   <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/55">
                     FOUNDER PRICING
                   </p>
@@ -245,15 +246,18 @@ export function FindYourPack() {
                     </span>
                   </p>
                 </div>
-                <div className="mt-6 flex flex-col gap-3">
+                <div className="mt-6 flex animate-fade-in-up flex-col gap-3 [animation-delay:620ms]">
                   <Button onClick={reserve} disabled={reserving} size="lg">
                     {reserving ? "REDIRECTING..." : `RESERVE THE ${sku.id} · $1`}
                   </Button>
                   <a
                     href={`/#sku-${sku.id}`}
-                    className="font-sans text-[12px] font-semibold uppercase tracking-wide-md text-ink/65 underline underline-offset-4 hover:text-ink"
+                    className="group font-sans text-[12px] font-semibold uppercase tracking-wide-md text-ink/65 underline underline-offset-4 transition-colors hover:text-ink"
                   >
-                    SEE THE FULL {sku.id} PACK →
+                    SEE THE FULL {sku.id} PACK{" "}
+                    <span className="inline-block transition-transform group-hover:translate-x-1">
+                      →
+                    </span>
                   </a>
                 </div>
               </div>
@@ -269,7 +273,7 @@ export function FindYourPack() {
               </div>
             )}
           </div>
-        </div>
+        </Reveal>
 
         <p className="mt-6 max-w-[820px] font-sans text-[11px] leading-[1.55] text-ink/45">
           Sizing uses standard protein targets. About 0.8 g per pound of body

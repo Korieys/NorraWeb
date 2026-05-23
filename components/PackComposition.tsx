@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Reveal } from "@/components/Reveal";
 
 type Ingredient = {
   name: string;
@@ -80,17 +81,20 @@ export function PackComposition() {
   return (
     <section className="border-t border-ink/10 bg-paper py-24 lg:py-32">
       <div className="mx-auto max-w-content px-6 lg:px-10">
-        <p className="text-center font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
+        <Reveal as="p" className="text-center font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
           WHAT&apos;S IN THE BOX
-        </p>
-        <h2 className="mx-auto mt-6 max-w-[900px] text-center font-display text-[32px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink sm:text-[40px] lg:text-[48px]">
+        </Reveal>
+        <Reveal as="h2" delayMs={100} className="mx-auto mt-6 max-w-[900px] text-center font-display text-[32px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink sm:text-[40px] lg:text-[48px]">
           REAL INGREDIENTS. VERIFIED NUMBERS.
-        </h2>
+        </Reveal>
 
         <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-[2px] border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
           {INGREDIENTS.map((ing, i) => (
-            <article
+            <Reveal
+              as="article"
               key={ing.name}
+              variant="fade-scale"
+              delayMs={200 + i * 70}
               className="group flex flex-col bg-paper transition-colors hover:bg-tan/15"
             >
               <div className="relative aspect-square w-full overflow-hidden bg-tan/20">
@@ -120,7 +124,7 @@ export function PackComposition() {
                   PROTEIN PER SERVING
                 </p>
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
         <p className="mt-8 text-center font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45">

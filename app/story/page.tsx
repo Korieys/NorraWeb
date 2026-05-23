@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/Reveal";
 
 export const metadata = {
   title: "Our Story | Daypack",
@@ -40,30 +41,27 @@ function StoryHero() {
       />
       <div className="relative mx-auto grid max-w-content grid-cols-1 gap-12 px-6 pb-24 pt-14 lg:grid-cols-12 lg:gap-12 lg:px-10 lg:pb-32 lg:pt-24">
         <div className="lg:col-span-6 lg:pt-4">
-          <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55">
+          <p className="animate-fade-in-down font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55 [animation-delay:80ms]">
             OUR STORY · A LETTER FROM THE FOUNDER
           </p>
           <h1 className="mt-6 font-display text-[48px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[64px] lg:text-[80px]">
-            ONE PACK.
-            <br />
-            ONE DAY.
-            <br />
-            FOUR REAL
-            <br />
-            MEALS.
+            <span className="block animate-fade-in-up-lg [animation-delay:180ms]">ONE PACK.</span>
+            <span className="block animate-fade-in-up-lg [animation-delay:300ms]">ONE DAY.</span>
+            <span className="block animate-fade-in-up-lg [animation-delay:420ms]">FOUR REAL</span>
+            <span className="block animate-fade-in-up-lg [animation-delay:540ms]">MEALS.</span>
           </h1>
-          <p className="mt-8 max-w-[520px] font-sans text-[18px] leading-[1.55] text-ink/80 lg:text-[20px]">
+          <p className="mt-8 max-w-[520px] animate-fade-in-up font-sans text-[18px] leading-[1.55] text-ink/80 lg:text-[20px] [animation-delay:700ms]">
             Daypack started because I got tired of solving the same annoying
             problem every day. Hitting a protein target that actually mattered,
             without turning my whole day into a grocery store side quest.
           </p>
-          <p className="mt-5 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45">
+          <p className="mt-5 animate-fade-in font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45 [animation-delay:880ms]">
             KJ DIXON · FOUNDER, DAYPACK
           </p>
         </div>
 
         <div className="lg:col-span-6">
-          <figure className="relative">
+          <figure className="relative animate-fade-in-scale [animation-delay:300ms] [animation-duration:1.2s]">
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink/5">
               <Image
                 src="/founder-kj.jpg"
@@ -89,16 +87,16 @@ function Letter() {
   return (
     <section className="border-t border-ink/10 bg-paper py-24 lg:py-32">
       <div className="mx-auto grid max-w-content grid-cols-1 gap-12 px-6 lg:grid-cols-12 lg:px-10">
-        <div className="lg:col-span-3">
+        <Reveal className="lg:col-span-3">
           <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
             THE PROBLEM
           </p>
           <h2 className="mt-6 font-display text-[32px] font-medium uppercase leading-[1.0] tracking-wide-sm text-ink sm:text-[40px] lg:text-[44px]">
             THE GROCERY STORE SIDE QUEST.
           </h2>
-        </div>
+        </Reveal>
 
-        <div className="space-y-6 font-sans text-[17px] leading-[1.65] text-ink/80 lg:col-span-9 lg:text-[18px]">
+        <Reveal delayMs={150} className="space-y-6 font-sans text-[17px] leading-[1.65] text-ink/80 lg:col-span-9 lg:text-[18px]">
           <p>
             I&rsquo;d train, try to hit a protein target that actually mattered,
             then spend the rest of the day piecing food together like a grocery
@@ -146,7 +144,7 @@ function Letter() {
           <p className="pt-6 font-display text-[22px] font-medium uppercase leading-tight tracking-wide-sm text-ink lg:text-[26px]">
             I wanted one thing I could grab that already handled the day.
           </p>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -156,18 +154,20 @@ function PullQuote() {
   return (
     <section className="border-y border-ink/10 bg-paper py-20 lg:py-28">
       <div className="mx-auto max-w-content px-6 lg:px-10">
-        <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-tan">
+        <Reveal as="p" className="text-center font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-tan">
           THE WHOLE IDEA, ON ONE LINE
-        </p>
-        <blockquote className="mx-auto mt-6 max-w-[1100px] text-center font-display text-[32px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink sm:text-[44px] lg:text-[56px]">
-          ONE PACK. ONE DAY.
-          <br />
-          FOUR REAL MEALS.
-          <br />
-          <span className="text-tan">
-            A CLEAR PROTEIN TARGET ON THE FRONT.
-          </span>
-        </blockquote>
+        </Reveal>
+        <Reveal delayMs={120} className="mx-auto mt-6 max-w-[1100px]">
+          <blockquote className="text-center font-display text-[32px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink sm:text-[44px] lg:text-[56px]">
+            ONE PACK. ONE DAY.
+            <br />
+            FOUR REAL MEALS.
+            <br />
+            <span className="text-tan">
+              A CLEAR PROTEIN TARGET ON THE FRONT.
+            </span>
+          </blockquote>
+        </Reveal>
       </div>
     </section>
   );
@@ -198,17 +198,19 @@ function Principles() {
   return (
     <section className="bg-paper py-24 lg:py-32">
       <div className="mx-auto max-w-content px-6 lg:px-10">
-        <p className="text-center font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
+        <Reveal as="p" className="text-center font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
           WHAT WE BELIEVE
-        </p>
-        <h2 className="mx-auto mt-6 max-w-[900px] text-center font-display text-[36px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink sm:text-[44px] lg:text-[56px]">
+        </Reveal>
+        <Reveal as="h2" delayMs={100} className="mx-auto mt-6 max-w-[900px] text-center font-display text-[36px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink sm:text-[44px] lg:text-[56px]">
           THREE RULES. NO EXCEPTIONS.
-        </h2>
+        </Reveal>
 
         <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden border border-ink/10 bg-ink/10 md:grid-cols-3 lg:mt-20">
-          {PRINCIPLES.map((p) => (
-            <div
+          {PRINCIPLES.map((p, i) => (
+            <Reveal
               key={p.index}
+              variant="fade-scale"
+              delayMs={200 + i * 120}
               className="relative flex flex-col gap-6 bg-paper p-8 lg:p-10"
             >
               <span
@@ -225,7 +227,7 @@ function Principles() {
                   dangerouslySetInnerHTML={{ __html: p.body }}
                 />
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -237,16 +239,16 @@ function Signoff() {
   return (
     <section className="border-t border-ink/10 bg-paper py-24 lg:py-32">
       <div className="mx-auto grid max-w-content grid-cols-1 gap-12 px-6 lg:grid-cols-12 lg:px-10">
-        <div className="lg:col-span-3">
+        <Reveal className="lg:col-span-3">
           <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
             THE GOAL
           </p>
           <h2 className="mt-6 font-display text-[32px] font-medium uppercase leading-[1.0] tracking-wide-sm text-ink sm:text-[40px] lg:text-[44px]">
             ALREADY HANDLED.
           </h2>
-        </div>
+        </Reveal>
 
-        <div className="space-y-6 font-sans text-[17px] leading-[1.65] text-ink/80 lg:col-span-9 lg:text-[18px]">
+        <Reveal delayMs={150} className="space-y-6 font-sans text-[17px] leading-[1.65] text-ink/80 lg:col-span-9 lg:text-[18px]">
           <p className="font-display text-[22px] font-medium uppercase leading-tight tracking-wide-sm text-ink lg:text-[26px]">
             Make hitting your protein feel less like a chore, and more like
             something already handled.
@@ -295,7 +297,7 @@ function Signoff() {
               KJ DIXON · FOUNDER, DAYPACK
             </p>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -313,21 +315,21 @@ function CTA() {
         }}
       />
       <div className="relative mx-auto max-w-content px-6 text-center lg:px-10">
-        <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-paper/55">
+        <Reveal as="p" className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-paper/55">
           LOCK A PACK
-        </p>
-        <h2 className="mx-auto mt-6 max-w-[900px] font-display text-[36px] font-medium uppercase leading-[1.05] tracking-wide-sm sm:text-[44px] lg:text-[56px]">
+        </Reveal>
+        <Reveal as="h2" delayMs={120} className="mx-auto mt-6 max-w-[900px] font-display text-[36px] font-medium uppercase leading-[1.05] tracking-wide-sm sm:text-[44px] lg:text-[56px]">
           $1 DEPOSIT. REAL AND REFUNDABLE.
-        </h2>
-        <p className="mx-auto mt-6 max-w-[560px] font-sans text-[16px] leading-[1.55] text-paper/75 lg:text-[18px]">
+        </Reveal>
+        <Reveal as="p" delayMs={220} className="mx-auto mt-6 max-w-[560px] font-sans text-[16px] leading-[1.55] text-paper/75 lg:text-[18px]">
           Built in public. Honest updates. Shipping once the food is good enough
           to put my name on. $20 off at launch. First run Q3 2026.
-        </p>
-        <div className="mt-10 flex justify-center">
+        </Reveal>
+        <Reveal delayMs={320} className="mt-10 flex justify-center">
           <Button asChild size="lg" variant="invertedPaper">
-            <a href="/#sku-170">LOCK YOUR PACK · $1</a>
+            <a href="/#sku-110">LOCK YOUR PACK · $1</a>
           </Button>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -61,13 +61,13 @@ export default async function Reserved({
       <Nav />
       <main className="bg-paper">
         <section className="mx-auto flex max-w-content flex-col items-start gap-8 px-6 py-32 lg:px-10 lg:py-40">
-          <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
+          <p className="animate-fade-in-down font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan [animation-delay:80ms]">
             CONFIRMED · FIRST RUN
           </p>
           <h1 className="font-display text-[48px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[64px] lg:text-[80px]">
-            YOU&apos;RE IN.
+            <span className="block animate-fade-in-up-lg [animation-delay:200ms]">YOU&apos;RE IN.</span>
           </h1>
-          <p className="max-w-[600px] font-sans text-[18px] leading-[1.55] text-ink/80 lg:text-[20px]">
+          <p className="max-w-[600px] animate-fade-in-up font-sans text-[18px] leading-[1.55] text-ink/80 lg:text-[20px] [animation-delay:420ms]">
             Your $1 deposit is held. You&apos;re locked in for founder pricing
             and early access to the{" "}
             <span className={`font-display uppercase ${skuData.color.text}`}>
@@ -75,9 +75,16 @@ export default async function Reserved({
             </span>{" "}
             pack. Refund any time from your confirmation email.
           </p>
-          <Button asChild>
-            <Link href="/">← BACK TO HOME</Link>
-          </Button>
+          <div className="animate-fade-in-up [animation-delay:580ms]">
+            <Button asChild>
+              <Link href="/" className="group">
+                <span className="inline-block transition-transform group-hover:-translate-x-1">
+                  ←
+                </span>{" "}
+                BACK TO HOME
+              </Link>
+            </Button>
+          </div>
         </section>
       </main>
       <Footer />

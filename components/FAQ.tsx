@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/Accordion";
+import { Reveal } from "@/components/Reveal";
 
 const ITEMS = [
   {
@@ -56,13 +57,13 @@ export function FAQ() {
   return (
     <section id="faq" className="border-t border-ink/10 bg-paper py-24 lg:py-32">
       <div className="mx-auto max-w-[760px] px-6 lg:px-0">
-        <p className="text-center font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
+        <Reveal as="p" className="text-center font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
           QUESTIONS
-        </p>
-        <h2 className="mt-6 text-center font-display text-[40px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink lg:text-[48px]">
+        </Reveal>
+        <Reveal as="h2" delayMs={100} className="mt-6 text-center font-display text-[40px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink lg:text-[48px]">
           ANSWERS.
-        </h2>
-        <div className="mt-12 lg:mt-16">
+        </Reveal>
+        <Reveal delayMs={200} className="mt-12 lg:mt-16">
           <Accordion type="single" collapsible className="border-t border-ink/15">
             {ITEMS.map((item, i) => (
               <AccordionItem key={i} value={`item-${i}`}>
@@ -71,7 +72,7 @@ export function FAQ() {
               </AccordionItem>
             ))}
           </Accordion>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
