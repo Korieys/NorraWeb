@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { Reveal } from "@/components/Reveal";
 import { track } from "@/lib/analytics";
 import { SKUS, SKU_ORDER, type SkuId } from "@/lib/skus";
 
@@ -65,22 +66,22 @@ export function ConversionBlock() {
         }}
       />
       <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10 lg:py-32">
-        <p className="text-center font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
+        <Reveal as="p" className="text-center font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
           JOIN THE FIRST RUN
-        </p>
-        <h2 className="mx-auto mt-6 max-w-[900px] text-center font-display text-[40px] font-medium uppercase leading-[1.05] tracking-wide-sm text-paper sm:text-[56px] lg:text-[72px]">
+        </Reveal>
+        <Reveal as="h2" delayMs={100} className="mx-auto mt-6 max-w-[900px] text-center font-display text-[40px] font-medium uppercase leading-[1.05] tracking-wide-sm text-paper sm:text-[56px] lg:text-[72px]">
           RESERVE YOUR SPOT.
-        </h2>
-        <p className="mx-auto mt-6 max-w-[560px] text-center font-sans text-[16px] leading-[1.55] text-paper/70 lg:text-[18px]">
+        </Reveal>
+        <Reveal as="p" delayMs={200} className="mx-auto mt-6 max-w-[560px] text-center font-sans text-[16px] leading-[1.55] text-paper/70 lg:text-[18px]">
           First shipment Q3 2026. Founder pricing for early reservations.
-        </p>
-        <p className="mx-auto mt-3 max-w-[560px] text-center font-sans text-[11px] leading-[1.5] text-paper/45">
+        </Reveal>
+        <Reveal as="p" delayMs={280} className="mx-auto mt-3 max-w-[560px] text-center font-sans text-[11px] leading-[1.5] text-paper/45">
           Final flavors, ingredients &amp; packaging may change before launch.
-        </p>
+        </Reveal>
 
         <div className="mt-16 grid grid-cols-1 gap-6 lg:grid-cols-5 lg:gap-8">
           {/* Primary: $1 deposit, 3/5 width */}
-          <div className="bg-paper p-8 text-ink lg:col-span-3 lg:p-12">
+          <Reveal variant="fade-scale" delayMs={300} className="bg-paper p-8 text-ink lg:col-span-3 lg:p-12">
             <div className="flex items-baseline justify-between">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/55">
                 OPTION 01 · RECOMMENDED
@@ -135,10 +136,10 @@ export function ConversionBlock() {
                 SECURE CHECKOUT VIA STRIPE
               </span>
             </div>
-          </div>
+          </Reveal>
 
           {/* Secondary: email, 2/5 width */}
-          <div className="bg-tan p-8 text-ink lg:col-span-2 lg:p-12">
+          <Reveal variant="fade-scale" delayMs={420} className="bg-tan p-8 text-ink lg:col-span-2 lg:p-12">
             <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/60">
               OPTION 02
             </p>
@@ -177,7 +178,7 @@ export function ConversionBlock() {
                 </p>
               )}
             </form>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

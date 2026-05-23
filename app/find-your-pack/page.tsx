@@ -25,13 +25,13 @@ export default function FindYourPackPage() {
             }}
           />
           <div className="relative mx-auto max-w-content px-6 pb-10 pt-14 lg:px-10 lg:pb-16 lg:pt-24">
-            <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55">
+            <p className="animate-fade-in-down font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55 [animation-delay:80ms]">
               SIZING TOOL · NO ACCOUNT NEEDED
             </p>
             <h1 className="mt-6 max-w-[820px] font-display text-[48px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[64px] lg:text-[80px]">
-              FIND YOUR PACK.
+              <span className="block animate-fade-in-up-lg [animation-delay:180ms]">FIND YOUR PACK.</span>
             </h1>
-            <p className="mt-7 max-w-[640px] font-sans text-[17px] leading-[1.55] text-ink/80 lg:text-[19px]">
+            <p className="mt-7 max-w-[640px] animate-fade-in-up font-sans text-[17px] leading-[1.55] text-ink/80 lg:text-[19px] [animation-delay:380ms]">
               Enter your body weight, pick a goal, set your activity level.
               We will recommend the daily protein pack that matches.
             </p>

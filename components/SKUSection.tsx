@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { PackMockup } from "@/components/PackMockup";
+import { Reveal } from "@/components/Reveal";
 import { SKUS, SKU_ORDER, type SkuId } from "@/lib/skus";
+import { useCountUp } from "@/lib/useReveal";
 import { track } from "@/lib/analytics";
 
 type Props = {
@@ -13,6 +15,10 @@ type Props = {
 export function SKUSection({ skuId }: Props) {
   const sku = SKUS[skuId];
   const [loading, setLoading] = useState(false);
+  const proteinCount = useCountUp(sku.protein, {
+    durationMs: 1400,
+    threshold: 0.25,
+  });
 
   async function reserve() {
     setLoading(true);
@@ -39,7 +45,7 @@ export function SKUSection({ skuId }: Props) {
   return (
     <section
       id={`sku-${sku.id}`}
-      className={`relative overflow-hidden ${sku.color.bg} text-paper`}
+      className={`relative scroll-mt-[80px] overflow-hidden ${sku.color.bg} text-paper`}
       aria-labelledby={`sku-${sku.id}-heading`}
     >
       {/* Faint diagonal texture */}
@@ -68,33 +74,37 @@ export function SKUSection({ skuId }: Props) {
         <div className="lg:col-span-7">
           <h2
             id={`sku-${sku.id}-heading`}
-            className="font-display font-medium leading-[0.86] tracking-wide-sm text-paper"
+            ref={proteinCount.ref as never}
+            className="font-display font-medium leading-[0.86] tracking-wide-sm text-paper tabular-nums"
             style={{ fontSize: "clamp(120px, 18vw, 240px)" }}
+            aria-label={`${sku.protein} grams of protein`}
           >
-            {sku.protein}
+            {proteinCount.value}
           </h2>
-          <p className="mt-2 font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-paper/80">
+          <Reveal as="p" delayMs={150} className="mt-2 font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-paper/80">
             GRAMS OF PROTEIN · 4 MEALS · 1 DAY
-          </p>
-          <p className="mt-8 max-w-[520px] font-sans text-[18px] leading-[1.5] text-paper/85">
+          </Reveal>
+          <Reveal as="p" delayMs={250} className="mt-8 max-w-[520px] font-sans text-[18px] leading-[1.5] text-paper/85">
             <span className="font-display uppercase tracking-wide-sm">
               {sku.title}
             </span>{" "}
             {sku.description}
-          </p>
-          <div className="mt-6 max-w-[520px] border-l-2 border-paper/30 pl-4">
+          </Reveal>
+          <Reveal delayMs={350} className="mt-6 max-w-[520px] border-l-2 border-paper/30 pl-4">
             <p className="font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-paper/55">
               WHO THIS IS FOR
             </p>
             <p className="mt-2 font-sans text-[14px] leading-[1.55] text-paper/85">
               {sku.whoFor}
             </p>
-          </div>
+          </Reveal>
 
           <ul className="mt-12 divide-y divide-paper/15 border-y border-paper/15">
-            {sku.meals.map((meal) => (
-              <li
+            {sku.meals.map((meal, i) => (
+              <Reveal
+                as="li"
                 key={meal.slot}
+                delayMs={450 + i * 90}
                 className="flex items-center justify-between gap-6 py-5"
               >
                 <div className="min-w-0">
@@ -111,7 +121,7 @@ export function SKUSection({ skuId }: Props) {
                     g
                   </span>
                 </span>
-              </li>
+              </Reveal>
             ))}
           </ul>
 
@@ -149,9 +159,13 @@ export function SKUSection({ skuId }: Props) {
           </div>
         </div>
 
-        <div className="flex items-center justify-center lg:col-span-5 lg:justify-end">
+        <Reveal
+          variant="fade-scale"
+          delayMs={200}
+          className="flex items-center justify-center lg:col-span-5 lg:justify-end"
+        >
           <PackMockup sku={sku} size="lg" />
-        </div>
+        </Reveal>
       </div>
     </section>
   );
