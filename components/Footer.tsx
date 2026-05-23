@@ -18,11 +18,11 @@ export function Footer() {
               DAYPACK
             </p>
             <p className="mt-3 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-paper/55">
-              COMPLETE DAILY NUTRITION · DESIGNED FOR THE NUMBER
+              DAILY PROTEIN, SORTED · 110 TO 230 GRAMS
             </p>
             <p className="mt-8 max-w-[420px] font-sans text-[14px] leading-[1.6] text-paper/70">
-              Hit your number. Fuel your day. Real food. Real fuel. No
-              compromises.
+              Pick your daily protein target. Eat the box. Real food. Shelf
+              stable. Built for any adult who wants the number handled.
             </p>
           </div>
 

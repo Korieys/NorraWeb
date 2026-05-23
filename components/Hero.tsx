@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { EmailDialog } from "@/components/EmailDialog";
+import { SKU_ORDER, SKUS } from "@/lib/skus";
 
 export function Hero() {
   return (
@@ -51,23 +52,23 @@ export function Hero() {
             <div className="mx-auto flex h-full max-w-content items-center px-6 lg:px-10">
               <div className="max-w-[620px]">
                 <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55">
-                  PRE-LAUNCH · COMPLETE DAILY NUTRITION
+                  PRE-LAUNCH · DAILY PROTEIN, SORTED
                 </p>
                 <h1 className="mt-6 font-display font-medium uppercase leading-[0.92] tracking-wide-sm text-ink"
                     style={{ fontSize: "clamp(64px, 8.4vw, 112px)" }}>
-                  HIT YOUR
+                  PICK YOUR
                   <br />
-                  NUMBER.
+                  PROTEIN
                   <br />
-                  FUEL YOUR DAY.
+                  TARGET.
                 </h1>
                 <p className="mt-7 max-w-[480px] font-sans text-[18px] leading-[1.5] text-ink/80 lg:text-[20px]">
-                  Daily meal packs engineered around your protein target. Shelf
-                  stable. Microwave ready. No tracking.
+                  Five daily packs sized by grams of protein. From 110 to 230.
+                  Shelf stable. Microwave ready. No tracking.
                 </p>
                 <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
                   <Button asChild size="lg">
-                    <a href="#sku-170">RESERVE YOUR PACK · $1</a>
+                    <a href="/find-your-pack">FIND YOUR PACK</a>
                   </Button>
                   <EmailDialog
                     trigger={
@@ -93,22 +94,22 @@ export function Hero() {
       <div className="relative lg:hidden">
         <div className="mx-auto max-w-content px-6 pb-10 pt-14 sm:px-8">
           <p className="font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55">
-            PRE-LAUNCH · COMPLETE DAILY NUTRITION
+            PRE-LAUNCH · DAILY PROTEIN, SORTED
           </p>
           <h1 className="mt-6 font-display text-[52px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[68px]">
-            HIT YOUR
+            PICK YOUR
             <br />
-            NUMBER.
+            PROTEIN
             <br />
-            FUEL YOUR DAY.
+            TARGET.
           </h1>
           <p className="mt-7 max-w-[560px] font-sans text-[17px] leading-[1.5] text-ink/80">
-            Daily meal packs engineered around your protein target. Shelf
+            Five daily packs sized by grams of protein. From 110 to 230. Shelf
             stable. Microwave ready. No tracking.
           </p>
           <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
             <Button asChild size="lg">
-              <a href="#sku-170">RESERVE YOUR PACK · $1</a>
+              <a href="/find-your-pack">FIND YOUR PACK</a>
             </Button>
             <EmailDialog
               trigger={
@@ -149,27 +150,25 @@ export function Hero() {
 }
 
 function SkuIndexStrip() {
-  const items = [
-    { id: "170", num: "01", protein: "170", color: "SLATE", href: "#sku-170" },
-    { id: "200", num: "02", protein: "200", color: "OLIVE", href: "#sku-200" },
-    { id: "230", num: "03", protein: "230", color: "SIENNA", href: "#sku-230" },
-  ];
   return (
     <div className="relative border-y border-ink/15 bg-paper">
-      <div className="mx-auto grid max-w-content grid-cols-3 px-3 sm:px-6 lg:px-10">
-        {items.map((item) => (
-          <a
-            key={item.id}
-            href={item.href}
-            className="group flex items-center justify-center gap-1.5 border-r border-ink/15 py-4 text-center font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-ink/65 transition-colors last:border-r-0 hover:text-ink sm:gap-3 sm:text-[11px]"
-          >
-            <span className="font-display tabular-nums">{item.num}</span>
-            <span className="hidden sm:inline">·</span>
-            <span className="font-display tabular-nums">{item.protein}</span>
-            <span className="hidden sm:inline">·</span>
-            <span className="hidden sm:inline">{item.color}</span>
-          </a>
-        ))}
+      <div className="mx-auto grid max-w-content grid-cols-5 px-3 sm:px-6 lg:px-10">
+        {SKU_ORDER.map((id) => {
+          const sku = SKUS[id];
+          return (
+            <a
+              key={id}
+              href={`#sku-${id}`}
+              className="group flex items-center justify-center gap-1.5 border-r border-ink/15 py-4 text-center font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-ink/65 transition-colors last:border-r-0 hover:text-ink sm:gap-3 sm:text-[11px]"
+            >
+              <span className="font-display tabular-nums">{sku.index}</span>
+              <span className="hidden sm:inline">·</span>
+              <span className="font-display tabular-nums">{sku.protein}</span>
+              <span className="hidden lg:inline">·</span>
+              <span className="hidden lg:inline">{sku.color.name.toUpperCase()}</span>
+            </a>
+          );
+        })}
       </div>
     </div>
   );

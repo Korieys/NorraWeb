@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { PackMockup } from "@/components/PackMockup";
-import { SKUS, type SkuId } from "@/lib/skus";
+import { SKUS, SKU_ORDER, type SkuId } from "@/lib/skus";
 import { track } from "@/lib/analytics";
 
 type Props = {
@@ -56,7 +56,7 @@ export function SKUSection({ skuId }: Props) {
       <div className="relative border-b border-paper/15">
         <div className="mx-auto flex max-w-content items-center justify-between px-6 py-5 lg:px-10">
           <span className="font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-paper/60">
-            PROTEIN PACK NO. {sku.index} / 03
+            PROTEIN PACK NO. {sku.index} / {String(SKU_ORDER.length).padStart(2, "0")}
           </span>
           <span className="font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-paper/60">
             {sku.color.name.toUpperCase()}
@@ -82,6 +82,14 @@ export function SKUSection({ skuId }: Props) {
             </span>{" "}
             {sku.description}
           </p>
+          <div className="mt-6 max-w-[520px] border-l-2 border-paper/30 pl-4">
+            <p className="font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-paper/55">
+              WHO THIS IS FOR
+            </p>
+            <p className="mt-2 font-sans text-[14px] leading-[1.55] text-paper/85">
+              {sku.whoFor}
+            </p>
+          </div>
 
           <ul className="mt-12 divide-y divide-paper/15 border-y border-paper/15">
             {sku.meals.map((meal) => (

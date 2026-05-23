@@ -1,6 +1,11 @@
 "use client";
 
-type EventName = "Lead" | "InitiateCheckout" | "Purchase" | "ViewContent";
+type EventName =
+  | "Lead"
+  | "InitiateCheckout"
+  | "Purchase"
+  | "ViewContent"
+  | "FindYourPack";
 
 type EventPayload = {
   value?: number;

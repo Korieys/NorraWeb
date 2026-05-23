@@ -16,6 +16,10 @@ const config: Config = {
         slate: "#3A5567",
         olive: "#5A6340",
         sienna: "#8B5A3C",
+        linen: "#A08C6A",
+        pine: "#2F4538",
+        oak: "#6B4A2F",
+        granite: "#4A4E52",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
