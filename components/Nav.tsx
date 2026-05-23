@@ -42,14 +42,14 @@ export function Nav() {
           </span>
         </Link>
         <nav className="hidden items-center gap-7 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/65 md:flex">
-          <a href="/#sku-170" className="hover:text-ink">PACKS</a>
-          <a href="/#why" className="hover:text-ink">WHY</a>
+          <a href="/#sku-110" className="hover:text-ink">PACKS</a>
+          <Link href="/find-your-pack" className="hover:text-ink">FIND YOUR PACK</Link>
           <Link href="/story" className="hover:text-ink">STORY</Link>
           <a href="/#faq" className="hover:text-ink">FAQ</a>
         </nav>
         <div className="hidden md:block">
           <Button asChild size="sm">
-            <a href="/#sku-170">RESERVE A PACK</a>
+            <a href="/find-your-pack">FIND YOUR PACK</a>
           </Button>
         </div>
         <button
@@ -91,13 +91,13 @@ export function Nav() {
         )}
       >
         <nav className="flex flex-col px-6 py-4 font-sans text-sm font-semibold uppercase tracking-wide-lg text-ink">
-          <a href="/#sku-170" onClick={close} className="border-b border-ink/10 py-4">PACKS</a>
-          <a href="/#why" onClick={close} className="border-b border-ink/10 py-4">WHY</a>
+          <a href="/#sku-110" onClick={close} className="border-b border-ink/10 py-4">PACKS</a>
+          <Link href="/find-your-pack" onClick={close} className="border-b border-ink/10 py-4">FIND YOUR PACK</Link>
           <Link href="/story" onClick={close} className="border-b border-ink/10 py-4">STORY</Link>
           <a href="/#faq" onClick={close} className="border-b border-ink/10 py-4">FAQ</a>
           <div className="pt-5">
             <Button asChild size="sm" className="w-full">
-              <a href="/#sku-170" onClick={close}>RESERVE A PACK</a>
+              <a href="/find-your-pack" onClick={close}>FIND YOUR PACK</a>
             </Button>
           </div>
         </nav>

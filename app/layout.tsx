@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
+import { SKUS, SKU_ORDER } from "@/lib/skus";
 import "./globals.css";
 
 const inter = Inter({
@@ -20,13 +21,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://eatdaypack.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Daypack — Hit Your Number. Fuel Your Day.",
+  title: "Daypack — Pick Your Protein Target. Eat the Box.",
   description:
-    "Daily meal packs engineered around your protein target. Shelf stable. Microwave ready. No tracking.",
+    "Daily protein packs sized by grams. Five sizes, from 110 to 230. Built for any adult who wants the number handled. Shelf stable. Microwave ready. No tracking.",
   openGraph: {
-    title: "Daypack — Hit Your Number. Fuel Your Day.",
+    title: "Daypack — Pick Your Protein Target. Eat the Box.",
     description:
-      "Daily meal packs engineered around your protein target. Shelf stable. Microwave ready. No tracking.",
+      "Daily protein packs sized by grams. Five sizes, from 110 to 230. Built for any adult who wants the number handled. Shelf stable. Microwave ready. No tracking.",
     url: siteUrl,
     siteName: "Daypack",
     type: "website",
@@ -41,9 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Daypack — Hit Your Number. Fuel Your Day.",
+    title: "Daypack — Pick Your Protein Target. Eat the Box.",
     description:
-      "Daily meal packs engineered around your protein target. Shelf stable. Microwave ready. No tracking.",
+      "Daily protein packs sized by grams. Five sizes, from 110 to 230. Built for any adult who wants the number handled. Shelf stable. Microwave ready. No tracking.",
     images: ["/og.png"],
   },
   robots: { index: true, follow: true },
@@ -72,6 +73,32 @@ export default function RootLayout({
       <body className="bg-paper text-ink antialiased">
         {children}
         <AnalyticsScripts />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              SKU_ORDER.map((id) => {
+                const sku = SKUS[id];
+                return {
+                  "@context": "https://schema.org",
+                  "@type": "Product",
+                  name: `Daypack ${sku.protein} Protein Pack`,
+                  description: sku.description,
+                  brand: { "@type": "Brand", name: "Daypack" },
+                  sku: `daypack-${sku.id}`,
+                  url: `${siteUrl}/#sku-${sku.id}`,
+                  offers: {
+                    "@type": "Offer",
+                    price: sku.pricePerDay.toFixed(2),
+                    priceCurrency: "USD",
+                    availability: "https://schema.org/PreOrder",
+                    url: `${siteUrl}/#sku-${sku.id}`,
+                  },
+                };
+              })
+            ),
+          }}
+        />
       </body>
     </html>
   );

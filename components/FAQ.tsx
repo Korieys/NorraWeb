@@ -23,6 +23,14 @@ const ITEMS = [
     a: "Every component has a verified protein count. We assemble packs from a fixed library so the math always works.",
   },
   {
+    q: "Which pack should I pick?",
+    a: "Match the number to your body weight and goal. As a rough guide, multiply your weight in pounds by 0.8 for maintenance, 1.0 if you are losing weight, or 1.05 if you are building muscle. Snap to the closest pack: 110, 140, 170, 200, or 230. The Find Your Pack tool does this for you.",
+  },
+  {
+    q: "Is Daypack just for lifters or bodybuilders?",
+    a: "No. Daypack is built for any adult who wants structured daily protein. The lower-tier packs serve smaller frames, recovery, and older adults. The larger packs serve heavier frames and high-output training. Same architecture across the line.",
+  },
+  {
     q: "What about allergens?",
     a: "Allergens labeled per FDA requirements. Gluten-free and dairy-free variants planned for v2.",
   },

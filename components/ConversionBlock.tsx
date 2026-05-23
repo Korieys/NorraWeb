@@ -4,10 +4,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { track } from "@/lib/analytics";
-import { SKUS } from "@/lib/skus";
+import { SKUS, SKU_ORDER, type SkuId } from "@/lib/skus";
 
 export function ConversionBlock() {
-  const [sku, setSku] = useState<"170" | "200" | "230">("200");
+  const [sku, setSku] = useState<SkuId>("170");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [emailStatus, setEmailStatus] = useState<"idle" | "loading" | "ok" | "err">("idle");
@@ -100,14 +100,14 @@ export function ConversionBlock() {
               <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/55">
                 SELECT YOUR TARGET
               </p>
-              <div className="mt-3 inline-flex rounded-[4px] border border-ink/15 p-1">
-                {(["170", "200", "230"] as const).map((s) => (
+              <div className="mt-3 inline-flex flex-wrap rounded-[4px] border border-ink/15 p-1">
+                {SKU_ORDER.map((s) => (
                   <button
                     key={s}
                     type="button"
                     onClick={() => setSku(s)}
                     aria-pressed={sku === s}
-                    className={`h-11 px-5 font-sans text-[13px] font-semibold uppercase tracking-wide-md transition-colors ${
+                    className={`h-11 px-4 font-sans text-[13px] font-semibold uppercase tracking-wide-md transition-colors sm:px-5 ${
                       sku === s
                         ? "bg-ink text-paper"
                         : "text-ink hover:bg-ink/5"
@@ -117,6 +117,15 @@ export function ConversionBlock() {
                   </button>
                 ))}
               </div>
+              <p className="mt-3 font-sans text-[12px] leading-[1.5] text-ink/60">
+                Not sure which number is yours?{" "}
+                <a
+                  href="/find-your-pack"
+                  className="font-semibold uppercase tracking-wide-md text-ink underline underline-offset-4 hover:text-ink/70"
+                >
+                  FIND YOUR PACK →
+                </a>
+              </p>
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Button onClick={reserve} disabled={loading} size="lg">

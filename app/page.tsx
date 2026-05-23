@@ -14,6 +14,8 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <SKUSection skuId="110" />
+        <SKUSection skuId="140" />
         <SKUSection skuId="170" />
         <SKUSection skuId="200" />
         <SKUSection skuId="230" />

@@ -2,8 +2,8 @@ const COLUMNS = [
   {
     index: "01",
     accent: "text-slate",
-    headline: "PRE-PORTIONED FOR YOUR TARGET",
-    body: "Stop counting. Stop logging. The box is the math.",
+    headline: "PICK YOUR DAILY TARGET",
+    body: "Five packs sized by grams of protein. Match the number to your body weight and goal. The pack does the rest.",
   },
   {
     index: "02",
@@ -24,11 +24,16 @@ export function Argument() {
     <section id="why" className="border-t border-ink/10 bg-paper py-24 lg:py-32">
       <div className="mx-auto max-w-content px-6 lg:px-10">
         <p className="text-center font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
-          WHY THIS WORKS
+          HOW IT WORKS
         </p>
         <h2 className="mx-auto mt-6 max-w-[900px] text-center font-display text-[36px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink sm:text-[44px] lg:text-[56px]">
-          REAL FOOD. REAL FUEL. NO COMPROMISES.
+          PICK YOUR DAILY PROTEIN TARGET.
         </h2>
+        <p className="mx-auto mt-6 max-w-[640px] text-center font-sans text-[16px] leading-[1.55] text-ink/70 lg:text-[18px]">
+          Daypack is built for any adult who wants structured daily protein.
+          Five pack sizes, from 110 to 230 grams. Match your body weight and
+          goal to a number, then eat the box.
+        </p>
 
         <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden border border-ink/10 bg-ink/10 md:grid-cols-3 lg:mt-20">
           {COLUMNS.map((col) => (
