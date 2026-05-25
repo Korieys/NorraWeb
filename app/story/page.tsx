@@ -293,7 +293,7 @@ function Signoff() {
               </a>
               <span className="px-2 text-ink/35">·</span>
               IG &amp; FB
-              <span className="px-2 text-ink/35">//</span>
+              <span className="px-2 text-ink/35">·</span>
               <a
                 href="https://instagram.com/kjgrotesk"
                 target="_blank"
