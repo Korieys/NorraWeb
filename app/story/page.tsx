@@ -99,8 +99,8 @@ function Letter() {
         <Reveal delayMs={150} className="space-y-6 font-sans text-[17px] leading-[1.65] text-ink/80 lg:col-span-9 lg:text-[18px]">
           <p>
             I&rsquo;d train, try to hit a protein target that actually mattered,
-            then spend the rest of the day piecing food together like a grocery
-            store side quest.
+            then spend the rest of the day hunting down food like it was a
+            scavenger hunt I never signed up for.
           </p>
           <p>
             One stop for chicken. Another stop for snacks. Maybe a smoothie
