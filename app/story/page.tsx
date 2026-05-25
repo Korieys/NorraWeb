@@ -275,6 +275,36 @@ function Signoff() {
               updates, and only shipping once the food is good enough to put my
               name on.
             </p>
+            <p className="mt-4 font-sans text-[16px] leading-[1.6] text-ink/85">
+              You can follow our socials to stay updated, or you can follow me
+              personally to see behind the scenes: how we design the
+              packaging, brainstorming meals, stressing out, thinking out loud,
+              second-guessing fonts, taste-testing protein numbers, and
+              whatever else.
+            </p>
+            <p className="mt-4 font-sans text-[13px] font-semibold uppercase tracking-wide-lg text-ink/70">
+              <a
+                href="https://instagram.com/eatdaypack"
+                target="_blank"
+                rel="noreferrer"
+                className="underline decoration-ink/30 underline-offset-4 transition hover:decoration-tan hover:text-tan"
+              >
+                @eatdaypack
+              </a>
+              <span className="px-2 text-ink/35">·</span>
+              IG &amp; FB
+              <span className="px-2 text-ink/35">//</span>
+              <a
+                href="https://instagram.com/kjgrotesk"
+                target="_blank"
+                rel="noreferrer"
+                className="underline decoration-ink/30 underline-offset-4 transition hover:decoration-tan hover:text-tan"
+              >
+                @kjgrotesk
+              </a>
+              <span className="px-2 text-ink/35">·</span>
+              IG &amp; YOUTUBE
+            </p>
           </div>
 
           <p className="pt-6">
