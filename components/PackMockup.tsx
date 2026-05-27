@@ -111,16 +111,6 @@ export function PackMockup({ sku, size = "md", className }: PackMockupProps) {
             >
               LOT-{sku.id}
             </span>
-            {s.showSpec && (
-              <span
-                className={cn(
-                  "rounded-[1px] bg-ink/55 px-1.5 py-0.5 font-sans font-semibold uppercase leading-none tracking-wide-md text-paper backdrop-blur-[2px]",
-                  s.eyebrow
-                )}
-              >
-                {sku.image.environment}
-              </span>
-            )}
           </div>
         </div>
       </div>
