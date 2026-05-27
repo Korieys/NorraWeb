@@ -22,6 +22,11 @@ export type Sku = {
     text: string;
     name: "linen" | "olive" | "pine" | "oak" | "granite";
   };
+  image: {
+    src: string;
+    alt: string;
+    environment: string;
+  };
 };
 
 export const SKUS: Record<SkuId, Sku> = {
@@ -48,6 +53,11 @@ export const SKUS: Record<SkuId, Sku> = {
       text: "text-linen",
       name: "linen",
     },
+    image: {
+      src: "/DayPack-Linen.png",
+      alt: "Daypack 110g daily meal kit pouch in tan linen against dried botanicals and a soft linen drape.",
+      environment: "DRIED LINEN & WHEAT",
+    },
   },
   "140": {
     id: "140",
@@ -71,6 +81,11 @@ export const SKUS: Record<SkuId, Sku> = {
       bg: "bg-olive",
       text: "text-olive",
       name: "olive",
+    },
+    image: {
+      src: "/DayPack-olive.png",
+      alt: "Daypack 140g daily meal kit pouch in olive green among an olive grove with fresh olives.",
+      environment: "OLIVE GROVE",
     },
   },
   "170": {
@@ -96,6 +111,11 @@ export const SKUS: Record<SkuId, Sku> = {
       text: "text-pine",
       name: "pine",
     },
+    image: {
+      src: "/DayPack-pine.png",
+      alt: "Daypack 170g daily meal kit pouch in deep pine green on a forest floor with pine cones.",
+      environment: "PINE FOREST FLOOR",
+    },
   },
   "200": {
     id: "200",
@@ -120,6 +140,11 @@ export const SKUS: Record<SkuId, Sku> = {
       text: "text-oak",
       name: "oak",
     },
+    image: {
+      src: "/DayPack-oak.png",
+      alt: "Daypack 200g daily meal kit pouch in warm oak brown among oak leaves and acorns.",
+      environment: "OAK CANOPY",
+    },
   },
   "230": {
     id: "230",
@@ -143,6 +168,11 @@ export const SKUS: Record<SkuId, Sku> = {
       bg: "bg-granite",
       text: "text-granite",
       name: "granite",
+    },
+    image: {
+      src: "/DayPack-granite.png",
+      alt: "Daypack 230g daily meal kit pouch in dark granite among sunlit boulders.",
+      environment: "GRANITE FIELD",
     },
   },
 };
