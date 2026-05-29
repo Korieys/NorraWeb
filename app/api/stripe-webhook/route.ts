@@ -13,6 +13,7 @@ type DepositPayload = {
   reservedPack?: string;
   amount: number;
   reservationId: string;
+  stripeSessionId?: string;
   stripeObjectId: string;
 };
 
@@ -92,6 +93,7 @@ async function depositFromCheckoutSession(
     reservedPack: reservedPackFrom(session.metadata),
     amount: dollarsFromCents(session.amount_total),
     reservationId: reservationIdFrom(stripeObjectId),
+    stripeSessionId: session.id,
     stripeObjectId,
   };
 }
@@ -114,62 +116,102 @@ async function depositFromPaymentIntent(
   };
 }
 
-async function sendPlacedDepositToKlaviyo(deposit: Required<DepositPayload>) {
+function getKlaviyoPrivateKey() {
+  const privateApiKey = process.env.KLAVIYO_PRIVATE_API_KEY;
   const privateKey = process.env.KLAVIYO_PRIVATE_KEY;
-  if (!privateKey) {
-    console.error("KLAVIYO_PRIVATE_KEY is not configured.");
-    return { ok: false, status: 0, error: "KLAVIYO_PRIVATE_KEY is not configured." };
+  return {
+    key: privateApiKey ?? privateKey,
+    source: privateApiKey
+      ? "KLAVIYO_PRIVATE_API_KEY"
+      : privateKey
+        ? "KLAVIYO_PRIVATE_KEY"
+        : "missing",
+    hasPrivateApiKey: Boolean(privateApiKey),
+    hasPrivateKey: Boolean(privateKey),
+  };
+}
+
+async function sendPlacedDepositToKlaviyo(
+  deposit: DepositPayload & { email: string; reservedPack: string }
+) {
+  const privateKey = getKlaviyoPrivateKey();
+  if (!privateKey.key) {
+    console.error("Klaviyo private API key is not configured.", {
+      hasKlaviyoPrivateApiKey: privateKey.hasPrivateApiKey,
+      hasKlaviyoPrivateKey: privateKey.hasPrivateKey,
+    });
+    return {
+      ok: false,
+      status: 0,
+      error: "Klaviyo private API key is not configured.",
+    };
   }
+
+  const payload = {
+    data: {
+      type: "event",
+      attributes: {
+        properties: {
+          ReservedPack: deposit.reservedPack,
+          ReservationId: deposit.reservationId,
+          reserved_sku: deposit.reservedPack,
+          stripe_object_id: deposit.stripeObjectId,
+          stripe_session_id: deposit.stripeSessionId,
+          currency: "USD",
+          source: "stripe_checkout",
+        },
+        value: deposit.amount,
+        value_currency: "USD",
+        unique_id: deposit.stripeObjectId,
+        metric: {
+          data: {
+            type: "metric",
+            attributes: { name: "Placed Deposit" },
+          },
+        },
+        profile: {
+          data: {
+            type: "profile",
+            attributes: { email: deposit.email },
+          },
+        },
+      },
+    },
+  };
+
+  console.log("Klaviyo Placed Deposit request", {
+    url: KLAVIYO_EVENTS_URL,
+    metricName: "Placed Deposit",
+    keySource: privateKey.source,
+    hasKlaviyoPrivateApiKey: privateKey.hasPrivateApiKey,
+    hasKlaviyoPrivateKey: privateKey.hasPrivateKey,
+    payload,
+  });
 
   const res = await fetch(KLAVIYO_EVENTS_URL, {
     method: "POST",
     headers: {
-      Authorization: `Klaviyo-API-Key ${privateKey}`,
+      Authorization: `Klaviyo-API-Key ${privateKey.key}`,
       "Content-Type": KLAVIYO_JSON_API_MIME,
       Accept: KLAVIYO_JSON_API_MIME,
       revision: KLAVIYO_REVISION,
     },
-    body: JSON.stringify({
-      data: {
-        type: "event",
-        attributes: {
-          properties: {
-            ReservedPack: deposit.reservedPack,
-            ReservationId: deposit.reservationId,
-            reserved_sku: deposit.reservedPack,
-            stripe_object_id: deposit.stripeObjectId,
-            currency: "USD",
-            source: "stripe_checkout",
-          },
-          value: deposit.amount,
-          value_currency: "USD",
-          unique_id: deposit.stripeObjectId,
-          metric: {
-            data: {
-              type: "metric",
-              attributes: { name: "Placed Deposit" },
-            },
-          },
-          profile: {
-            data: {
-              type: "profile",
-              attributes: { email: deposit.email },
-            },
-          },
-        },
-      },
-    }),
+    body: JSON.stringify(payload),
   });
 
+  const responseBody = await res.text();
   console.log("Klaviyo Placed Deposit response", {
     email: deposit.email,
     status: res.status,
+    body: responseBody,
   });
 
   if (!res.ok) {
-    const text = await res.text();
-    console.error("Klaviyo Placed Deposit error", res.status, text);
-    return { ok: false, status: res.status, error: text };
+    console.error("Klaviyo Placed Deposit error", {
+      status: res.status,
+      body: responseBody,
+    });
+    return { ok: false, status: res.status, error: responseBody };
   }
 
   return { ok: true, status: res.status };
@@ -200,6 +242,10 @@ export async function POST(req: Request) {
 
   let deposit: DepositPayload | null = null;
   try {
+    console.log("Stripe webhook event type received", {
+      type: event.type,
+    });
+
     if (event.type === "checkout.session.completed") {
       deposit = await depositFromCheckoutSession(
         stripe,
@@ -221,6 +267,9 @@ export async function POST(req: Request) {
     console.log("Stripe webhook received", {
       type: event.type,
       email: deposit.email ?? "missing",
+      stripeSessionId: deposit.stripeSessionId ?? "n/a",
+      reservedPack: deposit.reservedPack ?? "missing",
+      reservationId: deposit.reservationId,
     });
 
     if (!deposit.email || !deposit.reservedPack) {

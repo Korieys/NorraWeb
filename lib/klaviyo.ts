@@ -14,6 +14,10 @@ function klaviyoHeaders(privateKey: string) {
   };
 }
 
+function getKlaviyoPrivateKey(): string | undefined {
+  return process.env.KLAVIYO_PRIVATE_API_KEY ?? process.env.KLAVIYO_PRIVATE_KEY;
+}
+
 /**
  * Upserts a profile and writes custom properties. The bulk-subscribe
  * endpoint doesn't accept profile properties, so we do this first.
@@ -150,7 +154,7 @@ export async function subscribeToKlaviyo(
   listId?: string
 ): Promise<Result> {
   const list = listId || process.env.NEXT_PUBLIC_KLAVIYO_LIST_ID;
-  const privateKey = process.env.KLAVIYO_PRIVATE_KEY;
+  const privateKey = getKlaviyoPrivateKey();
 
   if (!list || !privateKey) {
     console.warn("Klaviyo env not configured. Skipping subscribe.");
@@ -175,7 +179,7 @@ export async function trackKlaviyoEvent(
   metric: string,
   properties: ProfileProperties = {}
 ): Promise<Result> {
-  const privateKey = process.env.KLAVIYO_PRIVATE_KEY;
+  const privateKey = getKlaviyoPrivateKey();
   if (!privateKey) {
     console.warn("Klaviyo private key not set. Skipping event.");
     return { ok: true };
