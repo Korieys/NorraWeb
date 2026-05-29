@@ -5,8 +5,15 @@ import { SKUS, type SkuId } from "@/lib/skus";
 export const runtime = "nodejs";
 
 function originFrom(req: Request): string {
+  const h = req.headers;
+  const forwardedHost = h.get("x-forwarded-host") ?? h.get("host");
+  const forwardedProto = h.get("x-forwarded-proto") ?? "https";
+  if (forwardedHost && !/^localhost(:|$)/i.test(forwardedHost)) {
+    return `${forwardedProto}://${forwardedHost}`;
+  }
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL;
-  if (fromEnv) return fromEnv.replace(/\/$/, "");
+  if (fromEnv && !/localhost/i.test(fromEnv)) return fromEnv.replace(/\/$/, "");
+  if (forwardedHost) return `${forwardedProto}://${forwardedHost}`;
   const url = new URL(req.url);
   return `${url.protocol}//${url.host}`;
 }
@@ -15,12 +22,25 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const sku = body?.sku as SkuId | undefined;
+    const email =
+      typeof body?.email === "string" && body.email.trim()
+        ? body.email.trim()
+        : undefined;
+
     if (!sku || !SKUS[sku]) {
       return NextResponse.json({ error: "Invalid SKU" }, { status: 400 });
+    }
+    if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
     const stripe = getStripe();
     const origin = originFrom(req);
+    const reservationMetadata = {
+      sku,
+      reserved_pack: sku,
+      kind: "founder_reservation",
+    };
 
     if (!stripe) {
       // Dev fallback: skip Stripe and go straight to confirmation.
@@ -46,10 +66,11 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      metadata: { sku, kind: "founder_reservation" },
+      metadata: reservationMetadata,
       payment_intent_data: {
-        metadata: { sku, kind: "founder_reservation" },
+        metadata: reservationMetadata,
       },
+      ...(email ? { customer_email: email } : {}),
       customer_creation: "always",
       consent_collection: {
         terms_of_service: "none",

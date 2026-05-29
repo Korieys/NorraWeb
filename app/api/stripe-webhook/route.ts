@@ -1,19 +1,189 @@
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
-import { subscribeToKlaviyo, trackKlaviyoEvent } from "@/lib/klaviyo";
 
 export const runtime = "nodejs";
 
-// Stripe needs the raw body bytes to verify the signature.
+const KLAVIYO_EVENTS_URL = "https://a.klaviyo.com/api/events";
+const KLAVIYO_JSON_API_MIME = "application/vnd.api+json";
+const KLAVIYO_REVISION = "2026-04-15";
+
+type DepositPayload = {
+  email?: string;
+  reservedPack?: string;
+  amount: number;
+  reservationId: string;
+  stripeObjectId: string;
+};
+
+function cleanString(value: unknown): string | undefined {
+  return typeof value === "string" && value.trim() ? value.trim() : undefined;
+}
+
+function reservationIdFrom(stripeObjectId: string): string {
+  return stripeObjectId.slice(-6).toUpperCase();
+}
+
+function dollarsFromCents(amount: number | null | undefined): number {
+  return typeof amount === "number" ? amount / 100 : 0;
+}
+
+function reservedPackFrom(
+  metadata: Stripe.Metadata | null | undefined
+): string | undefined {
+  return cleanString(metadata?.reserved_pack) ?? cleanString(metadata?.sku);
+}
+
+function paymentIntentIdFrom(
+  paymentIntent: string | Stripe.PaymentIntent | null
+): string | undefined {
+  return typeof paymentIntent === "string" ? paymentIntent : paymentIntent?.id;
+}
+
+function customerEmailFrom(
+  customer: string | Stripe.Customer | Stripe.DeletedCustomer | null | undefined
+): string | undefined {
+  if (!customer || typeof customer === "string") return undefined;
+  if ("deleted" in customer && customer.deleted) return undefined;
+  return cleanString(customer.email);
+}
+
+async function retrieveCustomerEmail(
+  stripe: Stripe,
+  customer: string | Stripe.Customer | Stripe.DeletedCustomer | null | undefined
+): Promise<string | undefined> {
+  const fromObject = customerEmailFrom(customer);
+  if (fromObject || typeof customer !== "string") return fromObject;
+
+  const retrieved = await stripe.customers.retrieve(customer);
+  return customerEmailFrom(retrieved);
+}
+
+function chargeEmailFrom(
+  charge: string | Stripe.Charge | null | undefined
+): string | undefined {
+  if (!charge || typeof charge === "string") return undefined;
+  return cleanString(charge.billing_details.email);
+}
+
+async function retrieveChargeEmail(
+  stripe: Stripe,
+  charge: string | Stripe.Charge | null | undefined
+): Promise<string | undefined> {
+  const fromObject = chargeEmailFrom(charge);
+  if (fromObject || typeof charge !== "string") return fromObject;
+
+  const retrieved = await stripe.charges.retrieve(charge);
+  return chargeEmailFrom(retrieved);
+}
+
+async function depositFromCheckoutSession(
+  stripe: Stripe,
+  session: Stripe.Checkout.Session
+): Promise<DepositPayload> {
+  const stripeObjectId = paymentIntentIdFrom(session.payment_intent) ?? session.id;
+  const email =
+    cleanString(session.customer_details?.email) ??
+    cleanString(session.customer_email) ??
+    (await retrieveCustomerEmail(stripe, session.customer));
+
+  return {
+    email,
+    reservedPack: reservedPackFrom(session.metadata),
+    amount: dollarsFromCents(session.amount_total),
+    reservationId: reservationIdFrom(stripeObjectId),
+    stripeObjectId,
+  };
+}
+
+async function depositFromPaymentIntent(
+  stripe: Stripe,
+  paymentIntent: Stripe.PaymentIntent
+): Promise<DepositPayload> {
+  const email =
+    cleanString(paymentIntent.receipt_email) ??
+    (await retrieveCustomerEmail(stripe, paymentIntent.customer)) ??
+    (await retrieveChargeEmail(stripe, paymentIntent.latest_charge));
+
+  return {
+    email,
+    reservedPack: reservedPackFrom(paymentIntent.metadata),
+    amount: dollarsFromCents(paymentIntent.amount_received || paymentIntent.amount),
+    reservationId: reservationIdFrom(paymentIntent.id),
+    stripeObjectId: paymentIntent.id,
+  };
+}
+
+async function sendPlacedDepositToKlaviyo(deposit: Required<DepositPayload>) {
+  const privateKey = process.env.KLAVIYO_PRIVATE_KEY;
+  if (!privateKey) {
+    console.error("KLAVIYO_PRIVATE_KEY is not configured.");
+    return { ok: false, status: 0, error: "KLAVIYO_PRIVATE_KEY is not configured." };
+  }
+
+  const res = await fetch(KLAVIYO_EVENTS_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Klaviyo-API-Key ${privateKey}`,
+      "Content-Type": KLAVIYO_JSON_API_MIME,
+      Accept: KLAVIYO_JSON_API_MIME,
+      revision: KLAVIYO_REVISION,
+    },
+    body: JSON.stringify({
+      data: {
+        type: "event",
+        attributes: {
+          properties: {
+            ReservedPack: deposit.reservedPack,
+            ReservationId: deposit.reservationId,
+            reserved_sku: deposit.reservedPack,
+            stripe_object_id: deposit.stripeObjectId,
+            currency: "USD",
+            source: "stripe_checkout",
+          },
+          value: deposit.amount,
+          value_currency: "USD",
+          unique_id: deposit.stripeObjectId,
+          metric: {
+            data: {
+              type: "metric",
+              attributes: { name: "Placed Deposit" },
+            },
+          },
+          profile: {
+            data: {
+              type: "profile",
+              attributes: { email: deposit.email },
+            },
+          },
+        },
+      },
+    }),
+  });
+
+  console.log("Klaviyo Placed Deposit response", {
+    email: deposit.email,
+    status: res.status,
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("Klaviyo Placed Deposit error", res.status, text);
+    return { ok: false, status: res.status, error: text };
+  }
+
+  return { ok: true, status: res.status };
+}
+
+// App Router route handlers expose the raw Web Request body; do not call req.json().
 export async function POST(req: Request) {
   const stripe = getStripe();
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
   const sig = req.headers.get("stripe-signature");
 
   if (!stripe || !secret) {
-    console.warn("Stripe webhook env not configured. Skipping.");
-    return NextResponse.json({ received: true });
+    console.error("Stripe webhook env is not configured.");
+    return NextResponse.json({ error: "Webhook not configured" }, { status: 500 });
   }
   if (!sig) {
     return NextResponse.json({ error: "Missing signature" }, { status: 400 });
@@ -28,46 +198,56 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
+  let deposit: DepositPayload | null = null;
   try {
     if (event.type === "checkout.session.completed") {
-      const session = event.data.object as Stripe.Checkout.Session;
-      const email =
-        session.customer_details?.email ||
-        session.customer_email ||
-        undefined;
-      const sku = (session.metadata?.sku as string | undefined) || "unknown";
-      const amount = (session.amount_total ?? 100) / 100;
+      deposit = await depositFromCheckoutSession(
+        stripe,
+        event.data.object as Stripe.Checkout.Session
+      );
+    } else if (event.type === "payment_intent.succeeded") {
+      deposit = await depositFromPaymentIntent(
+        stripe,
+        event.data.object as Stripe.PaymentIntent
+      );
+    } else {
+      console.log("Stripe webhook received", {
+        type: event.type,
+        email: "n/a",
+      });
+      return NextResponse.json({ received: true });
+    }
 
-      if (email) {
-        // Add (or refresh) profile + tag as reserved with the chosen SKU.
-        await subscribeToKlaviyo(
-          email,
-          {
-            source: "stripe_checkout",
-            reservation_status: "reserved",
-            reserved_sku: sku,
-            reserved_at: new Date().toISOString(),
-          },
-          process.env.KLAVIYO_RESERVED_LIST_ID || undefined
-        );
+    console.log("Stripe webhook received", {
+      type: event.type,
+      email: deposit.email ?? "missing",
+    });
 
-        // Fire a metric so flows can trigger off it.
-        await trackKlaviyoEvent(email, "Reserved Deposit", {
-          sku,
-          amount,
-          currency: (session.currency || "usd").toUpperCase(),
-          session_id: session.id,
-        });
-      } else {
-        console.warn(
-          "checkout.session.completed without email",
-          session.id
-        );
-      }
+    if (!deposit.email || !deposit.reservedPack) {
+      console.warn("Stripe deposit missing required Klaviyo fields", {
+        type: event.type,
+        email: deposit.email ?? "missing",
+        reservedPack: deposit.reservedPack ?? "missing",
+        stripeObjectId: deposit.stripeObjectId,
+      });
+      return NextResponse.json({ received: true });
+    }
+
+    const klaviyo = await sendPlacedDepositToKlaviyo({
+      ...deposit,
+      email: deposit.email,
+      reservedPack: deposit.reservedPack,
+    });
+
+    if (!klaviyo.ok) {
+      return NextResponse.json(
+        { error: "Klaviyo event failed", status: klaviyo.status },
+        { status: 502 }
+      );
     }
   } catch (err) {
     console.error("Webhook handler error:", err);
-    // Still 200 so Stripe doesn't retry indefinitely on app bugs.
+    return NextResponse.json({ error: "Webhook handler error" }, { status: 500 });
   }
 
   return NextResponse.json({ received: true });
