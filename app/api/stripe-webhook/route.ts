@@ -172,7 +172,13 @@ async function sendPlacedDepositToKlaviyo(
         profile: {
           data: {
             type: "profile",
-            attributes: { email: deposit.email },
+            attributes: {
+              email: deposit.email,
+              properties: {
+                reserved_pack: deposit.reservedPack,
+                reservation_status: "reserved",
+              },
+            },
           },
         },
       },
