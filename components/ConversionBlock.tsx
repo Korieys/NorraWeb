@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Reveal } from "@/components/Reveal";
-import { track } from "@/lib/analytics";
+import { track, getMetaCookies } from "@/lib/analytics";
 import { SKUS, SKU_ORDER, type SkuId } from "@/lib/skus";
 
 export function ConversionBlock() {
@@ -22,7 +22,7 @@ export function ConversionBlock() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sku }),
+        body: JSON.stringify({ sku, ...getMetaCookies() }),
       });
       const data = await res.json();
       if (data.url) {

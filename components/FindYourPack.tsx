@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/Input";
 import { PackMockup } from "@/components/PackMockup";
 import { Reveal } from "@/components/Reveal";
 import { SKUS, recommendSku } from "@/lib/skus";
-import { track } from "@/lib/analytics";
+import { track, getMetaCookies } from "@/lib/analytics";
 
 type Goal = "lose" | "maintain" | "gain";
 type Activity = "sedentary" | "moderate" | "active";
@@ -72,7 +72,7 @@ export function FindYourPack() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sku: result.skuId }),
+        body: JSON.stringify({ sku: result.skuId, ...getMetaCookies() }),
       });
       const data = await res.json();
       if (data.url) {

@@ -26,6 +26,12 @@ export async function POST(req: Request) {
       typeof body?.email === "string" && body.email.trim()
         ? body.email.trim()
         : undefined;
+    // Meta browser cookies forwarded from the client to improve CAPI match
+    // quality; persisted in Stripe metadata so the webhook can read them.
+    const fbp =
+      typeof body?.fbp === "string" && body.fbp.trim() ? body.fbp.trim() : undefined;
+    const fbc =
+      typeof body?.fbc === "string" && body.fbc.trim() ? body.fbc.trim() : undefined;
 
     if (!sku || !SKUS[sku]) {
       return NextResponse.json({ error: "Invalid SKU" }, { status: 400 });
@@ -40,6 +46,8 @@ export async function POST(req: Request) {
       sku,
       reserved_pack: sku,
       kind: "founder_reservation",
+      ...(fbp ? { fbp } : {}),
+      ...(fbc ? { fbc } : {}),
     };
 
     if (!stripe) {

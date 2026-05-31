@@ -6,7 +6,7 @@ import { PackMockup } from "@/components/PackMockup";
 import { Reveal } from "@/components/Reveal";
 import { SKUS, SKU_ORDER, type SkuId } from "@/lib/skus";
 import { useCountUp } from "@/lib/useReveal";
-import { track } from "@/lib/analytics";
+import { track, getMetaCookies } from "@/lib/analytics";
 
 type Props = {
   skuId: SkuId;
@@ -27,7 +27,7 @@ export function SKUSection({ skuId }: Props) {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sku: sku.id }),
+        body: JSON.stringify({ sku: sku.id, ...getMetaCookies() }),
       });
       const data = await res.json();
       if (data.url) {
