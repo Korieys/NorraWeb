@@ -2,7 +2,7 @@ import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { SKUSection } from "@/components/SKUSection";
 import { Argument } from "@/components/Argument";
-import { PackComposition } from "@/components/PackComposition";
+import { PackContents } from "@/components/PackContents";
 import { ConversionBlock } from "@/components/ConversionBlock";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
@@ -20,7 +20,7 @@ export default function Home() {
         <SKUSection skuId="200" />
         <SKUSection skuId="230" />
         <Argument />
-        <PackComposition />
+        <PackContents />
         <ConversionBlock />
         <FAQ />
       </main>
