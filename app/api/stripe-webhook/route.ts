@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
+import { sendPurchaseToMeta } from "@/lib/meta";
 
 export const runtime = "nodejs";
 
@@ -15,7 +16,13 @@ type DepositPayload = {
   reservationId: string;
   stripeSessionId?: string;
   stripeObjectId: string;
+  fbp?: string;
+  fbc?: string;
 };
+
+const DEPOSIT_PAGE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://eatdaypack.com"
+).replace(/\/$/, "");
 
 function cleanString(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value.trim() : undefined;
@@ -95,6 +102,8 @@ async function depositFromCheckoutSession(
     reservationId: reservationIdFrom(stripeObjectId),
     stripeSessionId: session.id,
     stripeObjectId,
+    fbp: cleanString(session.metadata?.fbp),
+    fbc: cleanString(session.metadata?.fbc),
   };
 }
 
@@ -113,6 +122,8 @@ async function depositFromPaymentIntent(
     amount: dollarsFromCents(paymentIntent.amount_received || paymentIntent.amount),
     reservationId: reservationIdFrom(paymentIntent.id),
     stripeObjectId: paymentIntent.id,
+    fbp: cleanString(paymentIntent.metadata?.fbp),
+    fbc: cleanString(paymentIntent.metadata?.fbc),
   };
 }
 
@@ -288,11 +299,25 @@ export async function POST(req: Request) {
       return NextResponse.json({ received: true });
     }
 
-    const klaviyo = await sendPlacedDepositToKlaviyo({
-      ...deposit,
-      email: deposit.email,
-      reservedPack: deposit.reservedPack,
-    });
+    // Server-side Purchase to Meta CAPI (source of truth for the $1 deposit).
+    // Runs alongside Klaviyo; a CAPI failure is logged but never blocks the
+    // webhook response — Meta dedupes on event_id if Stripe retries.
+    const [klaviyo] = await Promise.all([
+      sendPlacedDepositToKlaviyo({
+        ...deposit,
+        email: deposit.email,
+        reservedPack: deposit.reservedPack,
+      }),
+      sendPurchaseToMeta({
+        eventId: deposit.reservationId,
+        email: deposit.email,
+        eventSourceUrl: DEPOSIT_PAGE_URL,
+        reservedPack: deposit.reservedPack,
+        value: 1.0,
+        fbp: deposit.fbp,
+        fbc: deposit.fbc,
+      }),
+    ]);
 
     if (!klaviyo.ok) {
       return NextResponse.json(

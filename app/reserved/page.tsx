@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
-import { PurchaseTracker } from "./PurchaseTracker";
 import { getStripe } from "@/lib/stripe";
 import { SKUS, type SkuId } from "@/lib/skus";
 
@@ -88,7 +87,6 @@ export default async function Reserved({
         </section>
       </main>
       <Footer />
-      <PurchaseTracker sku={sku} />
     </>
   );
 }
