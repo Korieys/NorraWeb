@@ -22,14 +22,14 @@ export function Hero() {
       {/* DESKTOP: full-bleed image with overlaid text in the natural left negative space */}
       <div className="relative hidden lg:block">
         {/* Image canvas */}
-        <div className="relative h-[760px] w-full xl:h-[820px]">
+        <div className="relative h-[760px] w-full bg-[#ead2aa] xl:h-[820px]">
           <Image
-            src="/DaypackHeroMealKit.png"
+            src="/DaypackHeroMealKitV2.png"
             alt="Daypack 200g daily meal kit pouch with a bowl of chicken, grains, and vegetables. 170g and 230g pouches and a water bottle in the background."
             fill
             priority
             sizes="100vw"
-            className="animate-fade-in-scale object-cover object-center [animation-duration:1.6s]"
+            className="animate-fade-in-scale object-contain object-right [animation-duration:1.6s]"
           />
           {/* Soft gradient on the left so text always reads, regardless of crop */}
           <div
@@ -129,7 +129,7 @@ export function Hero() {
         <figure className="relative mt-2">
           <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
             <Image
-              src="/DaypackHeroMealKit.png"
+              src="/DaypackHeroMealKitV2.png"
               alt="Daypack 200g daily meal kit pouch with a bowl of chicken, grains, and vegetables."
               fill
               sizes="100vw"
