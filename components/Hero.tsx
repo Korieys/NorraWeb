@@ -24,7 +24,7 @@ export function Hero() {
         {/* Image canvas */}
         <div className="relative h-[760px] w-full xl:h-[820px]">
           <Image
-            src="/DaypackHero.png"
+            src="/DaypackHeroMealKit.png"
             alt="Daypack 200g daily meal kit pouch with a bowl of chicken, grains, and vegetables. 170g and 230g pouches and a water bottle in the background."
             fill
             priority
@@ -42,7 +42,7 @@ export function Hero() {
           />
 
           {/* Disclaimer floats bottom-right of the image */}
-          <p className="absolute bottom-5 right-6 max-w-[260px] text-right font-sans text-[10px] leading-[1.5] text-ink/55 lg:right-10">
+          <p className="absolute bottom-5 right-6 max-w-[280px] rounded-[4px] bg-paper/85 px-3 py-2 text-right font-sans text-[10px] font-medium leading-[1.5] text-ink/75 shadow-sm backdrop-blur-sm lg:right-10">
             Prototype photography. Final flavors, ingredients &amp; packaging
             may change before launch.
           </p>
@@ -51,7 +51,7 @@ export function Hero() {
           <div className="absolute inset-0">
             <div className="mx-auto flex h-full max-w-content items-center px-6 lg:px-10">
               <div className="max-w-[620px]">
-                <p className="animate-fade-in-down font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55 [animation-delay:120ms]">
+                <p className="animate-fade-in-down font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/70 [animation-delay:120ms]">
                   PRE-LAUNCH · DAILY PROTEIN, SORTED
                 </p>
                 <h1 className="mt-6 font-display font-medium uppercase leading-[0.92] tracking-wide-sm text-ink"
@@ -82,7 +82,7 @@ export function Hero() {
                     }
                   />
                 </div>
-                <p className="mt-7 animate-fade-in font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45 [animation-delay:1000ms]">
+                <p className="mt-7 animate-fade-in font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/70 [animation-delay:1000ms]">
                   REFUNDABLE ANY TIME · $20 OFF AT LAUNCH · FIRST RUN Q3 2026
                 </p>
               </div>
@@ -94,7 +94,7 @@ export function Hero() {
       {/* MOBILE / TABLET: text first, image full-width below */}
       <div className="relative lg:hidden">
         <div className="mx-auto max-w-content px-6 pb-10 pt-14 sm:px-8">
-          <p className="animate-fade-in-down font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/55 [animation-delay:80ms]">
+          <p className="animate-fade-in-down font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-ink/70 [animation-delay:80ms]">
             PRE-LAUNCH · DAILY PROTEIN, SORTED
           </p>
           <h1 className="mt-6 font-display text-[52px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[68px]">
@@ -121,7 +121,7 @@ export function Hero() {
               }
             />
           </div>
-          <p className="mt-7 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45">
+          <p className="mt-7 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/70">
             REFUNDABLE ANY TIME · $20 OFF AT LAUNCH · FIRST RUN Q3 2026
           </p>
         </div>
@@ -129,14 +129,14 @@ export function Hero() {
         <figure className="relative mt-2">
           <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]">
             <Image
-              src="/DaypackHero.png"
+              src="/DaypackHeroMealKit.png"
               alt="Daypack 200g daily meal kit pouch with a bowl of chicken, grains, and vegetables."
               fill
               sizes="100vw"
               className="object-cover object-[65%_center]"
             />
           </div>
-          <p className="px-6 pb-6 pt-3 font-sans text-[10px] leading-[1.5] text-ink/50 sm:px-8">
+          <p className="px-6 pb-6 pt-3 font-sans text-[10px] font-medium leading-[1.5] text-ink/70 sm:px-8">
             Prototype photography. Final flavors, ingredients &amp; packaging
             may change before launch.
           </p>
