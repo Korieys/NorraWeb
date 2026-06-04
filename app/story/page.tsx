@@ -7,7 +7,7 @@ import { Reveal } from "@/components/Reveal";
 export const metadata = {
   title: "Our Story | Daypack",
   description:
-    "Daypack started because KJ Dixon got tired of solving the same annoying problem every day. Hitting a protein target without turning it into a side quest.",
+    "Daypack started because KJ Grotesk got tired of solving the same annoying problem every day. Hitting a protein target without turning it into a side quest.",
 };
 
 export default function StoryPage() {
@@ -56,7 +56,7 @@ function StoryHero() {
             without turning my whole day into a grocery store side quest.
           </p>
           <p className="mt-5 animate-fade-in font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/45 [animation-delay:880ms]">
-            KJ DIXON · FOUNDER, DAYPACK
+            KJ GROTESK · FOUNDER, DAYPACK
           </p>
         </div>
 
@@ -65,7 +65,7 @@ function StoryHero() {
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink/5">
               <Image
                 src="/founder-kj.jpg"
-                alt="KJ Dixon, founder of Daypack"
+                alt="KJ Grotesk, founder of Daypack"
                 fill
                 priority
                 sizes="(min-width: 1024px) 560px, 100vw"
@@ -73,7 +73,7 @@ function StoryHero() {
               />
             </div>
             <figcaption className="mt-4 flex items-baseline justify-between border-t border-ink/15 pt-3 font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-ink/55">
-              <span>KJ DIXON · FOUNDER</span>
+              <span>KJ GROTESK · FOUNDER</span>
               <span className="font-display tabular-nums">01 / 01</span>
             </figcaption>
           </figure>
@@ -324,7 +324,7 @@ function Signoff() {
               KJ
             </p>
             <p className="mt-2 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/55">
-              KJ DIXON · FOUNDER, DAYPACK
+              KJ GROTESK · FOUNDER, DAYPACK
             </p>
           </div>
         </Reveal>
