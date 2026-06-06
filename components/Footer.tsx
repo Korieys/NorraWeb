@@ -37,6 +37,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href="mailto:team@eatdaypack.com" className="hover:text-paper">
+                  REFUNDS · TEAM@EATDAYPACK.COM
+                </a>
+              </li>
+              <li>
                 <a
                   href="https://instagram.com/eatdaypack"
                   target="_blank"
@@ -83,7 +88,7 @@ export function Footer() {
             © 2026 DAYPACK. NOT YET SHIPPING. RESERVE TO BE FIRST.
           </p>
           <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/40">
-            DESIGNED IN THE PACIFIC NORTHWEST
+            DESIGNED IN THE SOUTH ATLANTIC
           </p>
         </div>
       </div>

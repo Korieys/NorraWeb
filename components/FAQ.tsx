@@ -40,6 +40,10 @@ const ITEMS = [
     a: "Continental US at launch. Canada and UK shortly after.",
   },
   {
+    q: "What does my $1 get me?",
+    a: "A lot for a buck. It locks in 30% off your first order of Daypack — Daily or Weekly, your choice. It reserves your spot in line for early access and founder pricing. And it tells our co-packers exactly how much real demand exists, which is what lets us finalize production runs, ingredients, and launch timing. Your dollar is fully refundable any time.",
+  },
+  {
     q: "Is the deposit really refundable?",
     a: "Yes. Any time. No questions, no email required. Click the link in your confirmation.",
   },
