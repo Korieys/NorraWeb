@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { PackMockup } from "@/components/PackMockup";
@@ -29,6 +29,7 @@ export function FindYourPack() {
   const [activity, setActivity] = useState<Activity>("moderate");
   const [submitted, setSubmitted] = useState(false);
   const [reserving, setReserving] = useState(false);
+  const resultRef = useRef<HTMLDivElement>(null);
 
   const weightNum = Number(weight);
   const validWeight = weightNum >= 80 && weightNum <= 400;
@@ -57,6 +58,10 @@ export function FindYourPack() {
         target_grams: result.targetGrams,
       });
     }
+    // On mobile, scroll result panel into view after a brief delay
+    setTimeout(() => {
+      resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
   }
 
   async function reserve() {
@@ -205,7 +210,7 @@ export function FindYourPack() {
             </div>
 
             <div className="mt-10">
-              <Button type="submit" size="lg" disabled={!validWeight}>
+              <Button type="submit" size="lg" disabled={!validWeight} className="w-full sm:w-auto">
                 CALCULATE MY PACK
               </Button>
               {!validWeight && weight !== "" && (
@@ -217,7 +222,7 @@ export function FindYourPack() {
           </form>
 
           {/* Result */}
-          <div className="bg-paper p-8 lg:col-span-5 lg:p-12">
+          <div ref={resultRef} className="scroll-mt-[80px] bg-paper p-8 lg:col-span-5 lg:p-12">
             <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/55">
               YOUR RECOMMENDATION
             </p>
@@ -247,7 +252,7 @@ export function FindYourPack() {
                   </p>
                 </div>
                 <div className="mt-6 flex animate-fade-in-up flex-col gap-3 [animation-delay:620ms]">
-                  <Button onClick={reserve} disabled={reserving} size="lg">
+                  <Button onClick={reserve} disabled={reserving} size="lg" className="w-full">
                     {reserving ? "REDIRECTING..." : `RESERVE THE ${sku.id} · $1`}
                   </Button>
                   <a

@@ -128,8 +128,8 @@ export function ConversionBlock() {
                 </a>
               </p>
             </div>
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Button onClick={reserve} disabled={loading} size="lg">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-3">
+              <Button onClick={reserve} disabled={loading} size="lg" className="w-full sm:w-auto">
                 {loading ? "REDIRECTING..." : `RESERVE THE ${sku} — $1`}
               </Button>
               <span className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-ink/50">

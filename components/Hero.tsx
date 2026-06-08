@@ -106,15 +106,15 @@ export function Hero() {
             Five daily packs sized by grams of protein. From 110 to 230. Shelf
             stable. Microwave ready. No tracking.
           </p>
-          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
-            <Button asChild size="lg">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+            <Button asChild size="lg" className="w-full sm:w-auto">
               <a href="/find-your-pack">FIND YOUR PACK</a>
             </Button>
             <EmailDialog
               trigger={
                 <button
                   type="button"
-                  className="inline-flex items-center rounded-[4px] border border-ink/15 bg-paper px-4 py-2.5 font-sans text-[14px] font-medium text-ink underline underline-offset-4 shadow-sm transition-colors hover:bg-paper/85"
+                  className="inline-flex w-full items-center justify-center rounded-[4px] border border-ink/15 bg-paper px-4 py-3.5 font-sans text-[14px] font-medium text-ink underline underline-offset-4 shadow-sm transition-colors hover:bg-paper/85 active:bg-ink/5 sm:w-auto sm:py-2.5"
                 >
                   Or just get notified →
                 </button>
@@ -159,11 +159,11 @@ function SkuIndexStrip() {
               key={id}
               href={`#sku-${id}`}
               style={{ animationDelay: `${1200 + i * 70}ms` }}
-              className="group flex animate-fade-in-up items-center justify-center gap-1.5 border-r border-ink/15 py-4 text-center font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-ink/65 transition-all last:border-r-0 hover:bg-ink/[0.03] hover:text-ink sm:gap-3 sm:text-[11px]"
+              className="group flex animate-fade-in-up items-center justify-center gap-1.5 border-r border-ink/15 py-5 text-center font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-ink/65 transition-all last:border-r-0 hover:bg-ink/[0.03] hover:text-ink active:bg-ink/5 sm:gap-3 sm:text-[11px]"
             >
-              <span className="font-display tabular-nums">{sku.index}</span>
-              <span className="hidden sm:inline">·</span>
               <span className="font-display tabular-nums transition-colors group-hover:text-ink">{sku.protein}</span>
+              <span className="hidden sm:inline">·</span>
+              <span className="hidden sm:inline font-display tabular-nums">{sku.index}</span>
               <span className="hidden lg:inline">·</span>
               <span className="hidden lg:inline">{sku.color.name.toUpperCase()}</span>
             </a>

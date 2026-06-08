@@ -8,6 +8,7 @@ import { ConversionBlock } from "@/components/ConversionBlock";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
 import { ScrollTracker } from "@/components/ScrollTracker";
+import { MobileReserveBar } from "@/components/MobileReserveBar";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
       </main>
       <Footer />
       <ScrollTracker />
+      <MobileReserveBar />
     </>
   );
 }
