@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque } from "next/font/google";
+import { Inter, Bricolage_Grotesque, Fraunces, IBM_Plex_Mono } from "next/font/google";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
 import { SKUS, SKU_ORDER } from "@/lib/skus";
 import "./globals.css";
@@ -15,6 +15,23 @@ const bricolage = Bricolage_Grotesque({
   variable: "--font-display",
   display: "swap",
   weight: ["400", "500", "600", "700"],
+});
+
+// Stand-in serif for the comparison section's display numerals + headline.
+// TODO: swap for the brand serif once it is in the repo.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+  weight: ["400", "500", "600"],
+});
+
+// Mono for the data-sheet line items, grams, and prices.
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "500", "600"],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://eatdaypack.com";
@@ -67,7 +84,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${bricolage.variable}`}
+      className={`${inter.variable} ${bricolage.variable} ${fraunces.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <body className="bg-paper text-ink antialiased">

@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { SKUSection } from "@/components/SKUSection";
 import { Argument } from "@/components/Argument";
 import { PackContents } from "@/components/PackContents";
+import { BuildItYourself } from "@/components/sections/BuildItYourself";
 import { ConversionBlock } from "@/components/ConversionBlock";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
@@ -21,6 +22,7 @@ export default function Home() {
         <SKUSection skuId="230" />
         <Argument />
         <PackContents />
+        <BuildItYourself />
         <ConversionBlock />
         <FAQ />
       </main>

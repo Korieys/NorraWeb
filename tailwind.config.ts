@@ -20,10 +20,15 @@ const config: Config = {
         pine: "#2F4538",
         oak: "#6B4A2F",
         granite: "#4A4E52",
+        // Single accent for the build-it-yourself comparison section.
+        rust: "#B4502E",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        // Stand-in serif + mono for the comparison data sheet (see BuildItYourself).
+        serif: ["var(--font-serif)", "Georgia", "serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       letterSpacing: {
         "wide-sm": "0.08em",
