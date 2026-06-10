@@ -130,7 +130,7 @@ export function SKUSection({ skuId }: Props) {
             change before launch.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-end justify-between gap-6">
+          <div className="mt-10 flex flex-col gap-6 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
             <div>
               <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-paper/55">
                 FOUNDER PRICING
@@ -153,6 +153,7 @@ export function SKUSection({ skuId }: Props) {
               size="lg"
               onClick={reserve}
               disabled={loading}
+              className="w-full sm:w-auto"
             >
               {loading ? "REDIRECTING..." : `RESERVE THE ${sku.id} →`}
             </Button>

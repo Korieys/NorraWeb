@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/Reveal";
 import { track, getMetaCookies } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 import type { SkuId } from "@/lib/skus";
 
 /*
@@ -343,7 +344,8 @@ export function BuildItYourself() {
             </ul>
 
             {/* Data sheet */}
-            <table className="mt-7 w-full border-collapse font-mono text-[13px] text-ink/75">
+            <div className="mt-7 overflow-x-auto">
+            <table className="w-full border-collapse font-mono text-[13px] text-ink/75">
               <thead>
                 <tr className="border-b border-ink/[0.12] text-left text-[11px] uppercase tracking-wide-sm text-olive/70">
                   <th scope="col" className="py-2 pr-2 font-medium">
@@ -387,6 +389,7 @@ export function BuildItYourself() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
 
           {/* RIGHT — Daypack: the only accented element. */}
@@ -465,17 +468,17 @@ export function BuildItYourself() {
         </p>
 
         {/* Punchline + CTA row */}
-        <div className="mt-14 flex flex-col items-start gap-7 border-t border-ink/[0.12] pt-10 lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+        <div className="mt-14 flex flex-col gap-7 border-t border-ink/[0.12] pt-10 lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
           <p className="max-w-[640px] font-serif text-[22px] leading-[1.3] text-ink lg:text-[26px]">
             {data.targetGrams} grams. One box instead of {data.itemCount} items.
             {data.savings > 0 ? ` Daypack saves ${money(data.savings)}.` : ""}
           </p>
-          <div className="flex shrink-0 flex-col items-start gap-2 lg:items-end">
+          <div className="flex shrink-0 flex-col gap-2 lg:items-end">
             <Button
               onClick={reserve}
               disabled={loading}
               size="lg"
-              className={accent.cta}
+              className={cn("w-full lg:w-auto", accent.cta)}
             >
               {loading ? "REDIRECTING..." : "RESERVE YOUR SPOT FOR $1"}
             </Button>
