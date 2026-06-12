@@ -402,7 +402,7 @@ export function BuildItYourself() {
                   Daypack {data.targetGrams} pack
                 </h3>
                 <p className="mt-1 font-sans text-[13px] leading-[1.5] text-ink/60">
-                  one box, one day
+                  one pouch, one day
                 </p>
               </div>
               {/* Badge — the only place the mountain mark appears. */}
@@ -470,7 +470,7 @@ export function BuildItYourself() {
         {/* Punchline + CTA row */}
         <div className="mt-14 flex flex-col gap-7 border-t border-ink/[0.12] pt-10 lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
           <p className="max-w-[640px] font-serif text-[22px] leading-[1.3] text-ink lg:text-[26px]">
-            {data.targetGrams} grams. One box instead of {data.itemCount} items.
+            {data.targetGrams} grams. One pouch instead of {data.itemCount} items.
             {data.savings > 0 ? ` Daypack saves ${money(data.savings)}.` : ""}
           </p>
           <div className="flex shrink-0 flex-col gap-2 lg:items-end">

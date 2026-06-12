@@ -34,7 +34,7 @@ export function Argument() {
         <Reveal as="p" delayMs={200} className="mx-auto mt-6 max-w-[640px] text-center font-sans text-[16px] leading-[1.55] text-ink/70 lg:text-[18px]">
           Daypack is built for any adult who wants structured daily protein.
           Five pack sizes, from 110 to 230 grams. Match your body weight and
-          goal to a number, then eat the box.
+          goal to a number, then eat the pouch.
         </Reveal>
 
         <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden border border-ink/10 bg-ink/10 md:grid-cols-3 lg:mt-20">
