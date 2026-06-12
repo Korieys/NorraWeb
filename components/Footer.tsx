@@ -21,7 +21,7 @@ export function Footer() {
               DAILY PROTEIN, SORTED · 110 TO 230 GRAMS
             </p>
             <p className="mt-8 max-w-[420px] font-sans text-[14px] leading-[1.6] text-paper/70">
-              Pick your daily protein target. Eat the box. Real food. Shelf
+              Pick your daily protein target. Eat the pouch. Real food. Shelf
               stable. Built for any adult who wants the number handled.
             </p>
           </div>

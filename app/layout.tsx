@@ -38,11 +38,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://eatdaypack.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Daypack — Pick Your Protein Target. Eat the Box.",
+  title: "Daypack — Pick Your Protein Target. Eat the Pouch.",
   description:
     "Daily protein packs sized by grams. Five sizes, from 110 to 230. Built for any adult who wants the number handled. Shelf stable. Microwave ready. No tracking.",
   openGraph: {
-    title: "Daypack — Pick Your Protein Target. Eat the Box.",
+    title: "Daypack — Pick Your Protein Target. Eat the Pouch.",
     description:
       "Daily protein packs sized by grams. Five sizes, from 110 to 230. Built for any adult who wants the number handled. Shelf stable. Microwave ready. No tracking.",
     url: siteUrl,
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Daypack — Pick Your Protein Target. Eat the Box.",
+    title: "Daypack — Pick Your Protein Target. Eat the Pouch.",
     description:
       "Daily protein packs sized by grams. Five sizes, from 110 to 230. Built for any adult who wants the number handled. Shelf stable. Microwave ready. No tracking.",
     images: ["/og.png"],

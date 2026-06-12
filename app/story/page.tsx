@@ -177,8 +177,8 @@ const PRINCIPLES = [
   {
     index: "01",
     accent: "text-slate",
-    headline: "THE BOX IS THE MATH.",
-    body: "Every Daypack is engineered around a single protein number. No counting macros. No logging meals. Open the box, eat the box, hit the number.",
+    headline: "THE POUCH IS THE MATH.",
+    body: "Every Daypack is engineered around a single protein number. No counting macros. No logging meals. Open the pouch, eat the pouch, hit the number.",
   },
   {
     index: "02",
@@ -257,7 +257,7 @@ function Signoff() {
             Daypack isn&rsquo;t trying to be some magic transformation product.
             It&rsquo;s definitely not promising to change your life in thirty
             days. And I can&rsquo;t pretend it&rsquo;s a celebrity meal plan in
-            a cleaner box.
+            a cleaner pouch.
           </p>
           <p>
             It&rsquo;s just a full day of food, sorted by protein, shipped to
