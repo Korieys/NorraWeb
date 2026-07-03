@@ -97,9 +97,6 @@ export function Footer() {
           <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/50">
             © 2026 DAYPACK. NOT YET SHIPPING. RESERVE TO BE FIRST.
           </p>
-          <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/40">
-            DESIGNED IN THE SOUTH ATLANTIC
-          </p>
         </div>
       </div>
     </footer>
