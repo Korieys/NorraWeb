@@ -53,12 +53,22 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://twitter.com/eatdaypack"
+                  href="https://facebook.com/eatdaypack"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-paper"
                 >
-                  TWITTER
+                  FACEBOOK
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/@EatDaypack"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-paper"
+                >
+                  YOUTUBE
                 </a>
               </li>
             </ul>
@@ -86,9 +96,6 @@ export function Footer() {
         <div className="mt-16 flex flex-col gap-3 border-t border-paper/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/50">
             © 2026 DAYPACK. NOT YET SHIPPING. RESERVE TO BE FIRST.
-          </p>
-          <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/40">
-            DESIGNED IN THE SOUTH ATLANTIC
           </p>
         </div>
       </div>
