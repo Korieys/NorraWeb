@@ -53,12 +53,22 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://twitter.com/eatdaypack"
+                  href="https://facebook.com/eatdaypack"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-paper"
                 >
-                  TWITTER
+                  FACEBOOK
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/@EatDaypack"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-paper"
+                >
+                  YOUTUBE
                 </a>
               </li>
             </ul>
