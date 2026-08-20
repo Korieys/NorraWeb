@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque, Fraunces, IBM_Plex_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
 import { SKUS, SKU_ORDER } from "@/lib/skus";
 import "./globals.css";
@@ -90,6 +91,7 @@ export default function RootLayout({
       <body className="bg-paper text-ink antialiased">
         {children}
         <AnalyticsScripts />
+        <Analytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
