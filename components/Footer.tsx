@@ -18,11 +18,14 @@ export function Footer() {
               DAYPACK
             </p>
             <p className="mt-3 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-paper/55">
-              DAILY PROTEIN, SORTED · 110 TO 230 GRAMS
+              A DAYSWORTH PRODUCT
             </p>
             <p className="mt-8 max-w-[420px] font-sans text-[14px] leading-[1.6] text-paper/70">
-              Pick your daily protein target. Eat the pouch. Real food. Shelf
-              stable. Built for any adult who wants the number handled.
+              A planned curated assortment of unopened, shelf-stable foods
+              organized into one day. Paid pilot ordering is not currently open.
+            </p>
+            <p className="mt-4 font-sans text-[11px] leading-[1.5] text-paper/50">
+              Sold by Daysworth Nutrition LLC, Spring, Texas.
             </p>
           </div>
 
@@ -89,13 +92,23 @@ export function Footer() {
                   TERMS
                 </Link>
               </li>
+              <li>
+                <Link href="/refunds" className="hover:text-paper">
+                  REFUNDS
+                </Link>
+              </li>
+              <li>
+                <Link href="/shipping" className="hover:text-paper">
+                  SHIPPING
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
         <div className="mt-16 flex flex-col gap-3 border-t border-paper/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/50">
-            © 2026 DAYPACK. NOT YET SHIPPING. RESERVE TO BE FIRST.
+            © 2026 DAYSWORTH NUTRITION LLC. NOT YET SHIPPING.
           </p>
         </div>
       </div>
