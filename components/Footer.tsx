@@ -21,8 +21,8 @@ export function Footer() {
               A DAYSWORTH PRODUCT
             </p>
             <p className="mt-8 max-w-[420px] font-sans text-[14px] leading-[1.6] text-paper/70">
-              A planned curated assortment of unopened, shelf-stable foods
-              organized into one day. Paid pilot ordering is not currently open.
+              Four shelf-stable meals organized into one day. The 170 pack is
+              now open for first-run preorders.
             </p>
             <p className="mt-4 font-sans text-[11px] leading-[1.5] text-paper/50">
               Sold by Daysworth Nutrition LLC, Spring, Texas.
@@ -108,7 +108,7 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col gap-3 border-t border-paper/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/50">
-            © 2026 DAYSWORTH NUTRITION LLC. NOT YET SHIPPING.
+            © 2026 DAYSWORTH NUTRITION LLC. FIRST-RUN PREORDERS OPEN.
           </p>
         </div>
       </div>

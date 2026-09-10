@@ -52,8 +52,8 @@ export default async function Reserved({
     redirect("/cancelled");
   }
 
-  const sku = (session.sku as SkuId) || "200";
-  const skuData = SKUS[sku] ?? SKUS["200"];
+  const sku = (session.sku as SkuId) || "170";
+  const skuData = SKUS[sku] ?? SKUS["170"];
 
   return (
     <>
@@ -67,12 +67,13 @@ export default async function Reserved({
             <span className="block animate-fade-in-up-lg [animation-delay:200ms]">YOU&apos;RE IN.</span>
           </h1>
           <p className="max-w-[600px] animate-fade-in-up font-sans text-[18px] leading-[1.55] text-ink/80 lg:text-[20px] [animation-delay:420ms]">
-            Your $1 deposit is held. You&apos;re locked in for founder pricing
-            and early access to the{" "}
+            Your Daypack preorder is confirmed. We&apos;ll send production and
+            fulfillment updates to your checkout email for the{" "}
             <span className={`font-display uppercase ${skuData.color.text}`}>
               {skuData.protein}
             </span>{" "}
-            pack. Refund any time from your confirmation email.
+            pack. Estimated fulfillment is Q4 2026. You may cancel for a full
+            refund any time before shipment.
           </p>
           <div className="animate-fade-in-up [animation-delay:580ms]">
             <Button asChild>

@@ -170,6 +170,7 @@ async function sendPlacedDepositToKlaviyo(
           stripe_session_id: deposit.stripeSessionId,
           currency: "USD",
           source: "stripe_checkout",
+          order_type: "preorder",
         },
         value: deposit.amount,
         value_currency: "USD",
@@ -177,7 +178,7 @@ async function sendPlacedDepositToKlaviyo(
         metric: {
           data: {
             type: "metric",
-            attributes: { name: "Placed Deposit" },
+            attributes: { name: "Placed Preorder" },
           },
         },
         profile: {
@@ -187,7 +188,7 @@ async function sendPlacedDepositToKlaviyo(
               email: deposit.email,
               properties: {
                 reserved_pack: deposit.reservedPack,
-                reservation_status: "reserved",
+                reservation_status: "preordered",
               },
             },
           },
@@ -198,7 +199,7 @@ async function sendPlacedDepositToKlaviyo(
 
   console.log("Klaviyo Placed Deposit request", {
     url: KLAVIYO_EVENTS_URL,
-    metricName: "Placed Deposit",
+    metricName: "Placed Preorder",
     keySource: privateKey.source,
     hasKlaviyoPrivateApiKey: privateKey.hasPrivateApiKey,
     hasKlaviyoPrivateKey: privateKey.hasPrivateKey,
@@ -313,7 +314,7 @@ export async function POST(req: Request) {
         email: deposit.email,
         eventSourceUrl: DEPOSIT_PAGE_URL,
         reservedPack: deposit.reservedPack,
-        value: 1.0,
+        value: deposit.amount,
         fbp: deposit.fbp,
         fbc: deposit.fbc,
       }),

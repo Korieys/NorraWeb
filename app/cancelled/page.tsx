@@ -22,12 +22,12 @@ export default function Cancelled() {
             <span className="block animate-fade-in-up-lg [animation-delay:300ms]">ANY TIME.</span>
           </h1>
           <p className="max-w-[600px] animate-fade-in-up font-sans text-[18px] leading-[1.55] text-ink/80 lg:text-[20px] [animation-delay:460ms]">
-            The first run is small. Founder pricing locks once it&apos;s gone.
-            Reserve when you&apos;re ready.
+            No charge was made. The first run is small, and your 170 pack is
+            still here when you&apos;re ready.
           </p>
           <div className="animate-fade-in-up [animation-delay:620ms]">
             <Button asChild>
-              <Link href="/#reserve">← RESERVE A PACK</Link>
+              <Link href="/#preorder">← PREORDER THE 170</Link>
             </Button>
           </div>
         </section>

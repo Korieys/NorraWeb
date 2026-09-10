@@ -38,13 +38,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://eatdaypack.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Daypack by Daysworth - Pilot Updates",
+  title: "Daypack 170 — First-Run Preorder",
   description:
-    "Daypack is a planned curated assortment of unopened, shelf-stable foods organized into one day. Paid pilot ordering is not currently open.",
+    "Preorder the Daypack 170: four shelf-stable meals built around a 170g daily protein target.",
   openGraph: {
-    title: "Daypack by Daysworth - Pilot Updates",
+    title: "Daypack 170 — First-Run Preorder",
     description:
-      "A full day of food, in one pack. Join the list for verified pilot details before paid ordering opens.",
+      "Four shelf-stable meals. One complete day. 170 grams of protein.",
     url: siteUrl,
     siteName: "Daypack",
     type: "website",
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Daypack by Daysworth - Pilot Updates",
+    title: "Daypack 170 — First-Run Preorder",
     description:
-      "A full day of food, in one pack. Paid pilot ordering is not currently open.",
+      "Preorder one complete day of shelf-stable food built around a 170g protein target.",
     images: ["/og.png"],
   },
   robots: { index: true, follow: true },

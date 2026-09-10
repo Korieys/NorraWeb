@@ -46,13 +46,12 @@ export function Nav() {
             )}
           >
             <nav className="flex flex-col px-6 py-4 font-sans text-sm font-semibold uppercase tracking-wide-lg text-ink">
-              <a href="/#sku-110" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">PACKS</a>
-              <Link href="/find-your-pack" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">FIND YOUR PACK</Link>
+              <a href="/#inside" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">THE 170</a>
               <Link href="/story" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">STORY</Link>
               <a href="/#faq" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">FAQ</a>
               <div className="py-5">
                 <Button asChild size="lg" className="w-full">
-                  <a href="/find-your-pack" onClick={close}>FIND YOUR PACK</a>
+                  <a href="/#preorder" onClick={close}>PREORDER · FROM $54.99</a>
                 </Button>
               </div>
             </nav>
@@ -88,14 +87,13 @@ export function Nav() {
             </span>
           </Link>
           <nav className="hidden items-center gap-7 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/65 md:flex">
-            <a href="/#sku-110" className="hover:text-ink">PACKS</a>
-            <Link href="/find-your-pack" className="hover:text-ink">FIND YOUR PACK</Link>
+            <a href="/#inside" className="hover:text-ink">THE 170</a>
             <Link href="/story" className="hover:text-ink">STORY</Link>
             <a href="/#faq" className="hover:text-ink">FAQ</a>
           </nav>
           <div className="hidden md:block">
             <Button asChild size="sm">
-              <a href="/find-your-pack">FIND YOUR PACK</a>
+              <a href="/#preorder">PREORDER · $54.99</a>
             </Button>
           </div>
           <button
