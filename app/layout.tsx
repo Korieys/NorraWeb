@@ -40,11 +40,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Daypack 170 — First-Run Preorder",
   description:
-    "Preorder the Daypack 170: four shelf-stable meals built around a 170g daily protein target.",
+    "Preorder the Daypack 170: nine shelf-stable items, 170g+ protein, and roughly 2,000–2,100 calories organized into one complete day.",
   openGraph: {
     title: "Daypack 170 — First-Run Preorder",
     description:
-      "Four shelf-stable meals. One complete day. 170 grams of protein.",
+      "Nine shelf-stable items. One complete day. 170g+ protein and roughly 2,000–2,100 calories.",
     url: siteUrl,
     siteName: "Daypack",
     type: "website",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Daypack 170 — First-Run Preorder",
     description:
-      "Preorder one complete day of shelf-stable food built around a 170g protein target.",
+      "Preorder nine shelf-stable items organized into one complete day with 170g+ protein.",
     images: ["/og.png"],
   },
   robots: { index: true, follow: true },

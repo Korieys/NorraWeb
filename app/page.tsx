@@ -4,9 +4,18 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { PreorderButton } from "@/components/PreorderButton";
 import { EmailDialog } from "@/components/EmailDialog";
+import { FAQ } from "@/components/FAQ";
 import { SKUS } from "@/lib/skus";
 
 const pack = SKUS["170"];
+const CONTENTS = [
+  { meal: "Breakfast", items: ["Kodiak Chocolate Chip Protein Muffin Power Cup", "Quest Strawberry Protein Milkshake"] },
+  { meal: "Lunch", items: ["One HMR shelf-stable entrée", "Quest Chocolate Protein Milkshake"] },
+  { meal: "Dinner", items: ["One HMR shelf-stable entrée"] },
+  { meal: "Snacks", items: ["Legendary Blueberry Protein Tasty Pastry", "think! 20g Protein Bar", "Two H-E-B Hit the Trail Mix packets"] },
+];
+
+const HMR_ROTATION = ["Chicken Pasta Parmesan", "Turkey Chili", "Rotini Chicken Alfredo", "Beef Stroganoff", "Penne Pasta with Meatballs", "Lasagna with Meat Sauce"];
 
 export default function Home() {
   return (
@@ -19,7 +28,7 @@ export default function Home() {
             <div className="flex flex-col justify-center px-6 py-16 sm:px-8 lg:col-span-7 lg:px-10 lg:py-24">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-paper/65">First-run preorder · Daypack 170 · Three ways in</p>
               <h1 className="mt-6 max-w-4xl font-display text-[64px] font-medium uppercase leading-[0.86] tracking-wide-sm sm:text-[84px] lg:text-[108px]">The everyday pack is ready.</h1>
-              <p className="mt-8 max-w-xl font-sans text-lg leading-8 text-paper/80 sm:text-xl">Four shelf-stable meals. One complete day. 170 grams of protein, packed for work, travel, and the days you do not want to plan food.</p>
+              <p className="mt-8 max-w-xl font-sans text-lg leading-8 text-paper/80 sm:text-xl">One complete day, packed and ready. Nine shelf-stable items deliver 170g+ of protein and roughly 2,000–2,100 calories without the grocery-store side quest.</p>
               <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
                 <PreorderButton variant="invertedPaper" />
                 <a href="#inside" className="font-sans text-sm font-semibold uppercase tracking-wide-md text-paper underline underline-offset-4">See what is inside</a>
@@ -35,7 +44,7 @@ export default function Home() {
 
         <section className="border-b border-ink/15">
           <div className="mx-auto grid max-w-content grid-cols-2 lg:grid-cols-4">
-            {[["170G", "Protein target"], ["4", "Meals + snack"], ["1 DAY", "Grab-and-go food"], ["$54.99", "Single-pack price"]].map(([value, label]) => (
+            {[["170G+", "Working protein target"], ["9", "Individual items"], ["2,000–2,100", "Approx. calories"], ["$54.99", "Single-pack price"]].map(([value, label]) => (
               <div key={label} className="border-b border-r border-ink/15 px-6 py-8 last:border-r-0 lg:border-b-0 lg:px-8">
                 <p className="font-display text-4xl font-medium uppercase tracking-wide-sm">{value}</p>
                 <p className="mt-2 font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-ink/50">{label}</p>
@@ -47,20 +56,27 @@ export default function Home() {
         <section id="inside" className="mx-auto grid max-w-content gap-14 px-6 py-20 lg:grid-cols-12 lg:px-10 lg:py-28">
           <div className="lg:col-span-5">
             <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-pine">Built around your day</p>
-            <h2 className="mt-5 font-display text-5xl font-medium uppercase leading-[0.95] tracking-wide-sm sm:text-6xl">No macros to chase at 9 p.m.</h2>
-            <p className="mt-6 max-w-md font-sans text-base leading-7 text-ink/70">Daypack 170 portions a full day around a clear protein target. Keep it at your desk, in your car, or in your carry-on and eat each item when it fits your schedule.</p>
+            <h2 className="mt-5 font-display text-5xl font-medium uppercase leading-[0.95] tracking-wide-sm sm:text-6xl">Nine items. Your whole day.</h2>
+            <p className="mt-6 max-w-md font-sans text-base leading-7 text-ink/70">A warm protein breakfast, two savory entrées, two protein milkshakes, a protein pastry, a 20g protein bar, and two trail mix packets—organized by the moment you need them.</p>
           </div>
           <div className="lg:col-span-7 lg:pl-10">
             <ol className="divide-y divide-ink/15 border-y border-ink/15">
-              {pack.meals.map((meal, index) => (
-                <li key={meal.slot} className="grid grid-cols-[44px_1fr_auto] items-center gap-4 py-6">
+              {CONTENTS.map((group, index) => (
+                <li key={group.meal} className="grid grid-cols-[44px_1fr] gap-4 py-6 sm:grid-cols-[44px_120px_1fr]">
                   <span className="font-sans text-[10px] font-semibold tracking-wide-lg text-ink/35">0{index + 1}</span>
-                  <div><p className="font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-ink/50">{meal.slot}</p><p className="mt-1 font-display text-lg uppercase tracking-wide-sm">{meal.name}</p></div>
-                  <span className="font-display text-3xl tabular-nums">{meal.protein}<span className="text-base text-ink/45">g</span></span>
+                  <p className="font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-pine">{group.meal}</p>
+                  <ul className="space-y-2">{group.items.map((item) => <li key={item} className="font-display text-lg uppercase leading-6 tracking-wide-sm">{item}</li>)}</ul>
                 </li>
               ))}
             </ol>
-            <p className="mt-4 font-sans text-xs leading-5 text-ink/50">Sample menu shown. Final products, ingredients, allergens, nutrition labels, and preparation directions will appear on the pack and may change before fulfillment.</p>
+            <p className="mt-4 font-sans text-xs leading-5 text-ink/50">Nine individual items total. Nutrition varies with the two entrées selected. Always review the received labels for ingredients, allergens, nutrition, storage, and preparation directions.</p>
+          </div>
+        </section>
+
+        <section className="border-y border-ink/15 bg-paper">
+          <div className="mx-auto grid max-w-content gap-12 px-6 py-20 lg:grid-cols-12 lg:px-10 lg:py-24">
+            <div className="lg:col-span-4"><p className="font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-pine">Rotating HMR selection</p><h2 className="mt-5 font-display text-4xl font-medium uppercase leading-none tracking-wide-sm sm:text-5xl">Two savory entrées in every pack.</h2><p className="mt-6 font-sans text-sm leading-6 text-ink/65">The exact pair rotates while we finish received-label and taste validation. We will confirm the final combination before fulfillment.</p></div>
+            <ul className="grid gap-px bg-ink/15 sm:grid-cols-2 lg:col-span-8">{HMR_ROTATION.map((item, index) => <li key={item} className="flex items-center gap-4 bg-paper p-5"><span className="font-sans text-[10px] font-semibold text-ink/35">{String(index + 1).padStart(2, "0")}</span><span className="font-display text-base uppercase tracking-wide-sm">{item}</span></li>)}</ul>
           </div>
         </section>
 
@@ -70,6 +86,8 @@ export default function Home() {
             <div className="space-y-6 font-sans text-base leading-7 text-ink/75"><p>We are opening the 170 first because it is the most useful everyday baseline in the Daypack range. Start with one pack, stock three, or subscribe to a monthly Core 3 delivery.</p><p>You will receive production and fulfillment updates by email. If the timing or final product details no longer work for you, cancel before shipment for a full refund to the original payment method.</p></div>
           </div>
         </section>
+
+        <FAQ />
 
         <section id="preorder" className="bg-ink text-paper">
           <div className="mx-auto max-w-content px-6 py-20 lg:px-10 lg:py-28">

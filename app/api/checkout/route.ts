@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     };
     const productLineItem = { price_data: { currency: "usd", unit_amount: offer.amount, product_data: {
       name: offer.name,
-      description: `${offer.quantity} single-day 170g protein pack${offer.quantity > 1 ? "s" : ""}. Estimated Q4 2026 first fulfillment.`,
+        description: `${offer.quantity} single-day pack${offer.quantity > 1 ? "s" : ""}, each with 9 shelf-stable items and a working target of 170g+ protein. Estimated Q4 2026 first fulfillment.`,
       metadata: { sku: "170", offer: offerId },
     }, ...(offer.recurring ? { recurring: { interval: "month" as const } } : {}) }, quantity: 1 };
     const lineItems = offer.recurring

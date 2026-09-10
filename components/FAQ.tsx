@@ -1,83 +1,24 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/Accordion";
-import { Reveal } from "@/components/Reveal";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/Accordion";
 
 const ITEMS = [
-  {
-    q: "When does Daypack launch?",
-    a: "Targeting Q3 2026. Reserve a pack to lock in early access and founder pricing.",
-  },
-  {
-    q: "How is the food shelf stable?",
-    a: "Retort pouches. The same technology used by premium sous-vide brands and high-end field rations. No preservatives needed.",
-  },
-  {
-    q: "What's the shelf life?",
-    a: "Twelve to eighteen months unopened. Every pack is dated.",
-  },
-  {
-    q: "How do you hit the protein number exactly?",
-    a: "Every component has a verified protein count. We assemble packs from a fixed library so the math always works.",
-  },
-  {
-    q: "Which pack should I pick?",
-    a: "Match the number to your body weight and goal. As a rough guide, multiply your weight in pounds by 0.8 for maintenance, 1.0 if you are losing weight, or 1.05 if you are building muscle. Snap to the closest pack: 110, 140, 170, 200, or 230. The Find Your Pack tool does this for you.",
-  },
-  {
-    q: "Is Daypack just for lifters or bodybuilders?",
-    a: "No. Daypack is built for any adult who wants structured daily protein. The lower-tier packs serve smaller frames, recovery, and older adults. The larger packs serve heavier frames and high-output training. Same architecture across the line.",
-  },
-  {
-    q: "What about allergens?",
-    a: "Allergens labeled per FDA requirements. Gluten-free and dairy-free variants planned for v2.",
-  },
-  {
-    q: "Where do you ship?",
-    a: "Continental US at launch. Canada and UK shortly after.",
-  },
-  {
-    q: "What does my $1 get me?",
-    a: "A lot for a buck. It locks in 30% off your first order of Daypack — Daily or Weekly, your choice. It reserves your spot in line for early access and founder pricing. And it tells our co-packers exactly how much real demand exists, which is what lets us finalize production runs, ingredients, and launch timing. Your dollar is fully refundable any time.",
-  },
-  {
-    q: "Is the deposit really refundable?",
-    a: "Yes. Any time. No questions, no email required. Click the link in your confirmation.",
-  },
-  {
-    q: "Do I have to buy weekly?",
-    a: "No. The weekly bundle gets the best per-day price, but you're welcome to grab a single pack and try it first. Pricing and pack structure are still being finalized and may change before launch.",
-  },
-  {
-    q: "Can I customize the meals?",
-    a: "Not at launch. We start with a fixed library so the protein math is guaranteed. Customization comes in v2.",
-  },
+  { q: "What is in the current Daypack?", a: "Nine items: a Kodiak Chocolate Chip Protein Muffin Power Cup; Quest Strawberry and Chocolate Protein Milkshakes; two shelf-stable HMR entrées; a Legendary Blueberry Protein Tasty Pastry; a think! 20g Protein Bar; and two H-E-B Hit the Trail Mix packets." },
+  { q: "Which HMR entrées will I receive?", a: "Each pack includes two entrées from our rotating HMR selection. The planned rotation includes Chicken Pasta Parmesan, Turkey Chili, Rotini Chicken Alfredo, Beef Stroganoff, Penne Pasta with Meatballs, and Lasagna with Meat Sauce. The exact pair may vary while received-label and taste validation is completed." },
+  { q: "How much protein and how many calories?", a: "The current working target is at least 170 grams of protein and roughly 2,000–2,100 calories. Exact totals depend on the two HMR entrées included. The received product labels are the final source for nutrition and allergen information." },
+  { q: "Does anything need refrigeration?", a: "The pilot items are shelf stable while unopened. Follow the storage and preparation directions on every received product label, and refrigerate leftovers when a label directs you to." },
+  { q: "When will my preorder ship?", a: "First-run fulfillment is estimated for Q4 2026. We will send production updates and tracking to the email used at checkout. You may cancel for a full refund any time before shipment." },
+  { q: "What are the purchase options?", a: "One Daypack is $54.99, a one-time Core 3 is $149.99, and the monthly Core 3 subscription is $139.99. Standard U.S. shipping is $9.99 per order or subscription shipment." },
+  { q: "Can I cancel the Core 3 subscription?", a: "Yes. The Core 3 subscription renews monthly until canceled. Email team@eatdaypack.com before the next renewal to stop future shipments." },
+  { q: "What about allergens?", a: "Ingredients and allergens vary across the branded items and rotating entrées. Review every received label before eating. Do not consume an item containing an ingredient you cannot safely eat." },
 ];
 
 export function FAQ() {
-  return (
-    <section id="faq" className="border-t border-ink/10 bg-paper py-24 lg:py-32">
-      <div className="mx-auto max-w-[760px] px-6 lg:px-0">
-        <Reveal as="p" className="text-center font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan">
-          QUESTIONS
-        </Reveal>
-        <Reveal as="h2" delayMs={100} className="mt-6 text-center font-display text-[40px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink lg:text-[48px]">
-          ANSWERS.
-        </Reveal>
-        <Reveal delayMs={200} className="mt-12 lg:mt-16">
-          <Accordion type="single" collapsible className="border-t border-ink/15">
-            {ITEMS.map((item, i) => (
-              <AccordionItem key={i} value={`item-${i}`}>
-                <AccordionTrigger>{item.q}</AccordionTrigger>
-                <AccordionContent>{item.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </Reveal>
-      </div>
-    </section>
-  );
+  return <section id="faq" className="border-t border-ink/15 bg-paper py-20 lg:py-28">
+    <div className="mx-auto max-w-[800px] px-6">
+      <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-pine">The useful details</p>
+      <h2 className="mt-5 text-center font-display text-5xl font-medium uppercase tracking-wide-sm">Questions, answered.</h2>
+      <Accordion type="single" collapsible className="mt-12 border-t border-ink/15">
+        {ITEMS.map((item, index) => <AccordionItem key={item.q} value={`item-${index}`}><AccordionTrigger>{item.q}</AccordionTrigger><AccordionContent>{item.a}</AccordionContent></AccordionItem>)}
+      </Accordion>
+    </div>
+  </section>;
 }

@@ -21,8 +21,8 @@ export function Footer() {
               A DAYSWORTH PRODUCT
             </p>
             <p className="mt-8 max-w-[420px] font-sans text-[14px] leading-[1.6] text-paper/70">
-              Four shelf-stable meals organized into one day. The 170 pack is
-              now open for first-run preorders.
+              Nine shelf-stable items organized into one complete day, with
+              170g+ protein. The pilot pack is open for first-run preorders.
             </p>
             <p className="mt-4 font-sans text-[11px] leading-[1.5] text-paper/50">
               Sold by Daysworth Nutrition LLC, Spring, Texas.

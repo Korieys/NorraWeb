@@ -47,8 +47,8 @@ function StoryHero() {
           <h1 className="mt-6 font-display text-[48px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[64px] lg:text-[80px]">
             <span className="block animate-fade-in-up-lg [animation-delay:180ms]">ONE PACK.</span>
             <span className="block animate-fade-in-up-lg [animation-delay:300ms]">ONE DAY.</span>
-            <span className="block animate-fade-in-up-lg [animation-delay:420ms]">FOUR REAL</span>
-            <span className="block animate-fade-in-up-lg [animation-delay:540ms]">MEALS.</span>
+            <span className="block animate-fade-in-up-lg [animation-delay:420ms]">NINE REAL</span>
+            <span className="block animate-fade-in-up-lg [animation-delay:540ms]">ITEMS.</span>
           </h1>
           <p className="mt-8 max-w-[520px] animate-fade-in-up font-sans text-[18px] leading-[1.55] text-ink/80 lg:text-[20px] [animation-delay:700ms]">
             Daypack started because I got tired of solving the same annoying
@@ -161,7 +161,7 @@ function PullQuote() {
           <blockquote className="text-center font-display text-[32px] font-medium uppercase leading-[1.05] tracking-wide-sm text-ink sm:text-[44px] lg:text-[56px]">
             ONE PACK. ONE DAY.
             <br />
-            FOUR REAL MEALS.
+            NINE READY ITEMS.
             <br />
             <span className="text-tan">
               A CLEAR PROTEIN TARGET ON THE FRONT.
@@ -178,13 +178,13 @@ const PRINCIPLES = [
     index: "01",
     accent: "text-slate",
     headline: "THE POUCH IS THE MATH.",
-    body: "Every Daypack is engineered around a single protein number. No counting macros. No logging meals. Open the pouch, eat the pouch, hit the number.",
+    body: "The pilot combines nine labeled items around a working target of 170g+ protein. No daily grocery run and no macro scavenger hunt.",
   },
   {
     index: "02",
     accent: "text-olive",
-    headline: "REAL FOOD, NOT POWDER.",
-    body: "Sous-vide proteins. Real grains. Real sauces. Nothing extruded, nothing pretending. The kind of meal you&rsquo;d make on your best day, on every day.",
+    headline: "BRANDS YOU CAN READ.",
+    body: "Kodiak, Quest, HMR, Legendary, think!, and H-E-B products with the original manufacturer labels, ingredients, and preparation directions intact.",
   },
   {
     index: "03",
