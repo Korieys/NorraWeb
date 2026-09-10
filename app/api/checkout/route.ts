@@ -35,24 +35,32 @@ export async function POST(req: Request) {
       ...(optionalCookie(body?.fbp) ? { fbp: optionalCookie(body.fbp)! } : {}),
       ...(optionalCookie(body?.fbc) ? { fbc: optionalCookie(body.fbc)! } : {}),
     };
+    const productLineItem = { price_data: { currency: "usd", unit_amount: offer.amount, product_data: {
+      name: offer.name,
+      description: `${offer.quantity} single-day 170g protein pack${offer.quantity > 1 ? "s" : ""}. Estimated Q4 2026 first fulfillment.`,
+      metadata: { sku: "170", offer: offerId },
+    }, ...(offer.recurring ? { recurring: { interval: "month" as const } } : {}) }, quantity: 1 };
+    const lineItems = offer.recurring
+      ? [productLineItem, { price_data: { currency: "usd", unit_amount: SHIPPING_CENTS, product_data: {
+          name: "Standard U.S. shipping",
+          description: "Shipping for each monthly Core 3 delivery.",
+          metadata: { kind: "shipping", offer: offerId },
+        }, recurring: { interval: "month" as const } }, quantity: 1 }]
+      : [productLineItem];
     const session = await stripe.checkout.sessions.create({
       mode: offer.recurring ? "subscription" : "payment",
       payment_method_types: ["card"],
-      line_items: [{ price_data: { currency: "usd", unit_amount: offer.amount, product_data: {
-        name: offer.name,
-        description: `${offer.quantity} single-day 170g protein pack${offer.quantity > 1 ? "s" : ""}. Estimated Q4 2026 first fulfillment.`,
-        metadata: { sku: "170", offer: offerId },
-      }, ...(offer.recurring ? { recurring: { interval: "month" as const } } : {}) }, quantity: 1 }],
+      line_items: lineItems,
       metadata,
       ...(offer.recurring ? { subscription_data: { metadata } } : { payment_intent_data: { metadata } }),
       ...(!offer.recurring ? { customer_creation: "always" as const } : {}),
       shipping_address_collection: { allowed_countries: ["US"] },
-      shipping_options: [{ shipping_rate_data: {
+      ...(!offer.recurring ? { shipping_options: [{ shipping_rate_data: {
         type: "fixed_amount",
         fixed_amount: { amount: SHIPPING_CENTS, currency: "usd" },
         display_name: "Standard U.S. shipping",
         delivery_estimate: { minimum: { unit: "business_day", value: 3 }, maximum: { unit: "business_day", value: 7 } },
-      } }],
+      } }] } : {}),
       phone_number_collection: { enabled: true },
       custom_text: {
         submit: { message: offer.recurring ? "Renews monthly until canceled. First fulfillment estimated Q4 2026." : "Preorder charged today. Estimated Q4 2026 fulfillment. Cancel before shipment for a full refund." },
