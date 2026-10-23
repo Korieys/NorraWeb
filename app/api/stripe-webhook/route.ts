@@ -264,10 +264,14 @@ export async function POST(req: Request) {
       type: event.type,
     });
 
-    if (event.type === "checkout.session.completed") {
+    if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
+      const session = event.data.object as Stripe.Checkout.Session;
+      if (session.payment_status !== "paid" && session.payment_status !== "no_payment_required") {
+        return NextResponse.json({ received: true });
+      }
       deposit = await depositFromCheckoutSession(
         stripe,
-        event.data.object as Stripe.Checkout.Session
+        session
       );
     } else if (event.type === "payment_intent.succeeded") {
       deposit = await depositFromPaymentIntent(
