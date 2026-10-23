@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque, Fraunces, IBM_Plex_Mono } from "next/font/google";
+import { Inter, Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
 import "./globals.css";
@@ -19,11 +20,11 @@ const bricolage = Bricolage_Grotesque({
 
 // Stand-in serif for the comparison section's display numerals + headline.
 // TODO: swap for the brand serif once it is in the repo.
-const fraunces = Fraunces({
-  subsets: ["latin"],
+const fraunces = localFont({
+  src: "../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2",
   variable: "--font-serif",
   display: "swap",
-  weight: ["400", "500", "600"],
+  weight: "100 900",
 });
 
 // Mono for the data-sheet line items, grams, and prices.
