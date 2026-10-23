@@ -15,7 +15,7 @@ type Props = {
 export function SKUSection({ skuId }: Props) {
   const sku = SKUS[skuId];
   const [loading, setLoading] = useState(false);
-  const proteinCount = useCountUp(sku.protein, {
+  const { ref: proteinRef, value: proteinValue } = useCountUp(sku.protein, {
     durationMs: 1400,
     threshold: 0.25,
   });
@@ -74,12 +74,12 @@ export function SKUSection({ skuId }: Props) {
         <div className="lg:col-span-7">
           <h2
             id={`sku-${sku.id}-heading`}
-            ref={proteinCount.ref as never}
+            ref={proteinRef as never}
             className="font-display font-medium leading-[0.86] tracking-wide-sm text-paper tabular-nums"
             style={{ fontSize: "clamp(120px, 18vw, 240px)" }}
             aria-label={`${sku.protein} grams of protein`}
           >
-            {proteinCount.value}
+            {proteinValue}
           </h2>
           <Reveal as="p" delayMs={150} className="mt-2 font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-paper/80">
             GRAMS OF PROTEIN · 4 MEALS · 1 DAY

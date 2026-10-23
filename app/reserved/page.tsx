@@ -11,14 +11,9 @@ export const metadata = {
   description: "You're on the first run.",
 };
 
-type Search = { sku?: string; session_id?: string; dev?: string };
+type Search = { sku?: string; session_id?: string };
 
 async function resolveSession(search: Search) {
-  // Dev fallback path bypasses Stripe.
-  if (search.dev === "1") {
-    return { ok: true, sku: search.sku, email: undefined as string | undefined };
-  }
-
   const stripe = getStripe();
   if (!stripe || !search.session_id) {
     return { ok: false as const };
@@ -45,9 +40,9 @@ async function resolveSession(search: Search) {
 export default async function Reserved({
   searchParams,
 }: {
-  searchParams: Search;
+  searchParams: Promise<Search>;
 }) {
-  const session = await resolveSession(searchParams);
+  const session = await resolveSession(await searchParams);
   if (!session.ok) {
     redirect("/cancelled");
   }
