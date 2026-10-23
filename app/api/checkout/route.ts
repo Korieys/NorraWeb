@@ -58,13 +58,12 @@ export async function POST(req: Request) {
       ...(!offer.recurring ? { shipping_options: [{ shipping_rate_data: {
         type: "fixed_amount",
         fixed_amount: { amount: SHIPPING_CENTS, currency: "usd" },
-        display_name: "Standard U.S. shipping",
-        delivery_estimate: { minimum: { unit: "business_day", value: 3 }, maximum: { unit: "business_day", value: 7 } },
+        display_name: "Preorder shipping — estimated Q4 2026 fulfillment",
       } }] } : {}),
       phone_number_collection: { enabled: true },
       custom_text: {
         submit: { message: offer.recurring ? "Renews monthly until canceled. First fulfillment estimated Q4 2026." : "Preorder charged today. Estimated Q4 2026 fulfillment. Cancel before shipment for a full refund." },
-        shipping_address: { message: "$9.99 standard U.S. shipping is added at checkout." },
+        shipping_address: { message: "$9.99 standard U.S. shipping. This is a preorder with first fulfillment estimated for Q4 2026, not immediate dispatch." },
       },
       success_url: `${origin}/reserved?sku=170&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/cancelled`,
