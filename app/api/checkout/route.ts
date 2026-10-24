@@ -1,13 +1,8 @@
 import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
+import { OFFERS, SHIPPING_CENTS, offerIdFrom } from "@/lib/daypack-offers";
 
 export const runtime = "nodejs";
-const SHIPPING_CENTS = 999;
-const OFFERS = {
-  single: { amount: 5499, quantity: 1, name: "1 Daypack 170", recurring: false },
-  core3: { amount: 14999, quantity: 3, name: "Daypack 170 — Core 3", recurring: false },
-  "core3-subscription": { amount: 13999, quantity: 3, name: "Daypack 170 — Core 3 Subscription", recurring: true },
-} as const;
 
 function originFrom(req: Request): string {
   const host = req.headers.get("x-forwarded-host") ?? req.headers.get("host");
@@ -22,9 +17,12 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     if (body?.sku !== "170") return NextResponse.json({ error: "Only the Daypack 170 is open for preorder." }, { status: 400 });
-    const offerId = body?.offer as keyof typeof OFFERS;
+    const offerId = offerIdFrom(body?.offer);
+    if (!offerId) return NextResponse.json({ error: "Choose a valid Daypack offer." }, { status: 400 });
     const offer = OFFERS[offerId];
-    if (!offer) return NextResponse.json({ error: "Choose a valid Daypack offer." }, { status: 400 });
+    if (process.env.DAYPACK_CHECKOUT_ENABLED !== "true") {
+      return NextResponse.json({ error: "Preorders are temporarily unavailable. Please contact team@eatdaypack.com for updates." }, { status: 503 });
+    }
     const stripe = getStripe();
     if (!stripe) return NextResponse.json({ error: "Secure checkout is not configured yet." }, { status: 503 });
 
@@ -49,22 +47,21 @@ export async function POST(req: Request) {
       : [productLineItem];
     const session = await stripe.checkout.sessions.create({
       mode: offer.recurring ? "subscription" : "payment",
-      payment_method_types: ["card"],
+      integration_identifier: "daypack-preorder-nqvszwrt",
       line_items: lineItems,
       metadata,
-      ...(offer.recurring ? { subscription_data: { metadata } } : { payment_intent_data: { metadata } }),
+      ...(offer.recurring ? { subscription_data: { metadata, billing_mode: { type: "classic" as const } } } : { payment_intent_data: { metadata } }),
       ...(!offer.recurring ? { customer_creation: "always" as const } : {}),
       shipping_address_collection: { allowed_countries: ["US"] },
       ...(!offer.recurring ? { shipping_options: [{ shipping_rate_data: {
         type: "fixed_amount",
         fixed_amount: { amount: SHIPPING_CENTS, currency: "usd" },
-        display_name: "Standard U.S. shipping",
-        delivery_estimate: { minimum: { unit: "business_day", value: 3 }, maximum: { unit: "business_day", value: 7 } },
+        display_name: "Preorder shipping — estimated Q4 2026 fulfillment",
       } }] } : {}),
       phone_number_collection: { enabled: true },
       custom_text: {
         submit: { message: offer.recurring ? "Renews monthly until canceled. First fulfillment estimated Q4 2026." : "Preorder charged today. Estimated Q4 2026 fulfillment. Cancel before shipment for a full refund." },
-        shipping_address: { message: "$9.99 standard U.S. shipping is added at checkout." },
+        shipping_address: { message: "$9.99 standard U.S. shipping. This is a preorder with first fulfillment estimated for Q4 2026, not immediate dispatch." },
       },
       success_url: `${origin}/reserved?sku=170&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/cancelled`,
@@ -72,8 +69,8 @@ export async function POST(req: Request) {
       billing_address_collection: "auto",
     });
     return NextResponse.json({ url: session.url }, { headers: { "Cache-Control": "no-store" } });
-  } catch (error) {
-    console.error("Checkout error", error);
+  } catch {
+    console.error("Daypack checkout could not be created.");
     return NextResponse.json({ error: "Unable to open secure checkout. Please try again." }, { status: 500 });
   }
 }

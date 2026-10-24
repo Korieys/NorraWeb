@@ -5,15 +5,12 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useHydrated } from "@/lib/useHydrated";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydrated();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
@@ -46,12 +43,12 @@ export function Nav() {
             )}
           >
             <nav className="flex flex-col px-6 py-4 font-sans text-sm font-semibold uppercase tracking-wide-lg text-ink">
-              <a href="/#inside" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">THE 170</a>
+              <Link href="/#inside" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">THE 170</Link>
               <Link href="/story" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">STORY</Link>
-              <a href="/#faq" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">FAQ</a>
+              <Link href="/#faq" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">FAQ</Link>
               <div className="py-5">
                 <Button asChild size="lg" className="w-full">
-                  <a href="/#preorder" onClick={close}>PREORDER · FROM $54.99</a>
+                  <Link href="/#preorder" onClick={close}>PREORDER · FROM $54.99</Link>
                 </Button>
               </div>
             </nav>
@@ -87,13 +84,13 @@ export function Nav() {
             </span>
           </Link>
           <nav className="hidden items-center gap-7 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/65 md:flex">
-            <a href="/#inside" className="hover:text-ink">THE 170</a>
+            <Link href="/#inside" className="hover:text-ink">THE 170</Link>
             <Link href="/story" className="hover:text-ink">STORY</Link>
-            <a href="/#faq" className="hover:text-ink">FAQ</a>
+            <Link href="/#faq" className="hover:text-ink">FAQ</Link>
           </nav>
           <div className="hidden md:block">
             <Button asChild size="sm">
-              <a href="/#preorder">PREORDER · $54.99</a>
+              <Link href="/#preorder">PREORDER · $54.99</Link>
             </Button>
           </div>
           <button

@@ -1,0 +1,23 @@
+name: Customer readiness
+on:
+  pull_request:
+  push:
+    branches: [codex/customer-ready-preorder]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: node --test tests/*.test.cjs
+      - run: npx tsc --noEmit
+      - run: npm run lint
+      - run: npm run build
+      - run: node --test tests/built-webhook.cjs

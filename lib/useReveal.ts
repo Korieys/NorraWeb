@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useHydrated } from "./useHydrated";
 
 type Options = {
   /** Pixel/rem rootMargin offset. Default: trigger 80px before entering viewport. */
@@ -30,12 +31,12 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
     options;
   const ref = useRef<T | null>(null);
   const [revealed, setRevealed] = useState(false);
+  const hydrated = useHydrated();
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
     if (typeof IntersectionObserver === "undefined") {
-      setRevealed(true);
       return;
     }
 
@@ -56,7 +57,7 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
     return () => obs.disconnect();
   }, [rootMargin, threshold, once]);
 
-  return { ref, revealed };
+  return { ref, revealed: revealed || (hydrated && typeof IntersectionObserver === "undefined") };
 }
 
 /**

@@ -4,14 +4,11 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useHydrated } from "@/lib/useHydrated";
 
 export function MobileReserveBar() {
   const [visible, setVisible] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydrated();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 300);

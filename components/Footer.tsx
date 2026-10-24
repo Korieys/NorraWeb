@@ -22,7 +22,7 @@ export function Footer() {
             </p>
             <p className="mt-8 max-w-[420px] font-sans text-[14px] leading-[1.6] text-paper/70">
               Nine shelf-stable items organized into one complete day, with
-              170g+ protein. The pilot pack is open for first-run preorders.
+              170g+ protein. Explore the Daypack 170 first-run pilot.
             </p>
             <p className="mt-4 font-sans text-[11px] leading-[1.5] text-paper/50">
               Sold by Daysworth Nutrition LLC, Spring, Texas.
@@ -108,7 +108,7 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col gap-3 border-t border-paper/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-sans text-[11px] font-semibold uppercase tracking-wide-md text-paper/50">
-            © 2026 DAYSWORTH NUTRITION LLC. FIRST-RUN PREORDERS OPEN.
+            © 2026 DAYSWORTH NUTRITION LLC. DAYPACK 170 · FIRST-RUN PILOT.
           </p>
         </div>
       </div>
