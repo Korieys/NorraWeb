@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
-import { getStripe } from "@/lib/stripe";
+import { getStripe, stripePaymentMode } from "@/lib/stripe";
 import { sendPurchaseToMeta } from "@/lib/meta";
 import { OFFERS, orderOffer, type OfferId } from "@/lib/daypack-offers";
 
@@ -160,8 +160,23 @@ export async function POST(req: Request) {
   let event: Stripe.Event;
   try { event = stripe.webhooks.constructEvent(await req.text(), signature, secret); }
   catch { return NextResponse.json({ error: "Invalid signature" }, { status: 400 }); }
+  if (event.livemode !== (stripePaymentMode() === "live")) {
+    return NextResponse.json({ error: "Event payment mode does not match this environment" }, { status: 400 });
+  }
   try {
     const notice = await noticeFor(stripe, event);
+    if (!event.livemode) {
+      // Exercise the same Stripe reads and order classification in a sandbox,
+      // without writing profiles, sending emails or reporting ad conversions.
+      // These diagnostics do not prove email delivery or fulfillment.
+      const result = notice ? {
+        metric: notice.metric, reference: notice.key, amount: notice.amount,
+        orderType: notice.properties.order_type, quantity: notice.properties.pack_quantity,
+        currency: notice.properties.currency,
+      } : null;
+      console.log("Daypack sandbox event checked", { eventId: event.id, type: event.type, result });
+      return NextResponse.json({ received: true, test: true, notification: result });
+    }
     if (notice) {
       await sendNotice(notice);
       if (notice.purchase) await sendPurchaseToMeta({

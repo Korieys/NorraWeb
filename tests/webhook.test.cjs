@@ -9,7 +9,7 @@ const metadata=(offer='single')=>({sku:'170',reserved_pack:'170',offer,pack_quan
 const session=(extra={})=>({id:'cs_test_fixture',mode:'payment',payment_intent:'pi_test_fixture',payment_status:'paid',currency:'usd',customer_details:{email:'fixture@example.test'},customer:null,metadata:metadata(),amount_total:6498,...extra});
 const invoice=(extra={})=>({id:'in_test_initial',created,currency:'usd',status:'paid',amount_paid:14998,amount_remaining:0,billing_reason:'subscription_create',customer_email:'fixture@example.test',customer:'cus_test_fixture',parent:{type:'subscription_details',subscription_details:{subscription:'sub_test_fixture',metadata:metadata('core3-subscription')}},status_transitions:{paid_at:created+10},...extra});
 const subscription=(extra={})=>({id:'sub_test_fixture',status:'active',metadata:metadata('core3-subscription'),customer:'cus_test_fixture',cancel_at_period_end:false,cancel_at:null,canceled_at:null,...extra});
-const event=(type,object,extra={})=>({id:'evt_test_fixture',created,type,data:{object},...extra});
+const event=(type,object,extra={})=>({id:'evt_test_fixture',created,type,livemode:true,data:{object},...extra});
 function route(options={}){
  const requests=[],purchases=[],reads=[],logs=[];
  let currentInvoice=options.invoice??invoice(),currentSubscription=options.subscription??subscription();
@@ -20,7 +20,7 @@ function route(options={}){
   customers:{retrieve:async id=>{reads.push(['customer',id]);return options.customer??{email:'fixture@example.test'}}}};
  const loaded=load('app/api/stripe-webhook/route.ts',{
   'next/server':{NextResponse:{json:(data,options)=>({data,status:options?.status??200})}},
-  '@/lib/stripe':{getStripe:()=>options.noStripe?null:stripe},
+  '@/lib/stripe':{getStripe:()=>options.noStripe?null:stripe,stripePaymentMode:()=>options.mode??'live'},
   '@/lib/meta':{sendPurchaseToMeta:async value=>{purchases.push(value);return {ok:true}}}
  },{
   process:{env:{STRIPE_WEBHOOK_SECRET:secret,...(options.noKlaviyo?{}:{KLAVIYO_PRIVATE_API_KEY:'not-a-real-key'})}},
@@ -32,6 +32,38 @@ function route(options={}){
   async send(e,signature=true){const payload=JSON.stringify(e);return loaded.POST(new Request('https://example.test/api/stripe-webhook',{method:'POST',body:payload,headers:signature?{'stripe-signature':signature===true?signer.webhooks.generateTestHeaderString({payload,secret}):'invalid'}:{}}))}};
 }
 const attrs=r=>r.requests.at(-1).data.attributes;
+
+test('correctly signed wrong-mode and missing-mode events cannot reach any provider',async()=>{
+ for(const [mode,livemode] of [['live',false],['test',true],['test',undefined]]){
+  const r=route({mode});
+  assert.equal((await r.send(event('invoice.paid',{id:'in_test_initial'},{livemode}))).status,400);
+  assert.equal(r.reads.length,0);assert.equal(r.requests.length,0);assert.equal(r.purchases.length,0);
+ }
+});
+
+test('sandbox orders are classified without emails, ad tracking or personal-data logs',async()=>{
+ const r=route({mode:'test',noKlaviyo:true});
+ const result=await r.send(event('checkout.session.completed',session(),{livemode:false}));
+ assert.equal(result.status,200);assert.equal(result.data.test,true);
+ assert.equal(result.data.notification.metric,'Placed Preorder');
+ assert.equal(result.data.notification.reference,'pi_test_fixture');assert.equal(result.data.notification.amount,64.98);
+ assert.equal(r.requests.length,0);assert.equal(r.purchases.length,0);
+ assert.doesNotMatch(JSON.stringify([result,r.logs]),/fixture@example|customer_details|not-a-real-key|fbp|fbc/);
+});
+
+test('sandbox renewals still read current Stripe state and expose the stable invoice reference',async()=>{
+ const r=route({mode:'test',noKlaviyo:true,invoice:invoice({id:'in_test_renewal',billing_reason:'subscription_cycle'})});
+ const result=await r.send(event('invoice.paid',{id:'in_test_renewal'},{livemode:false}));
+ assert.equal(result.status,200);assert.equal(result.data.notification.reference,'in_test_renewal');
+ assert.equal(result.data.notification.orderType,'renewal');assert.equal(result.data.notification.quantity,3);
+ assert.deepEqual(r.reads,[['invoice','in_test_renewal']]);assert.equal(r.requests.length,0);assert.equal(r.purchases.length,0);
+});
+
+test('sandbox failures still retry instead of claiming successful verification',async()=>{
+ const r=route({mode:'test',customer:{deleted:true}});
+ assert.equal((await r.send(event('checkout.session.completed',session({customer_details:null,customer:'cus_deleted'}),{livemode:false}))).status,502);
+ assert.equal(r.requests.length,0);assert.equal(r.purchases.length,0);
+});
 test('missing and invalid signatures cannot reach providers',async()=>{
  const r=route();for(const sig of [false,'bad'])assert.equal((await r.send(event('checkout.session.completed',session()),sig)).status,400);
  assert.equal(r.requests.length,0);assert.equal(r.reads.length,0);

@@ -52,19 +52,34 @@ Paid events include the actual value, USD currency, offer name, pack quantity an
 
 ## Verification and remaining release gates
 
-51 local checks cover real SDK signature verification, payment gating, duplicate and concurrent deliveries, initial/renewal invoice identity, stale events, canceled/reversed schedules, provider failures, timeout aborts, log privacy, three offer totals and receipt states. TypeScript, lint and a production build pass. A stale local Turbopack cache initially prevented worker startup; preserving that cache and rebuilding cleanly resolved it. A new hosted workflow repeats the tests, type checking, lint and build on Linux.
+59 checks cover real SDK signature verification, payment gating, test/live isolation, duplicate and concurrent deliveries, initial/renewal invoice identity, stale events, canceled/reversed schedules, provider failures, timeout aborts, log privacy, three offer totals and receipt states. The hosted workflow repeats the tests, type checking, lint and build on Linux.
 
 Production dependencies have zero audit advisories. Three moderate development advisory entries remain in Tailwind 3's PostCSS selector chain; resolving those through a forced Tailwind 4 upgrade is outside this payment repair.
 
 Before enabling real customer checkout:
 
-1. Configure a dedicated Norra Stripe sandbox and its preview webhook, using sandbox credentials only. The existing preview had no Stripe secret configured. Verify all three offers, a delayed payment, invoice renewal, failed payment then recovery, scheduled/reversed/final cancellation, duplicate delivery and refund behavior.
+1. Configure a dedicated Norra Stripe sandbox and its preview webhook, using sandbox credentials only. The existing preview has no Stripe secret configured. The owner opened Norra's shared test mode; read-only inspection found active test endpoints pointing at the production Daypack URL and the production Klaviyo integration. Do not generate test payments there until those delivery paths are isolated; prefer a separate named Daypack sandbox without those inherited destinations. See the isolation requirements below. Verify all three offers, a delayed payment, invoice renewal, failed payment then recovery, scheduled/reversed/final cancellation, duplicate delivery and refund behavior.
 2. Create and review the separate operational email flows. Confirm transactional approval and suppression behavior with Klaviyo; disabling smart sending alone does not make a message transactional. Test delivery only to explicitly approved test recipients. Do not enroll buyers into marketing as part of this repair.
 3. Reconcile the Stripe order/invoice, shipping address and customer confirmation. Klaviyo event deduplication is not a warehouse ledger or evidence of shipment. No inventory allocation, shipping-label service, fulfillment tracking, automatic refund system or staff assignment is implemented here.
 4. Confirm fulfillment ownership, support coverage, refund handling and the remaining legal identity/statement descriptor details. Review refunds, disputes, nonstandard/proration invoices and zero/off-Stripe payments manually in Stripe; the automated order path deliberately excludes these cases.
 5. Complete hosted/mobile checks, approve the production application release and event/settings changes, and only then enable `DAYPACK_CHECKOUT_ENABLED=true` for that environment. Keep monitoring/reconciliation in place for failed deliveries.
 
 No purchases, charges, refunds, emails, live webhook edits, account changes or application releases were performed for this patch.
+
+## Sandbox isolation and preview setup
+
+Only Vercel production (`VERCEL_ENV=production`, supplied by Vercel) accepts `sk_live_` or `rk_live_` Stripe keys. Every preview and local environment accepts only `sk_test_` or `rk_test_` keys. Missing or wrong-mode credentials fail closed; a cached client cannot bypass key removal or replacement. Signed webhook events must have an explicit `livemode` value matching the environment before any Stripe lookup or outbound notification.
+
+In test mode the handler performs the same Stripe state reads and notice classification, then returns/logs a compact diagnostic containing event/reference, metric, amount, quantity and order type. It never calls Klaviyo or Meta, even if their credentials were inherited. Customer email, address and provider payloads are excluded. This validates order classification only: notification delivery, suppression, operational handling and fulfillment remain separate release gates.
+
+Use a separate named Norra/Daypack sandbox with no destinations to production or the live Klaviyo account. Configure only the reviewed `codex/customer-ready-preorder` branch in Vercel's `norra-web` project:
+
+- `STRIPE_SECRET_KEY`: sandbox restricted key, entered by the owner directly in Vercel; Checkout Sessions write and the read permissions needed by Checkout, invoices, subscriptions and customer lookup. Stripe may require permissions for resources that Checkout creates indirectly; verify least privilege in that sandbox. Never place a key in chat or Git.
+- `STRIPE_WEBHOOK_SECRET`: signing secret of the sandbox destination pointing to `https://norra-web-git-codex-customer-ready-preorder-korieys-projects.vercel.app/api/stripe-webhook`, entered by the owner directly in Vercel. Subscribe only to the six events above.
+- `DAYPACK_CHECKOUT_ENABLED=true` only for that reviewed preview branch after the sandbox connection is ready, then rebuild. Keep production checkout unavailable pending release approval. Keep preview deployment protection in place; establish narrowly scoped authenticated delivery separately if it blocks Stripe.
+- Do not add production Klaviyo, Meta, analytics or email-delivery settings to the preview. Test orders use fictional data. No sandbox transaction should be taken as proof of email delivery or physical fulfillment.
+
+The two existing shared-test destinations were inspected only and remain unchanged. No sandbox or credentials were created by this patch.
 
 ## References
 
