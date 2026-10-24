@@ -153,13 +153,25 @@ async function sendNotice(notice: Notice) {
 
 export async function POST(req: Request) {
   const stripe = getStripe();
-  const secret = process.env.STRIPE_WEBHOOK_SECRET;
+  const secret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
   if (!stripe || !secret) return NextResponse.json({ error: "Webhook not configured" }, { status: 503 });
   const signature = req.headers.get("stripe-signature");
   if (!signature) return NextResponse.json({ error: "Missing signature" }, { status: 400 });
   let event: Stripe.Event;
-  try { event = stripe.webhooks.constructEvent(await req.text(), signature, secret); }
-  catch { return NextResponse.json({ error: "Invalid signature" }, { status: 400 }); }
+  try { event = await stripe.webhooks.constructEventAsync(await req.text(), signature, secret); }
+  catch (error) {
+    // Provider errors may contain the signature and full customer payload. Log
+    // only a fixed category, never the error object, message, header or secret.
+    const message = error && typeof error === "object" && "message" in error
+      && typeof error.message === "string" ? error.message : "";
+    const reason = message.includes("Timestamp outside") ? "expired_signature"
+      : message.includes("No signatures found matching") ? "signature_mismatch"
+      : /extract timestamp|expected scheme/.test(message) ? "malformed_signature_header"
+      : /CryptoProvider|crypto|SubtleCrypto/.test(message) ? "crypto_runtime"
+      : "invalid_payload_or_signature";
+    console.warn("Daypack webhook signature rejected", { reason });
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+  }
   if (event.livemode !== (stripePaymentMode() === "live")) {
     return NextResponse.json({ error: "Event payment mode does not match this environment" }, { status: 400 });
   }

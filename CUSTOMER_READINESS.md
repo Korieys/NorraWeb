@@ -52,19 +52,21 @@ Paid events include the actual value, USD currency, offer name, pack quantity an
 
 ## Verification and remaining release gates
 
-59 checks cover real SDK signature verification, payment gating, test/live isolation, duplicate and concurrent deliveries, initial/renewal invoice identity, stale events, canceled/reversed schedules, provider failures, timeout aborts, log privacy, three offer totals and receipt states. The hosted workflow repeats the tests, type checking, lint and build on Linux.
+63 source-level checks cover real SDK signature verification, payment gating, test/live isolation, duplicate and concurrent deliveries, initial/renewal invoice identity, stale events, canceled/reversed schedules, provider failures, timeout aborts, log privacy, three offer totals and receipt states. Four additional checks exercise the actual bundled route after the production build: valid sandbox signature, missing/changed signature, stale delivery, and wrong payment mode. The hosted workflow repeats all 67 checks, type checking, lint and build on Linux.
+
+Signature verification uses the asynchronous SDK method so both Node and asynchronous crypto providers work. Accidental whitespace around the configured secret is removed. Failed verification still returns HTTP 400; logs contain only a fixed failure category, never a secret, signature, customer payload or raw provider error.
 
 Production dependencies have zero audit advisories. Three moderate development advisory entries remain in Tailwind 3's PostCSS selector chain; resolving those through a forced Tailwind 4 upgrade is outside this payment repair.
 
 Before enabling real customer checkout:
 
-1. Configure a dedicated Norra Stripe sandbox and its preview webhook, using sandbox credentials only. The existing preview has no Stripe secret configured. The owner opened Norra's shared test mode; read-only inspection found active test endpoints pointing at the production Daypack URL and the production Klaviyo integration. Do not generate test payments there until those delivery paths are isolated; prefer a separate named Daypack sandbox without those inherited destinations. See the isolation requirements below. Verify all three offers, a delayed payment, invoice renewal, failed payment then recovery, scheduled/reversed/final cancellation, duplicate delivery and refund behavior.
+1. Complete verification in the dedicated Daypack readiness sandbox, using its branch-scoped credentials only. The first fictional single-pack checkout and $64.98 receipt pass. Signed webhook delivery returned HTTP 400 Invalid signature, including after the owner replaced the secret; it remains unresolved. Preview checkout is closed and the test destination is disabled between approved test windows. Norra's shared test mode retains endpoints pointing at production Daypack and Klaviyo, so do not generate payments there. Verify all three offers, a delayed payment, invoice renewal, failed payment then recovery, scheduled/reversed/final cancellation, duplicate delivery and refund behavior.
 2. Create and review the separate operational email flows. Confirm transactional approval and suppression behavior with Klaviyo; disabling smart sending alone does not make a message transactional. Test delivery only to explicitly approved test recipients. Do not enroll buyers into marketing as part of this repair.
 3. Reconcile the Stripe order/invoice, shipping address and customer confirmation. Klaviyo event deduplication is not a warehouse ledger or evidence of shipment. No inventory allocation, shipping-label service, fulfillment tracking, automatic refund system or staff assignment is implemented here.
 4. Confirm fulfillment ownership, support coverage, refund handling and the remaining legal identity/statement descriptor details. Review refunds, disputes, nonstandard/proration invoices and zero/off-Stripe payments manually in Stripe; the automated order path deliberately excludes these cases.
 5. Complete hosted/mobile checks, approve the production application release and event/settings changes, and only then enable `DAYPACK_CHECKOUT_ENABLED=true` for that environment. Keep monitoring/reconciliation in place for failed deliveries.
 
-No purchases, charges, refunds, emails, live webhook edits, account changes or application releases were performed for this patch.
+The owner approved a separate sandbox and fictional test order. No real charge, refund, outbound email, live webhook edit, merge or production application release occurred during verification.
 
 ## Sandbox isolation and preview setup
 
@@ -79,7 +81,7 @@ Use a separate named Norra/Daypack sandbox with no destinations to production or
 - `DAYPACK_CHECKOUT_ENABLED=true` only for that reviewed preview branch after the sandbox connection is ready, then rebuild. Keep production checkout unavailable pending release approval. Keep preview deployment protection in place; establish narrowly scoped authenticated delivery separately if it blocks Stripe.
 - Do not add production Klaviyo, Meta, analytics or email-delivery settings to the preview. Test orders use fictional data. No sandbox transaction should be taken as proof of email delivery or physical fulfillment.
 
-The two existing shared-test destinations were inspected only and remain unchanged. No sandbox or credentials were created by this patch.
+The two existing shared-test destinations were inspected only and remain unchanged. The separate Daypack readiness sandbox was created with owner approval, and the owner entered its API and signing secrets directly into Vercel. No secret is stored in this repository.
 
 ## References
 

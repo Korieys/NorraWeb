@@ -14,7 +14,7 @@ function route(options={}){
  const requests=[],purchases=[],reads=[],logs=[];
  let currentInvoice=options.invoice??invoice(),currentSubscription=options.subscription??subscription();
  let fail=options.fail??false;
- const stripe={webhooks:signer.webhooks,
+ const stripe={webhooks:options.webhooks??signer.webhooks,
   invoices:{retrieve:async id=>{reads.push(['invoice',id]);return currentInvoice}},
   subscriptions:{retrieve:async id=>{reads.push(['subscription',id]);return currentSubscription}},
   customers:{retrieve:async id=>{reads.push(['customer',id]);return options.customer??{email:'fixture@example.test'}}}};
@@ -23,15 +23,54 @@ function route(options={}){
   '@/lib/stripe':{getStripe:()=>options.noStripe?null:stripe,stripePaymentMode:()=>options.mode??'live'},
   '@/lib/meta':{sendPurchaseToMeta:async value=>{purchases.push(value);return {ok:true}}}
  },{
-  process:{env:{STRIPE_WEBHOOK_SECRET:secret,...(options.noKlaviyo?{}:{KLAVIYO_PRIVATE_API_KEY:'not-a-real-key'})}},
+  process:{env:{STRIPE_WEBHOOK_SECRET:options.webhookSecret??secret,...(options.noKlaviyo?{}:{KLAVIYO_PRIVATE_API_KEY:'not-a-real-key'})}},
   console:{log:(...args)=>logs.push(args),warn:(...args)=>logs.push(args),error:(...args)=>logs.push(args)},
   ...(options.globals??{}),
   fetch:options.fetch??(async(url,init)=>{assert.ok(init.signal);requests.push(JSON.parse(init.body));return {ok:!fail,status:fail?503:202,body:{cancel:async()=>{}}}})
  });
  return {requests,purchases,reads,logs,setInvoice:value=>{currentInvoice=value},setSubscription:value=>{currentSubscription=value},setFail:value=>{fail=value},
-  async send(e,signature=true){const payload=JSON.stringify(e);return loaded.POST(new Request('https://example.test/api/stripe-webhook',{method:'POST',body:payload,headers:signature?{'stripe-signature':signature===true?signer.webhooks.generateTestHeaderString({payload,secret}):'invalid'}:{}}))}};
+  async send(e,signature=true){const payload=JSON.stringify(e);return loaded.POST(new Request('https://example.test/api/stripe-webhook',{method:'POST',body:payload,headers:signature?{'stripe-signature':signature===true?signer.webhooks.generateTestHeaderString({payload,secret}):signature}:{}}))}};
 }
 const attrs=r=>r.requests.at(-1).data.attributes;
+
+test('copied secret whitespace is normalized; blank secrets fail closed',async()=>{
+ const e=event('checkout.session.completed',session());
+ assert.equal((await route({webhookSecret:' \r\n'+secret+'\n '}).send(e)).status,200);
+ const blank=route({webhookSecret:' \r\n '});assert.equal((await blank.send(e)).status,503);
+ assert.equal(blank.reads.length,0);assert.equal(blank.requests.length,0);
+});
+
+test('asynchronous-only crypto verifies signed events without weakening checks',async()=>{
+ const provider=Stripe.createSubtleCryptoProvider();
+ const r=route({webhooks:{constructEventAsync:(body,header,key)=>signer.webhooks.constructEventAsync(body,header,key,undefined,provider)}});
+ assert.equal((await r.send(event('checkout.session.completed',session()))).status,200);
+ assert.equal(r.requests.length,1);
+ assert.equal((await r.send(event('checkout.session.completed',session()),'bad')).status,400);
+ assert.equal(r.requests.length,1);
+});
+
+test('real mismatch, stale and malformed signatures log only fixed categories',async()=>{
+ const e=event('checkout.session.completed',session());const payload=JSON.stringify(e);
+ for(const [signature,reason] of [
+  [signer.webhooks.generateTestHeaderString({payload,secret:'whsec_wrong_fixture'}),'signature_mismatch'],
+  [signer.webhooks.generateTestHeaderString({payload,secret,timestamp:Math.floor(Date.now()/1000)-600}),'expired_signature'],
+  ['invalid','malformed_signature_header'],
+ ]){
+  const r=route();const response=await r.send(e,signature);
+  assert.equal(response.status,400);assert.equal(response.data.error,'Invalid signature');
+  assert.equal(r.logs[0][1].reason,reason);assert.equal(r.requests.length,0);assert.equal(r.reads.length,0);
+  assert.doesNotMatch(JSON.stringify(r.logs),/whsec_|fixture@example|evt_test|t=|v1=/);
+ }
+});
+
+test('crypto runtime and unknown verification errors cannot leak their payloads',async()=>{
+ for(const [message,reason] of [['SubtleCryptoProvider unavailable','crypto_runtime'],['unexpected verification failure','invalid_payload_or_signature']]){
+  const r=route({webhooks:{constructEventAsync:async()=>{throw Object.assign(new Error(message+' '+secret+' fixture@example.test'),{header:'private-header',payload:'private-payload'});}}});
+  assert.equal((await r.send(event('checkout.session.completed',session()))).status,400);
+  assert.equal(r.logs[0][1].reason,reason);assert.equal(r.requests.length,0);
+  assert.doesNotMatch(JSON.stringify(r.logs),/whsec_|fixture@example|private-/);
+ }
+});
 
 test('correctly signed wrong-mode and missing-mode events cannot reach any provider',async()=>{
  for(const [mode,livemode] of [['live',false],['test',true],['test',undefined]]){
