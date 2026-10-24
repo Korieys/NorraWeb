@@ -270,7 +270,7 @@ function Signoff() {
               WHERE WE ARE RIGHT NOW
             </p>
             <p className="mt-4 font-sans text-[16px] leading-[1.6] text-ink/85">
-              Daypack is taking first-run preorders. Prior $1 reservations
+              Daypack 170 first-run offers are listed on the homepage. Prior $1 reservations
               remain refundable. The packs are being finalized with a
               co-packer. I&rsquo;m building this in public, sending honest
               updates, and only shipping once the food is good enough to put my

@@ -30,7 +30,7 @@ export default function Home() {
               <h1 className="mt-6 max-w-4xl font-display text-[64px] font-medium uppercase leading-[0.86] tracking-wide-sm sm:text-[84px] lg:text-[108px]">The everyday pack is ready.</h1>
               <p className="mt-8 max-w-xl font-sans text-lg leading-8 text-paper/80 sm:text-xl">One complete day, packed and ready. Nine shelf-stable items deliver 170g+ of protein and roughly 2,000–2,100 calories without the grocery-store side quest.</p>
               <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-                <PreorderButton variant="invertedPaper" />
+                <PreorderButton enabled={process.env.DAYPACK_CHECKOUT_ENABLED === "true"} variant="invertedPaper" />
                 <a href="#inside" className="font-sans text-sm font-semibold uppercase tracking-wide-md text-paper underline underline-offset-4">See what is inside</a>
               </div>
               <p className="mt-6 max-w-xl font-sans text-[11px] font-semibold uppercase leading-5 tracking-wide-md text-paper/55">From $54.99 + $9.99 shipping · Estimated Q4 2026 fulfillment · Cancel for a full refund before shipment</p>
@@ -115,6 +115,6 @@ function Offer({ title, price, detail, copy, offer, label, featured = false }: {
     <p className="mt-8 font-display text-5xl font-medium">{price}</p>
     <p className={`mt-2 font-sans text-[10px] font-semibold uppercase tracking-wide-md ${featured ? "text-paper/55" : "text-ink/45"}`}>{detail} · + shipping</p>
     <p className={`mt-6 font-sans text-sm leading-6 ${featured ? "text-paper/70" : "text-ink/65"}`}>{copy}</p>
-    <PreorderButton offer={offer} className="mt-auto pt-8" variant={featured ? "invertedPaper" : "primary"} label={label} />
+    <PreorderButton enabled={process.env.DAYPACK_CHECKOUT_ENABLED === "true"} offer={offer} className="mt-auto pt-8" variant={featured ? "invertedPaper" : "primary"} label={label} />
   </article>;
 }

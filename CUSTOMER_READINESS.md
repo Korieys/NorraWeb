@@ -1,6 +1,6 @@
 # Daypack order readiness
 
-This branch is a draft. Do not enable customer checkout until the sandbox, email and operating checks below pass. `DAYPACK_CHECKOUT_ENABLED` must equal `true` to create new sessions; absence or any other value returns a customer-facing 503 message. The switch does not suppress existing payment webhooks. No live setting is changed by this document.
+This branch is a draft. Do not enable customer checkout until the sandbox, email and operating checks below pass. `DAYPACK_CHECKOUT_ENABLED` must equal `true` to create new sessions; absence or any other value returns a customer-facing 503 message. The page also shows disabled preorder buttons and a contact-for-updates notice. Rebuild/redeploy after changing this setting so static page availability and the API agree. The switch does not suppress existing payment webhooks. No live setting is changed by this document.
 
 ## Repaired behavior
 
