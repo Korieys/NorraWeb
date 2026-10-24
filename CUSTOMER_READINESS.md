@@ -22,7 +22,7 @@ The live application endpoint still uses `2026-04-22.dahlia`. This branch does n
 
 The owner-confirmed Norra account is the Daypack payment account. Its application webhook at `https://www.eatdaypack.com/api/stripe-webhook` currently enables only `checkout.session.completed`. The separate Klaviyo integration endpoint is unchanged.
 
-The Daypack Klaviyo account has a live `Placed Deposit` workflow named `Depo Conf-live`. Its email describes a $1 refundable deposit, still mentions other pack tiers, uses smart sending and is not marked transactional. No `Placed Preorder` metric/linked flow appeared in the complete metrics response. New preorder and lifecycle messages have not been created, activated or sent.
+The Daypack Klaviyo account has a live `Placed Deposit` workflow named `Depo Conf-live`. Its email describes a $1 refundable deposit, still mentions other pack tiers, uses smart sending and is not marked transactional. No `Placed Preorder` metric/linked flow appeared in the complete metrics response. Six separate preorder and lifecycle templates have been saved as unattached drafts. Nine provider-render checks pass. Six owner-approved preview send jobs were accepted for the chosen test inbox; inbox receipt is pending. New operational flows have not been created or activated.
 
 After sandbox verification and release approval, the application endpoint needs these six events:
 
@@ -66,7 +66,7 @@ Before enabling real customer checkout:
 4. Confirm fulfillment ownership, support coverage, refund handling and the remaining legal identity/statement descriptor details. Review refunds, disputes, nonstandard/proration invoices and zero/off-Stripe payments manually in Stripe; the automated order path deliberately excludes these cases.
 5. Complete hosted/mobile checks, approve the production application release and event/settings changes, and only then enable `DAYPACK_CHECKOUT_ENABLED=true` for that environment. Keep monitoring/reconciliation in place for failed deliveries.
 
-The owner approved the separate sandbox and fictional order/subscription checks. No real charge, refund, outbound email, live webhook edit, merge or production application release occurred during verification.
+The owner approved the separate sandbox and fictional order/subscription checks. No real charge, refund, customer email, live webhook edit, merge or production application release occurred during sandbox verification. After that window closed, six fictional template previews were queued only to the owner-approved test inbox.
 
 ## Sandbox isolation and preview setup
 
