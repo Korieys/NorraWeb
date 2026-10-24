@@ -100,3 +100,5 @@ The branded sending domain hello.eatdaypack.com is Active (Marketing, Dynamic), 
 The complete metrics response still contains none of the five new operational metrics. The only flow is the existing deposit confirmation; the six reviewed templates remain unattached. No flow, customer profile, domain setting, suppression setting or plan changed.
 
 Sources: [Klaviyo transactional email requirements](https://help.klaviyo.com/hc/en-us/articles/360003165732) and [sending-domain routing](https://help.klaviyo.com/hc/en-us/articles/26024442679835).
+
+The owner chose to remain on Klaviyo’s free plan on October 24, 2026. No upgrade should be purchased. Automated transactional order and subscription emails remain a launch gate; the six previews do not establish automatic delivery or suppression behavior.
