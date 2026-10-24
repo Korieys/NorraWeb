@@ -15,9 +15,12 @@ function hashEmail(email: string): string {
 
 export type MetaPurchaseInput = {
   eventId: string;
+  eventTime?: number;
   email: string;
   eventSourceUrl: string;
   reservedPack: string;
+  quantity?: number;
+  contentName?: string;
   value?: number;
   /** _fbp cookie captured browser-side at checkout, if available. */
   fbp?: string;
@@ -27,8 +30,8 @@ export type MetaPurchaseInput = {
 
 /**
  * Sends a server-side Purchase event to the Meta Conversions API. This is the
- * source-of-truth Purchase signal, fired from the Stripe webhook when the $1
- * deposit clears — never client-side. Returns the HTTP status (never throws so
+ * source-of-truth Purchase signal, fired from the Stripe webhook after payment
+ * clears — never client-side. Returns the HTTP status (never throws so
  * it can't break the webhook's 200 response or the Klaviyo call).
  */
 export async function sendPurchaseToMeta(
@@ -55,7 +58,7 @@ export async function sendPurchaseToMeta(
     data: [
       {
         event_name: "Purchase",
-        event_time: Math.floor(Date.now() / 1000),
+        event_time: input.eventTime ?? Math.floor(Date.now() / 1000),
         event_id: input.eventId,
         action_source: "website",
         event_source_url: input.eventSourceUrl,
@@ -63,8 +66,8 @@ export async function sendPurchaseToMeta(
         custom_data: {
           currency: "USD",
           value: input.value ?? 1.0,
-          content_name: "Daypack Deposit",
-          contents: [{ id: input.reservedPack, quantity: 1 }],
+          content_name: input.contentName ?? "Daypack Preorder",
+          contents: [{ id: input.reservedPack, quantity: input.quantity ?? 1 }],
         },
       },
     ],
@@ -75,25 +78,24 @@ export async function sendPurchaseToMeta(
   try {
     const res = await fetch(url, {
       method: "POST",
+      signal: AbortSignal.timeout(8_000),
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
-    const body = await res.text();
-    // Never log the token or the raw email — only status + response body.
+    await res.body?.cancel();
+    // Provider responses can contain sensitive data; log only status and ID.
     console.log("Meta CAPI Purchase response", {
       status: res.status,
       eventId: input.eventId,
-      body,
     });
 
     if (!res.ok) {
-      console.error("Meta CAPI Purchase error", { status: res.status, body });
-      return { ok: false, status: res.status, error: body };
+      return { ok: false, status: res.status, error: "provider rejected event" };
     }
     return { ok: true, status: res.status };
-  } catch (err) {
-    console.error("Meta CAPI Purchase request failed", err);
+  } catch {
+    console.error("Meta CAPI Purchase request failed", { eventId: input.eventId });
     return { ok: false, status: 0, error: "request failed" };
   }
 }
