@@ -22,7 +22,7 @@ The live application endpoint still uses `2026-04-22.dahlia`. This branch does n
 
 The owner-confirmed Norra account is the Daypack payment account. Its application webhook at `https://www.eatdaypack.com/api/stripe-webhook` currently enables only `checkout.session.completed`. The separate Klaviyo integration endpoint is unchanged.
 
-The Daypack Klaviyo account has a live `Placed Deposit` workflow named `Depo Conf-live`. Its email describes a $1 refundable deposit, still mentions other pack tiers, uses smart sending and is not marked transactional. No `Placed Preorder` metric/linked flow appeared in the complete metrics response. Six separate preorder and lifecycle templates have been saved as unattached drafts. Nine provider-render checks pass. Six owner-approved preview send jobs were accepted for the chosen test inbox; inbox receipt is pending. New operational flows have not been created or activated.
+The Daypack Klaviyo account has a live `Placed Deposit` workflow named `Depo Conf-live`. Its email describes a $1 refundable deposit, still mentions other pack tiers, uses smart sending and is not marked transactional. No `Placed Preorder` metric/linked flow appeared in the complete metrics response. Six separate preorder and lifecycle templates have been saved as unattached drafts. Nine provider-render checks pass. Six owner-approved preview send jobs were accepted for the chosen test inbox; the owner confirmed all six arrived and look good. New operational flows have not been created or activated.
 
 After sandbox verification and release approval, the application endpoint needs these six events:
 
