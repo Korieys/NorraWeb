@@ -92,3 +92,11 @@ The two existing shared-test destinations were inspected only and remain unchang
 - [Basil changes](https://docs.stripe.com/changelog/basil)
 - [Clover changes](https://docs.stripe.com/changelog/clover)
 - [Dahlia changes](https://docs.stripe.com/changelog/dahlia)
+
+## Email account verification — October 24, 2026
+
+The branded sending domain hello.eatdaypack.com is Active (Marketing, Dynamic), verified in the Daypack dashboard on October 24, 2026. The account remains on the free plan. Klaviyo requires a paid account and approval of each message for transactional email. An active marketing sending domain can carry approved transactional email; a separate transactional domain is optional. The smallest quoted email plan supports 500 profiles and 5,000 sends for $20/month before tax, with a $19 first-month discount ($1.07 displayed including estimated tax). Automatic upgrades are selected by default and can increase cost. The quote was canceled without purchase.
+
+The complete metrics response still contains none of the five new operational metrics. The only flow is the existing deposit confirmation; the six reviewed templates remain unattached. No flow, customer profile, domain setting, suppression setting or plan changed.
+
+Sources: [Klaviyo transactional email requirements](https://help.klaviyo.com/hc/en-us/articles/360003165732) and [sending-domain routing](https://help.klaviyo.com/hc/en-us/articles/26024442679835).
