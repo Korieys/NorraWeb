@@ -13,7 +13,7 @@ export function Footer() {
       />
       <div className="relative mx-auto max-w-content px-6 py-20 lg:px-10">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
-          <div className="md:col-span-6">
+          <div className="md:col-span-4">
             <p className="font-display text-[40px] font-medium uppercase leading-none tracking-wide-lg text-paper lg:text-[56px]">
               DAYPACK
             </p>
@@ -21,12 +21,24 @@ export function Footer() {
               A DAYSWORTH PRODUCT
             </p>
             <p className="mt-8 max-w-[420px] font-sans text-[14px] leading-[1.6] text-paper/70">
-              A portable full-day food kit in advanced pilot development.
-              Full product preorders are paused, with a planned reopening on January 25, 2027.
+              Portable nutrition, useful guides, and the making of the Daypack kit.
+              Full product preorders are paused until at least January 25, 2027.
             </p>
             <p className="mt-4 font-sans text-[11px] leading-[1.5] text-paper/50">
-              Sold by Daysworth Nutrition LLC, Spring, Texas.
+              Operated by Daysworth Nutrition LLC, Spring, Texas.
             </p>
+          </div>
+
+          <div className="md:col-span-2">
+            <p className="font-sans text-[10px] font-semibold uppercase tracking-wide-lg text-paper/45">EXPLORE</p>
+            <ul className="mt-4 space-y-2 font-sans text-[12px] font-semibold uppercase tracking-wide-md text-paper/85">
+              <li><Link href="/picks" className="hover:text-paper">PICKS</Link></li>
+              <li><Link href="/media" className="hover:text-paper">MEDIA</Link></li>
+              <li><Link href="/plan-your-day" className="hover:text-paper">DAY PLANNER</Link></li>
+              <li><Link href="/product-status" className="hover:text-paper">PRODUCT STATUS</Link></li>
+              <li><Link href="/partnerships" className="hover:text-paper">PARTNERSHIPS</Link></li>
+              <li><Link href="/story" className="hover:text-paper">OUR STORY</Link></li>
+            </ul>
           </div>
 
           <div className="md:col-span-3">

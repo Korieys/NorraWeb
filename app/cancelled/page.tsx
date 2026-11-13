@@ -12,7 +12,7 @@ export default function Cancelled() {
   return (
     <>
       <Nav />
-      <main className="bg-paper">
+      <main id="main-content" className="bg-paper">
         <section className="mx-auto flex max-w-content flex-col items-start gap-8 px-6 py-32 lg:px-10 lg:py-40">
           <p className="animate-fade-in-down font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan [animation-delay:80ms]">
             PREORDERS PAUSED

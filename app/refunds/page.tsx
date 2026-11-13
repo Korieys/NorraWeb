@@ -4,8 +4,9 @@ export default function RefundsPage() {
   return <main className="mx-auto max-w-3xl px-6 py-16 font-sans text-ink">
     <Link href="/" className="text-sm underline underline-offset-4">Back to Daypack</Link>
     <h1 className="mt-8 font-display text-5xl font-medium uppercase">Refund Policy</h1>
-    <p className="mt-4 text-sm text-ink/60">Effective September 10, 2026</p>
+    <p className="mt-4 text-sm text-ink/60">Updated November 13, 2026</p>
     <div className="mt-10 space-y-8 text-sm leading-7 text-ink/80">
+      <section><h2 className="font-semibold text-ink">Current product status</h2><p>Full product preorders are paused. The planned reopening is January 25, 2027, subject to readiness. Existing $1 payments are fully refundable reservations for a future preorder opportunity, not full product orders. The pause does not change existing refund rights.</p></section>
       <section><h2 className="font-semibold text-ink">Cancel before shipment</h2><p>You may cancel a Daypack 170 preorder for a full refund any time before it ships. Email team@eatdaypack.com from the checkout email and include your order details. We will submit the refund to the original payment method and confirm by email.</p></section>
       <section><h2 className="font-semibold text-ink">After shipment</h2><p>Because Daypack contains food, we cannot accept ordinary returns of shipped packs. If your order is damaged, missing, incorrect, or unsafe on arrival, contact us within 14 days of delivery with your order details and photos when relevant. We will replace or refund the affected order as appropriate.</p></section>
       <section><h2 className="font-semibold text-ink">Delays or material changes</h2><p>If fulfillment is materially delayed or the final offer materially changes, we will notify you and allow cancellation for a full refund before shipment.</p></section>

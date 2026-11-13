@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  distDir: process.env.DAYPACK_BUILD_DIR || ".next",
   reactStrictMode: true,
   images: {
     remotePatterns: [

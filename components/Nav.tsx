@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
@@ -10,6 +10,7 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -29,6 +30,34 @@ export function Nav() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const menu = document.getElementById("mobile-nav");
+    const frame = requestAnimationFrame(() => menu?.querySelector<HTMLElement>("a")?.focus());
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+      if (event.key === "Tab") {
+        const links = Array.from(menu?.querySelectorAll<HTMLElement>("a") || []);
+        const controls = [menuButton.current, ...links].filter((item): item is HTMLElement => !!item);
+        const current = controls.indexOf(document.activeElement as HTMLElement);
+        event.preventDefault();
+        const next = current < 0 ? (event.shiftKey ? controls.length - 1 : 0) : (current + (event.shiftKey ? -1 : 1) + controls.length) % controls.length;
+        controls[next]?.focus();
+      }
+    };
+    const onResize = () => { if (window.innerWidth >= 768) setOpen(false); };
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [open]);
+
   const close = () => setOpen(false);
 
   // Portalled so they escape any ancestor with a CSS transform (e.g. the
@@ -40,18 +69,19 @@ export function Nav() {
         <>
           <div
             id="mobile-nav"
+            hidden={!open}
             className={cn(
               "fixed inset-x-0 top-[72px] z-40 origin-top overflow-hidden border-b border-ink/10 bg-paper transition-[max-height] duration-300 ease-out md:hidden",
               open ? "max-h-[80vh]" : "max-h-0"
             )}
           >
             <nav className="flex flex-col px-6 py-4 font-sans text-sm font-semibold uppercase tracking-wide-lg text-ink">
-              <a href="/#inside" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">THE 170</a>
-              <Link href="/story" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">STORY</Link>
-              <a href="/#faq" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">FAQ</a>
+              <a href="/picks" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">PICKS</a>
+              <Link href="/media" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">MEDIA</Link>
+              <a href="/product-status" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">STATUS</a>
               <div className="py-5">
                 <Button asChild size="lg" className="w-full">
-                  <a href="/#preorder" onClick={close}>PRODUCT UPDATE</a>
+                  <a href="/#updates" onClick={close}>GET UPDATES</a>
                 </Button>
               </div>
             </nav>
@@ -71,6 +101,7 @@ export function Nav() {
 
   return (
     <>
+      <a className="dp-skip" href="#main-content">Skip to content</a>
       <header
         className={cn(
           "sticky top-0 z-50 h-[72px] w-full bg-paper transition-shadow",
@@ -83,20 +114,21 @@ export function Nav() {
               DAYPACK
             </span>
             <span className="mt-0.5 hidden font-sans text-[9px] font-semibold uppercase tracking-wide-lg text-ink/55 md:block">
-              PILOT IN DEVELOPMENT
+              PORTABLE NUTRITION
             </span>
           </Link>
           <nav className="hidden items-center gap-7 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/65 md:flex">
-            <a href="/#inside" className="hover:text-ink">THE 170</a>
-            <Link href="/story" className="hover:text-ink">STORY</Link>
-            <a href="/#faq" className="hover:text-ink">FAQ</a>
+            <a href="/picks" className="hover:text-ink">PICKS</a>
+            <Link href="/media" className="hover:text-ink">MEDIA</Link>
+            <a href="/product-status" className="hover:text-ink">STATUS</a>
           </nav>
           <div className="hidden md:block">
             <Button asChild size="sm">
-              <a href="/#preorder">PRODUCT UPDATE</a>
+              <a href="/#updates">GET UPDATES</a>
             </Button>
           </div>
           <button
+            ref={menuButton}
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}

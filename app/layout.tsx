@@ -3,6 +3,7 @@ import { Inter, Bricolage_Grotesque, Fraunces, IBM_Plex_Mono } from "next/font/g
 import { Analytics } from "@vercel/analytics/next";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
 import "./globals.css";
+import "./daypack.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,31 +39,31 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://eatdaypack.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Daypack | Pilot development update",
+  title: "Daypack | Portable nutrition for full days",
   description:
-    "Daypack is in advanced pilot development. Full product preorders are paused, with a planned reopening on January 25, 2027.",
+    "Discover portable food, read practical guides, plan your day, and follow the Daypack pilot. Full product preorders are paused until at least January 25, 2027.",
   openGraph: {
-    title: "Daypack | Pilot development update",
+    title: "Daypack | Portable nutrition for full days",
     description:
-      "A portable full-day food kit in development. Follow product updates. Planned preorder reopening: January 25, 2027.",
+      "Portable-food discovery, free planning tools, and updates on the Daypack flagship kit. Full product preorders are paused.",
     url: siteUrl,
     siteName: "Daypack",
     type: "website",
     images: [
       {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Daypack protein packs",
+        url: "/DayPack-pine.png",
+        width: 1122,
+        height: 1402,
+        alt: "Daypack prototype packaging concept",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Daypack | Pilot development update",
+    title: "Daypack | Portable nutrition for full days",
     description:
-      "Full product preorders are paused. Follow Daypack development updates.",
-    images: ["/og.png"],
+      "Free day planning tools, practical guides, and updates on the Daypack pilot.",
+    images: ["/DayPack-pine.png"],
   },
   robots: { index: true, follow: true },
   icons: {
