@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { sendPurchaseToMeta } from "@/lib/meta";
+import { isPaidReservationIntent, reservationSessionState } from "@/lib/reservations";
 
 export const runtime = "nodejs";
 
@@ -89,7 +90,8 @@ async function depositFromCheckoutSession(
   stripe: Stripe,
   session: Stripe.Checkout.Session
 ): Promise<DepositPayload> {
-  const stripeObjectId = paymentIntentIdFrom(session.payment_intent) ?? session.id;
+  const stripeObjectId = paymentIntentIdFrom(session.payment_intent);
+  if (!stripeObjectId) throw new Error("Paid reservation is missing its payment reference.");
   const email =
     cleanString(session.customer_details?.email) ??
     cleanString(session.customer_email) ??
@@ -170,7 +172,7 @@ async function sendPlacedDepositToKlaviyo(
           stripe_session_id: deposit.stripeSessionId,
           currency: "USD",
           source: "stripe_checkout",
-          order_type: "preorder",
+          order_type: "reservation",
         },
         value: deposit.amount,
         value_currency: "USD",
@@ -178,7 +180,7 @@ async function sendPlacedDepositToKlaviyo(
         metric: {
           data: {
             type: "metric",
-            attributes: { name: "Placed Preorder" },
+            attributes: { name: "Placed Deposit" },
           },
         },
         profile: {
@@ -188,7 +190,7 @@ async function sendPlacedDepositToKlaviyo(
               email: deposit.email,
               properties: {
                 reserved_pack: deposit.reservedPack,
-                reservation_status: "preordered",
+                reservation_status: "reserved",
               },
             },
           },
@@ -196,15 +198,6 @@ async function sendPlacedDepositToKlaviyo(
       },
     },
   };
-
-  console.log("Klaviyo Placed Deposit request", {
-    url: KLAVIYO_EVENTS_URL,
-    metricName: "Placed Preorder",
-    keySource: privateKey.source,
-    hasKlaviyoPrivateApiKey: privateKey.hasPrivateApiKey,
-    hasKlaviyoPrivateKey: privateKey.hasPrivateKey,
-    payload,
-  });
 
   const res = await fetch(KLAVIYO_EVENTS_URL, {
     method: "POST",
@@ -217,19 +210,9 @@ async function sendPlacedDepositToKlaviyo(
     body: JSON.stringify(payload),
   });
 
-  const responseBody = await res.text();
-  console.log("Klaviyo Placed Deposit response", {
-    email: deposit.email,
-    status: res.status,
-    body: responseBody,
-  });
-
   if (!res.ok) {
-    console.error("Klaviyo Placed Deposit error", {
-      status: res.status,
-      body: responseBody,
-    });
-    return { ok: false, status: res.status, error: responseBody };
+    console.error("Klaviyo reservation event failed", { status: res.status });
+    return { ok: false, status: res.status, error: "Reservation event rejected" };
   }
 
   return { ok: true, status: res.status };
@@ -254,50 +237,28 @@ export async function POST(req: Request) {
   try {
     event = stripe.webhooks.constructEvent(rawBody, sig, secret);
   } catch (err) {
-    console.error("Stripe signature verification failed:", err);
+    console.error("Stripe signature verification failed.");
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
   let deposit: DepositPayload | null = null;
   try {
-    console.log("Stripe webhook event type received", {
-      type: event.type,
-    });
-
-    if (event.type === "checkout.session.completed") {
-      deposit = await depositFromCheckoutSession(
-        stripe,
-        event.data.object as Stripe.Checkout.Session
-      );
+    if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
+      const session = event.data.object as Stripe.Checkout.Session;
+      if (reservationSessionState(session) !== "paid") return NextResponse.json({ received: true });
+      deposit = await depositFromCheckoutSession(stripe, session);
     } else if (event.type === "payment_intent.succeeded") {
-      deposit = await depositFromPaymentIntent(
-        stripe,
-        event.data.object as Stripe.PaymentIntent
-      );
+      const intent = event.data.object as Stripe.PaymentIntent;
+      if (!isPaidReservationIntent(intent)) return NextResponse.json({ received: true });
+      deposit = await depositFromPaymentIntent(stripe, intent);
     } else {
-      console.log("Stripe webhook received", {
-        type: event.type,
-        email: "n/a",
-      });
+      // Failed, unpaid, unrelated, and full-product events never become deposits.
       return NextResponse.json({ received: true });
     }
 
-    console.log("Stripe webhook received", {
-      type: event.type,
-      email: deposit.email ?? "missing",
-      stripeSessionId: deposit.stripeSessionId ?? "n/a",
-      reservedPack: deposit.reservedPack ?? "missing",
-      reservationId: deposit.reservationId,
-    });
-
     if (!deposit.email || !deposit.reservedPack) {
-      console.warn("Stripe deposit missing required Klaviyo fields", {
-        type: event.type,
-        email: deposit.email ?? "missing",
-        reservedPack: deposit.reservedPack ?? "missing",
-        stripeObjectId: deposit.stripeObjectId,
-      });
-      return NextResponse.json({ received: true });
+      console.error("Paid reservation is missing required event fields.");
+      return NextResponse.json({ error: "Reservation details unavailable" }, { status: 502 });
     }
 
     // Server-side Purchase to Meta CAPI (source of truth for the $1 deposit).
@@ -327,7 +288,7 @@ export async function POST(req: Request) {
       );
     }
   } catch (err) {
-    console.error("Webhook handler error:", err);
+    console.error("Reservation webhook could not be processed.");
     return NextResponse.json({ error: "Webhook handler error" }, { status: 500 });
   }
 

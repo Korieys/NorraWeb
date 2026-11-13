@@ -1,37 +1,8 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
-
-export const metadata = {
-  title: "Cancelled — Daypack",
-  description: "Full product preorders are paused. Follow the development update.",
-};
-
+import { ReservationButton } from "@/components/ReservationButton";
+export const metadata = { title: "Checkout not completed | Daypack", description: "Return to the $1 refundable reservation or keep exploring Daypack." };
 export default function Cancelled() {
-  return (
-    <>
-      <Nav />
-      <main id="main-content" className="bg-paper">
-        <section className="mx-auto flex max-w-content flex-col items-start gap-8 px-6 py-32 lg:px-10 lg:py-40">
-          <p className="animate-fade-in-down font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan [animation-delay:80ms]">
-            PREORDERS PAUSED
-          </p>
-          <h1 className="font-display text-[48px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[64px] lg:text-[80px]">
-            <span className="block animate-fade-in-up-lg [animation-delay:180ms]">COME BACK</span>
-            <span className="block animate-fade-in-up-lg [animation-delay:300ms]">ANY TIME.</span>
-          </h1>
-          <p className="max-w-[600px] animate-fade-in-up font-sans text-[18px] leading-[1.55] text-ink/80 lg:text-[20px] [animation-delay:460ms]">
-            Full product preorders are paused. We plan to reopen January 25, 2027, subject to readiness. This is not a shipping date. If you have a question about a previous payment, contact team@eatdaypack.com.
-          </p>
-          <div className="animate-fade-in-up [animation-delay:620ms]">
-            <Button asChild>
-              <Link href="/#preorder">← READ THE PRODUCT UPDATE</Link>
-            </Button>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </>
-  );
+  return <><Nav /><main id="main-content" className="dp-site"><section className="dp-section"><div className="dp-wrap dp-direction-grid"><div><p className="dp-label">Checkout not completed</p><h1>Come back<br />any time.</h1></div><div><p>You can try the $1 fully refundable reservation again or keep exploring our free guides and tools.</p><p>A reservation provides access to a future preorder opportunity. It is not a full product order and includes no automatic purchase credit or discount.</p><p>Full product preorders are paused, with a planned reopening on January 25, 2027, subject to readiness. Shipping is unconfirmed.</p><div className="dp-actions"><ReservationButton /><Link className="dp-text-link" href="/">Back to Daypack ↗</Link></div><p>Questions about a previous payment? Email <a className="underline" href="mailto:team@eatdaypack.com">team@eatdaypack.com</a>.</p></div></div></section></main><Footer /></>;
 }

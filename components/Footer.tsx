@@ -22,7 +22,7 @@ export function Footer() {
             </p>
             <p className="mt-8 max-w-[420px] font-sans text-[14px] leading-[1.6] text-paper/70">
               Portable nutrition, useful guides, and the making of the Daypack kit.
-              Full product preorders are paused until at least January 25, 2027.
+              New $1 refundable reservations are open. Full product preorders are paused until at least January 25, 2027.
             </p>
             <p className="mt-4 font-sans text-[11px] leading-[1.5] text-paper/50">
               Operated by Daysworth Nutrition LLC, Spring, Texas.

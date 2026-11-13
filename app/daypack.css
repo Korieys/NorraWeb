@@ -329,3 +329,13 @@
 @media (prefers-reduced-motion: no-preference) { .dp-hero-copy, .dp-hero-tool { animation: dp-enter .6s both ease-out; } .dp-hero-tool { animation-delay: .1s; } @keyframes dp-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } } }
 @media print { body:has(.dp-planner-page) header, body:has(.dp-planner-page) footer, .dp-planner-intro, .planner-actions, .planner-storage, .dp-skip { display: none !important; } .dp-planner-layout { display: block; } .dp-planner-page .dp-section { padding: 0; } .dp-planner-page .dp-wrap { max-width: 100%; padding: 0; } .day-planner { border: 0; } .planner-notes textarea { resize: none; } }
 .dp-founder-image { position: relative; width: 100%; aspect-ratio: 4/5; background: #d6ccaf; overflow: hidden; } .dp-founder-caption { margin-top: 18px; padding-top: 14px; border-top: 1px solid #c9c7bd; }
+
+.dp-reservation-offer { margin-top: 30px; padding-top: 28px; border-top: 1px solid #53616b; scroll-margin-top: 110px; }
+.dp-reservation-offer h3 { margin-bottom: 15px; }
+.dp-reservation-action { margin-top: 24px; }
+.dp-actions .dp-reservation-action { margin-top: 0; }
+.dp-reservation-action .dp-button { max-width: 100%; white-space: normal; }
+.dp-status-band .dp-reserve-button, .dp-preorder .dp-reserve-button { background: #f4f0e8; color: #172937; border-color: #f4f0e8; }
+.dp-status-band .dp-reserve-button:hover, .dp-preorder .dp-reserve-button:hover { background: #dfdbd3; }
+.dp-site .dp-reservation-small, .dp-site .dp-reservation-error { font-size: 13px; margin-top: 16px; }
+.dp-reservation-reference { padding-block: 18px; border-block: 1px solid #c9c7bd; }

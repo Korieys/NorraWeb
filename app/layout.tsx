@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Daypack | Portable nutrition for full days",
   description:
-    "Discover portable food, read practical guides, plan your day, and follow the Daypack pilot. Full product preorders are paused until at least January 25, 2027.",
+    "Discover portable food, read practical guides, plan your day, and follow the Daypack pilot. $1 refundable reservations are open; full product preorders are paused until at least January 25, 2027.",
   openGraph: {
     title: "Daypack | Portable nutrition for full days",
     description:

@@ -38,7 +38,7 @@ export const fieldGuides = [
       { title: "Read the unfinished details.", text: "Daypack is in advanced pilot development. Food selection, nutrition and allergens, packaging, assembly, pricing, and fulfillment are still unfinished. The product-status page explains what remains open." },
       { title: "Check the total.", text: "Review the product price, shipping, and any taxes at checkout. For a subscription, also check the renewal amount, frequency, and cancellation instructions." },
       { title: "Know the cancellation route.", text: "Read the current terms before paying. Existing $1 Daypack reservations are fully refundable and are not full product orders. Contact team@eatdaypack.com for help or a refund." },
-      { title: "Choose when to join.", text: "Daypack full product preorders are paused, with a planned reopening on January 25, 2027, subject to readiness. This is not a shipping date. Use the tools and guides now, and decide about the kit later." },
+      { title: "Choose when to join.", text: "Daypack full product preorders are paused, with a planned reopening on January 25, 2027, subject to readiness. This is not a shipping date. New $1 fully refundable reservations are open for future preorder access. You can also use the tools and guides now without reserving." },
     ],
   },
 ] as const;
