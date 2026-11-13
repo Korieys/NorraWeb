@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
+import { canCreatePreorder, PREORDER_PAUSE_MESSAGE } from "@/lib/preorder-availability";
 
 export const runtime = "nodejs";
 const SHIPPING_CENTS = 999;
@@ -19,6 +20,9 @@ function originFrom(req: Request): string {
 function optionalCookie(value: unknown) { return typeof value === "string" && value.trim() ? value.trim() : undefined; }
 
 export async function POST(req: Request) {
+  if (!canCreatePreorder()) {
+    return NextResponse.json({ error: PREORDER_PAUSE_MESSAGE, code: "PREORDERS_PAUSED" }, { status: 503, headers: { "Cache-Control": "no-store" } });
+  }
   try {
     const body = await req.json();
     if (body?.sku !== "170") return NextResponse.json({ error: "Only the Daypack 170 is open for preorder." }, { status: 400 });
