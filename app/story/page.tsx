@@ -269,11 +269,7 @@ function Signoff() {
               WHERE WE ARE RIGHT NOW
             </p>
             <p className="mt-4 font-sans text-[16px] leading-[1.6] text-ink/85">
-              Daypack is still in validation. The site is real. The $1 deposit
-              is real and refundable. The packs are being finalized with a
-              co-packer. I&rsquo;m building this in public, sending honest
-              updates, and only shipping once the food is good enough to put my
-              name on.
+              Daypack is in advanced pilot development. Pilot configurations have been tested, but the commercial product and fulfillment are not locked. Full product preorders are paused, with a planned reopening on January 25, 2027. Existing $1 reservations remain fully refundable.
             </p>
             <p className="mt-4 font-sans text-[16px] leading-[1.6] text-ink/85">
               You can follow our socials to stay updated, or you can follow me
@@ -349,15 +345,14 @@ function CTA() {
           LOCK A PACK
         </Reveal>
         <Reveal as="h2" delayMs={120} className="mx-auto mt-6 max-w-[900px] font-display text-[36px] font-medium uppercase leading-[1.05] tracking-wide-sm sm:text-[44px] lg:text-[56px]">
-          $1 DEPOSIT. REAL AND REFUNDABLE.
+          PREORDERS ARE PAUSED.
         </Reveal>
         <Reveal as="p" delayMs={220} className="mx-auto mt-6 max-w-[560px] font-sans text-[16px] leading-[1.55] text-paper/75 lg:text-[18px]">
-          Built in public. Honest updates. Shipping once the food is good enough
-          to put my name on. $20 off at launch. First run Q3 2026.
+          The planned preorder reopening is January 25, 2027, subject to readiness. This is not a confirmed shipping date. Follow the development updates.
         </Reveal>
         <Reveal delayMs={320} className="mt-10 flex justify-center">
           <Button asChild size="lg" variant="invertedPaper">
-            <a href="/#sku-110">LOCK YOUR PACK · $1</a>
+            <a href="/#preorder">READ THE PRODUCT UPDATE</a>
           </Button>
         </Reveal>
       </div>

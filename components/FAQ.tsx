@@ -1,14 +1,12 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/Accordion";
 
 const ITEMS = [
-  { q: "What is in the current Daypack?", a: "Nine items: a Kodiak Chocolate Chip Protein Muffin Power Cup; Quest Strawberry and Chocolate Protein Milkshakes; two shelf-stable HMR entrées; a Legendary Blueberry Protein Tasty Pastry; a think! 20g Protein Bar; and two H-E-B Hit the Trail Mix packets." },
-  { q: "Which HMR entrées will I receive?", a: "Each pack includes two entrées from our rotating HMR selection. The planned rotation includes Chicken Pasta Parmesan, Turkey Chili, Rotini Chicken Alfredo, Beef Stroganoff, Penne Pasta with Meatballs, and Lasagna with Meat Sauce. The exact pair may vary while received-label and taste validation is completed." },
-  { q: "How much protein and how many calories?", a: "The current working target is at least 170 grams of protein and roughly 2,000–2,100 calories. Exact totals depend on the two HMR entrées included. The received product labels are the final source for nutrition and allergen information." },
-  { q: "Does anything need refrigeration?", a: "The pilot items are shelf stable while unopened. Follow the storage and preparation directions on every received product label, and refrigerate leftovers when a label directs you to." },
-  { q: "When will my preorder ship?", a: "First-run fulfillment is estimated for Q4 2026. We will send production updates and tracking to the email used at checkout. You may cancel for a full refund any time before shipment." },
-  { q: "What are the purchase options?", a: "One Daypack is $54.99, a one-time Core 3 is $149.99, and the monthly Core 3 subscription is $139.99. Standard U.S. shipping is $9.99 per order or subscription shipment." },
-  { q: "Can I cancel the Core 3 subscription?", a: "Yes. The Core 3 subscription renews monthly until canceled. Email team@eatdaypack.com before the next renewal to stop future shipments." },
-  { q: "What about allergens?", a: "Ingredients and allergens vary across the branded items and rotating entrées. Review every received label before eating. Do not consume an item containing an ingredient you cannot safely eat." },
+  { q: "What stage is Daypack in?", a: "Daypack is in advanced pilot development and prelaunch. Pilot configurations have been tested, but the commercial product and fulfillment process are not yet locked." },
+  { q: "Can I preorder today?", a: "Full product preorders are paused. The planned reopening is January 25, 2027, subject to readiness. This is not a shipping date. You can sign up for updates in the meantime." },
+  { q: "What is still unfinished?", a: "Final food selection, nutrition and allergen validation, the bill of materials, production packaging and durability, a compliant assembly facility, permits, insurance, inventory, fulfillment, pricing, shipping, quality control, and checkout readiness." },
+  { q: "How much protein and how many calories?", a: "At least 170g of protein and approximately 2,000 calories are design targets for the full-day kit. They are not finalized commercial nutrition figures." },
+  { q: "I already paid $1. What does that mean?", a: "Your $1 payment is a fully refundable reservation for a future preorder opportunity. It is not a full product order. A deposit credit toward a future order has not been established. For help or a refund, email team@eatdaypack.com." },
+  { q: "When will Daypack ship?", a: "An exact shipping date is not confirmed. January 25, 2027 is the planned preorder reopening date, not a fulfillment promise. We will share updated product and shipping details before full preorders reopen." },
 ];
 
 export function FAQ() {

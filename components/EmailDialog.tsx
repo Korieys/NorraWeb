@@ -46,9 +46,9 @@ export function EmailDialog({ trigger }: Props) {
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent>
-        <DialogTitle>GET NOTIFIED.</DialogTitle>
+        <DialogTitle>GET DEVELOPMENT UPDATES.</DialogTitle>
         <DialogDescription>
-          Drop your email. We&apos;ll tell you when Daypack ships. No spam.
+          Get product development and preorder reopening updates. Unsubscribe whenever you like.
         </DialogDescription>
         <form onSubmit={onSubmit} className="mt-2 flex flex-col gap-3">
           <Input
@@ -61,7 +61,7 @@ export function EmailDialog({ trigger }: Props) {
             aria-label="Email address"
           />
           <Button type="submit" disabled={status === "loading"}>
-            {status === "loading" ? "SENDING..." : "NOTIFY ME"}
+            {status === "loading" ? "SENDING..." : "GET UPDATES"}
           </Button>
           {status === "ok" && (
             <p className="text-[13px] font-semibold uppercase tracking-wide-md text-olive">

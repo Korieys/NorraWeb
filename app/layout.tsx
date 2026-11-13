@@ -38,13 +38,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://eatdaypack.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Daypack 170 — First-Run Preorder",
+  title: "Daypack | Pilot development update",
   description:
-    "Preorder the Daypack 170: nine shelf-stable items, 170g+ protein, and roughly 2,000–2,100 calories organized into one complete day.",
+    "Daypack is in advanced pilot development. Full product preorders are paused, with a planned reopening on January 25, 2027.",
   openGraph: {
-    title: "Daypack 170 — First-Run Preorder",
+    title: "Daypack | Pilot development update",
     description:
-      "Nine shelf-stable items. One complete day. 170g+ protein and roughly 2,000–2,100 calories.",
+      "A portable full-day food kit in development. Follow product updates. Planned preorder reopening: January 25, 2027.",
     url: siteUrl,
     siteName: "Daypack",
     type: "website",
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Daypack 170 — First-Run Preorder",
+    title: "Daypack | Pilot development update",
     description:
-      "Preorder nine shelf-stable items organized into one complete day with 170g+ protein.",
+      "Full product preorders are paused. Follow Daypack development updates.",
     images: ["/og.png"],
   },
   robots: { index: true, follow: true },

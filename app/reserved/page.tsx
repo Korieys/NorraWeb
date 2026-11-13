@@ -8,7 +8,7 @@ import { SKUS, type SkuId } from "@/lib/skus";
 
 export const metadata = {
   title: "Reserved — Daypack",
-  description: "You're on the first run.",
+  description: "Daypack payment and reservation information.",
 };
 
 type Search = { sku?: string; session_id?: string; dev?: string };
@@ -61,19 +61,13 @@ export default async function Reserved({
       <main className="bg-paper">
         <section className="mx-auto flex max-w-content flex-col items-start gap-8 px-6 py-32 lg:px-10 lg:py-40">
           <p className="animate-fade-in-down font-sans text-[12px] font-semibold uppercase tracking-wide-lg text-tan [animation-delay:80ms]">
-            CONFIRMED · FIRST RUN
+            PAYMENT RECEIVED
           </p>
           <h1 className="font-display text-[48px] font-medium uppercase leading-[0.95] tracking-wide-sm text-ink sm:text-[64px] lg:text-[80px]">
-            <span className="block animate-fade-in-up-lg [animation-delay:200ms]">YOU&apos;RE IN.</span>
+            <span className="block animate-fade-in-up-lg [animation-delay:200ms]">THANK YOU.</span>
           </h1>
           <p className="max-w-[600px] animate-fade-in-up font-sans text-[18px] leading-[1.55] text-ink/80 lg:text-[20px] [animation-delay:420ms]">
-            Your Daypack preorder is confirmed. We&apos;ll send production and
-            fulfillment updates to your checkout email for the{" "}
-            <span className={`font-display uppercase ${skuData.color.text}`}>
-              {skuData.protein}
-            </span>{" "}
-            pack. Estimated fulfillment is Q4 2026. You may cancel for a full
-            refund any time before shipment.
+            We received your payment. A $1 payment is a fully refundable reservation for a future preorder opportunity, not a full product order. Full product preorders are paused, with a planned reopening on January 25, 2027. This is not a shipping date. Email team@eatdaypack.com for payment details, help, or a refund.
           </p>
           <div className="animate-fade-in-up [animation-delay:580ms]">
             <Button asChild>

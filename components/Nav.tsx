@@ -51,7 +51,7 @@ export function Nav() {
               <a href="/#faq" onClick={close} className="border-b border-ink/10 py-4 active:bg-ink/5">FAQ</a>
               <div className="py-5">
                 <Button asChild size="lg" className="w-full">
-                  <a href="/#preorder" onClick={close}>PREORDER · FROM $54.99</a>
+                  <a href="/#preorder" onClick={close}>PRODUCT UPDATE</a>
                 </Button>
               </div>
             </nav>
@@ -83,7 +83,7 @@ export function Nav() {
               DAYPACK
             </span>
             <span className="mt-0.5 hidden font-sans text-[9px] font-semibold uppercase tracking-wide-lg text-ink/55 md:block">
-              COMPLETE DAILY NUTRITION
+              PILOT IN DEVELOPMENT
             </span>
           </Link>
           <nav className="hidden items-center gap-7 font-sans text-[11px] font-semibold uppercase tracking-wide-lg text-ink/65 md:flex">
@@ -93,7 +93,7 @@ export function Nav() {
           </nav>
           <div className="hidden md:block">
             <Button asChild size="sm">
-              <a href="/#preorder">PREORDER · $54.99</a>
+              <a href="/#preorder">PRODUCT UPDATE</a>
             </Button>
           </div>
           <button
